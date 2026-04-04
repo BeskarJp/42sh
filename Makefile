@@ -42,7 +42,7 @@ SRC	=	lib/my/mini_printf.c	\
 
 OBJ	=	$(SRC:.c=.o)
 
-NAME	=	mysh
+NAME	=	42sh
 
 all:	$(NAME)
 
