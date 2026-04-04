@@ -30,6 +30,8 @@ void delete_var(shell_t *shell, char *var_name)
 {
     int len = my_strlen(var_name);
 
+    if (shell->copy_env == NULL)
+        return;
     for (int i = 0; shell->copy_env[i] != NULL; i++) {
         if (my_strncmp(shell->copy_env[i], var_name, len) == 0
             && shell->copy_env[i][len] == '=') {

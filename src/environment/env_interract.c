@@ -18,6 +18,8 @@ char **copy_environment(char **env)
     int i = 0;
     char **copy_env;
 
+    if (env == NULL)
+        return NULL;
     while (env[i])
         i++;
     copy_env = malloc(sizeof(char *) * (i + 1));
@@ -41,6 +43,8 @@ char *find_word_in_env(char **env, char *word)
 {
     int len = my_strlen(word);
 
+    if (env == NULL)
+        return NULL;
     for (int i = 0; env[i] != NULL; i++) {
         if (my_strncmp(env[i], word, len) == 0 && env[i][len] == '=')
             return &env[i][len + 1];

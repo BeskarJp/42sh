@@ -8,6 +8,21 @@
 #include "shell.h"
 
 /**
+ * @brief Handles the case where the environment is empty
+ *
+ * @param shell Shell structure
+ * @param new_line String in the form "name=value" to add
+ */
+void init_env(shell_t *shell, char *new_line)
+{
+    shell->copy_env = malloc(sizeof(char *) * 2);
+    if (shell->copy_env == NULL)
+        return;
+    shell->copy_env[0] = new_line;
+    shell->copy_env[1] = NULL;
+}
+
+/**
  * @brief Enlarges the environment array and adds a new line
  *
  * @param shell Shell structure
@@ -18,6 +33,8 @@ void make_env_bigger(shell_t *shell, char *new_line)
     char **new_env = NULL;
     int line_count = 0;
 
+    if (shell->copy_env == NULL)
+        return (init_env(shell, new_line));
     while (shell->copy_env[line_count] != NULL)
         line_count++;
     new_env = malloc(sizeof(char *) * (line_count + 2));
@@ -71,6 +88,10 @@ void exec_setenv(shell_t *shell)
         return;
     len_name = my_strlen(shell->arg_col[1]);
     added_line = add_line_in_env(shell->arg_col[1], shell->arg_col[2]);
+    if (shell->copy_env == NULL) {
+        make_env_bigger(shell, added_line);
+        return;
+    }
     for (int i = 0; shell->copy_env[i] != NULL; i++) {
         if (my_strncmp(shell->copy_env[i], shell->arg_col[1], len_name) == 0
             && shell->copy_env[i][len_name] == '=') {
