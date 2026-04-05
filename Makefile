@@ -44,6 +44,13 @@ OBJ	=	$(SRC:.c=.o)
 
 NAME	=	42sh
 
+SRC_TESTS	=	$(filter-out src/main.c, $(SRC))
+
+TESTS_FILES	=	tests/test_42sh.c
+
+NAME_TEST	=	unit_tests
+
+
 all:	$(NAME)
 
 $(NAME):	$(OBJ)
@@ -51,11 +58,19 @@ $(NAME):	$(OBJ)
 	@make clean
 	@echo "Everything is compiled"
 
+tests_run:
+	@$(CC) -o $(NAME_TEST) $(SRC_TESTS) $(TESTS_FILES) $(CFLAGS) --coverage -lcriterion
+	@make clean
+	@echo Units Tests are compiled
+	./$(NAME_TEST)
+
 clean:
 	@rm -f $(OBJ)
+	@rm -f *.gcno *.gcda
 
 fclean:	clean
 	@rm -f $(NAME)
+	@rm -f $(NAME_TEST)
 	@echo "Everything is cleaned"
 
 re:	clean all
