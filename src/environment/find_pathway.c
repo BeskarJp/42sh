@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2026
-** Minishell 2
+** 42sh
 ** File description:
 ** Find the path_way of the command
 */
