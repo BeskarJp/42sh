@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2026
-** Minishell 2
+** 42sh
 ** File description:
 ** Execute pipe in minishell
 */
