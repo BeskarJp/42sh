@@ -9,6 +9,7 @@
 #include <string.h>
 #include <fcntl.h>
 #include <errno.h>
+#include <time.h>
 #include "my.h"
 
 #ifndef MINISHELL
@@ -46,15 +47,25 @@ typedef struct struct_parse_s {
     token_tree_t *(*right_function)(char *);
 } struct_parse_t;
 
+typedef struct history_s {
+    int index;
+    char *command;
+    char *time;
+    struct history_s *next;
+} history_t;
+
 typedef struct shell_s {
     int continue_shell;
     char **arg_col;
     char **copy_env;
     char *oldpwd;
+    history_t *history;
 } shell_t;
 
 
-void print_shell_line(char **env);
+void add_to_history(shell_t *shell, char *line);
+void display_history(shell_t *shell);
+void free_history(history_t *history);
 
 int builtin_assembly(shell_t *shell);
 void exec_cd(shell_t *shell);
@@ -67,6 +78,7 @@ char *find_word_in_env(char **env, char *word);
 char *add_line_in_env(char *nom, char *valeur);
 char *find_command_path(char *cmd, char **env);
 
+void print_shell_line(char **env);
 void execute_command(shell_t *shell);
 void line_executor(shell_t *shell, char *line);
 
