@@ -23,7 +23,7 @@ void run_simple_command(shell_t *shell, token_tree_t *tree)
 }
 
 /**
- * @brief Traverses the token tree and executes nodes according to type.
+ * @brief Traverses the token tree and executes nodes by type.
  *
  * @param shell Shell structure.
  * @param tree Token tree to execute.
