@@ -22,6 +22,24 @@ void free_array(char **array)
 }
 
 /**
+ * @brief Frees the history linked list
+ *
+ * @param history History stucture
+ */
+void free_history(history_t *history)
+{
+    history_t *temp;
+
+    while (history) {
+        temp = history;
+        history = history->next;
+        free(temp->command);
+        free(temp->time);
+        free(temp);
+    }
+}
+
+/**
  * @brief Free allocated resources for the oldpwd variable
  *
  * @param shell Shell structure
