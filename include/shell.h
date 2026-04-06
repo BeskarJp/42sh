@@ -65,7 +65,7 @@ typedef struct shell_s {
 
 void add_to_history(shell_t *shell, char *line);
 void display_history(shell_t *shell);
-void free_history(history_t *history);
+
 
 int builtin_assembly(shell_t *shell);
 void exec_cd(shell_t *shell);
@@ -100,6 +100,7 @@ token_tree_t *parse_line(char *line);
 void check_execve_output_error(char *path);
 void check_strsignal(int status);
 void free_array(char **array);
+void free_history(history_t *history);
 void free_cd(shell_t *shell);
 void free_tree(token_tree_t *tree);
 
