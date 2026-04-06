@@ -32,7 +32,7 @@ char *get_current_time(void)
  * @param shell Shell structure
  * @param line Command line to save
  */
-void add_to_history(shell_t *shell, char *line)
+void add_to_history_linked_list(shell_t *shell, char *line)
 {
     history_t *new_node = malloc(sizeof(history_t));
     history_t *temp = shell->history;
