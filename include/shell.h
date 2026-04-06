@@ -63,8 +63,9 @@ typedef struct shell_s {
 } shell_t;
 
 
-void add_to_history(shell_t *shell, char *line);
+void add_to_history_linked_list(shell_t *shell, char *line);
 void display_history(shell_t *shell);
+char *check_history_feature(shell_t *shell, char *line);
 
 
 int builtin_assembly(shell_t *shell);

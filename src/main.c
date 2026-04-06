@@ -22,10 +22,36 @@ void initilize_struct(char **env, shell_t *shell)
 }
 
 /**
+ * @brief Main loop of the shell for input and execution
+ *
+ * @param shell Shell structure
+ * @param len Size of the allocated buffer for line
+ * @param line Buffer for the command line input
+ */
+void shell_loop(shell_t *shell, size_t *len, char **line)
+{
+    while (shell->continue_shell) {
+        print_shell_line(shell->copy_env);
+        if (getline(line, len, stdin) == -1)
+            break;
+        if ((*line)[0] != '\0' && (*line)[my_strlen(*line) - 1] == '\n')
+            (*line)[my_strlen(*line) - 1] = '\0';
+        *line = check_history_feature(shell, *line);
+        if (*line == NULL) {
+            *len = 0;
+            continue;
+        }
+        if ((*line)[0] != '\0') {
+            add_to_history_linked_list(shell, *line);
+            line_executor(shell, *line);
+        }
+    }
+}
+
+/**
  * @brief Free all allocated variables in the shell structure
  *
  * @param shell Shell structure to clean
- * @param line Last line allocated by getline
  */
 void free_shell(shell_t *shell, char *line)
 {
@@ -45,7 +71,7 @@ void free_shell(shell_t *shell, char *line)
  * @param argc Number of command-line arguments
  * @param argv Array of arguments
  * @param env Array of environment variables
- * @return int.
+ * @return int. Classical for a main
  */
 int main(int argc, char **argv, char **env)
 {
@@ -56,13 +82,7 @@ int main(int argc, char **argv, char **env)
     (void)argc;
     (void)argv;
     initilize_struct(env, &shell);
-    while (shell.continue_shell) {
-        print_shell_line(shell.copy_env);
-        if (getline(&line, &len, stdin) == -1)
-            break;
-        add_to_history(&shell, line);
-        line_executor(&shell, line);
-    }
+    shell_loop(&shell, &len, &line);
     free_shell(&shell, line);
     return 0;
 }
