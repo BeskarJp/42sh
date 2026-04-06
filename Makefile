@@ -20,6 +20,7 @@ SRC	=	lib/my/mini_printf.c	\
 		lib/my/my_strdup.c	\
 		lib/my/my_strlen.c	\
 		lib/my/my_strncmp.c	\
+		src/builtins/features/history.c	\
 		src/builtins/builtin_assembly.c	\
 		src/builtins/cd_builtin.c	\
 		src/builtins/env_builtin.c	\
