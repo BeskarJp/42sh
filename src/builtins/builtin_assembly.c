@@ -27,6 +27,10 @@ int builtin_exec(shell_t *shell)
         exec_cd(shell);
         return 1;
     }
+    if (my_strcmp(shell->arg_col[0], "history") == 0) {
+        display_history(shell);
+        return 1;
+    }
     return 0;
 }
 

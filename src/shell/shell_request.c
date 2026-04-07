@@ -44,11 +44,10 @@ void execute_command(shell_t *shell)
  */
 void line_executor(shell_t *shell, char *line)
 {
-    int len_without_backslash = my_strlen(line) - 1;
     token_tree_t *tree = NULL;
 
-    if (line[len_without_backslash] == '\n')
-        line[len_without_backslash] = '\0';
+    if (!line || line[0] == '\0')
+        return;
     tree = parse_line(line);
     if (tree != NULL) {
         run_tree(shell, tree);

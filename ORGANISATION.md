@@ -12,7 +12,7 @@ Pour la défense, on adapte un format de commit. Elle permet d'identifier rapide
 
 * **Initiales** : Tes initiales (ex: `[L.J]`).
 
-* **Branche** : La feature concernée (ex: `[history]`).
+* **Branche** : La feature concernée (ex: `[feature/history]`).
 
 * **Type** :
     * `Feat` : Nouvelle fonctionnalité.

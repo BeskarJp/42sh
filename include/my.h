@@ -14,6 +14,7 @@
     #define MY
 
 int my_printf(const char *format, ...);
+int my_getnbr(char *str);
 int my_put_nbr(int nb);
 void my_putchar(char c);
 int my_putstr(char const *str);

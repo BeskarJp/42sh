@@ -10,6 +10,7 @@ CC = 	epiclang
 CFLAGS	= -Wall -Wextra -I./include
 
 SRC	=	lib/my/mini_printf.c	\
+		lib/my/my_getnbr.c	\
 		lib/my/my_put_nbr.c	\
 		lib/my/my_putchar.c	\
 		lib/my/my_putstr.c	\
@@ -20,6 +21,8 @@ SRC	=	lib/my/mini_printf.c	\
 		lib/my/my_strdup.c	\
 		lib/my/my_strlen.c	\
 		lib/my/my_strncmp.c	\
+		src/builtins/features/history/history_builtin.c	\
+		src/builtins/features/history/history_feature.c	\
 		src/builtins/builtin_assembly.c	\
 		src/builtins/cd_builtin.c	\
 		src/builtins/env_builtin.c	\
