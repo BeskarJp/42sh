@@ -7,6 +7,11 @@
 
 #include "shell.h"
 
+/**
+ * @brief Displays all aliases or a specific alias if name is provided
+ *
+ * @param shell Shell structure
+ */
 void display_aliases(shell_t *shell)
 {
     alias_t *aliases = shell->aliases;
@@ -23,6 +28,12 @@ void display_aliases(shell_t *shell)
     }
 }
 
+/**
+ * @brief Concatenates command arguments into a single string
+ *
+ * @param args Array of command arguments
+ * @return char *. The command string if found or NULL
+ */
 char *get_full_command(char **args)
 {
     char *full_command = NULL;
@@ -42,6 +53,11 @@ char *get_full_command(char **args)
     return full_command;
 }
 
+/**
+ * @brief Executes the alias builtin command
+ *
+ * @param shell Shell structure
+ */
 void exec_alias(shell_t *shell)
 {
     char *command = NULL;

@@ -7,6 +7,13 @@
 
 #include "shell.h"
 
+/**
+ * @brief Finds an alias by its name in the linked list
+ *
+ * @param aliases The aliases structure
+ * @param name Name of the alias to find
+ * @return alias_t. The alias struct if found or NULL
+ */
 alias_t *find_alias_by_name(alias_t *aliases, char *name)
 {
     alias_t *temp = aliases;
@@ -19,6 +26,13 @@ alias_t *find_alias_by_name(alias_t *aliases, char *name)
     return NULL;
 }
 
+/**
+ * @brief Adds or updates an alias in the shell
+ *
+ * @param shell Shell structure
+ * @param name Name of the alias
+ * @param command Command string for the alias
+ */
 void add_alias(shell_t *shell, char *name, char *command)
 {
     alias_t *correlation = find_alias_by_name(shell->aliases, name);
