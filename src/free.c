@@ -22,6 +22,24 @@ void free_array(char **array)
 }
 
 /**
+ * @brief Frees the alias linked list
+ *
+ * @param aliases Alias stucture
+ */
+void free_aliases(alias_t *aliases)
+{
+    alias_t *temp;
+
+    while (aliases) {
+        temp = aliases;
+        aliases = aliases->next;
+        free(temp->name);
+        free(temp->command);
+        free(temp);
+    }
+}
+
+/**
  * @brief Frees the history linked list
  *
  * @param history History stucture
