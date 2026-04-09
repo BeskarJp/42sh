@@ -72,6 +72,8 @@ char *find_command_path(char *command, char **env)
     char *path_copy = NULL;
     char *path_way = NULL;
 
+    if (env == NULL)
+        return NULL;
     if (command != NULL && (command[0] == '/' || command[0] == '.')
         && access(command, X_OK) == 0)
         return my_strdup(command);
