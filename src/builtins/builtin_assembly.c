@@ -8,6 +8,21 @@
 #include "shell.h"
 
 /**
+ * @brief Executes a bonus builtin among claude if recognized
+ *
+ * @param shell Shell structure
+ * @return int. 1 if builtin is handled, 0 if not
+ */
+int bonus_builtin_exec(shell_t *shell)
+{
+    if (my_strcmp(shell->arg_col[0], "./claude") == 0) {
+        printf("\nClaude IA in 42sh will be here soon...\n\n");
+        return 1;
+    }
+    return 0;
+}
+
+/**
  * @brief Executes a builtin among alias/unalias if recognized
  *
  * @param shell Shell structure
@@ -23,6 +38,8 @@ int builtin_exec_continue(shell_t *shell)
         exec_unalias(shell);
         return 1;
     }
+    if (bonus_builtin_exec(shell) == 1)
+        return 1;
     return 0;
 }
 
