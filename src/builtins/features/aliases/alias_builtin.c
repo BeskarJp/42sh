@@ -22,3 +22,37 @@ void display_aliases(shell_t *shell)
             my_printf("%s\n", temp->command);
     }
 }
+
+char *get_full_command(char **args)
+{
+    char *full_command = NULL;
+    int len = 0;
+
+    for (int i = 2; args[i]; i++)
+        len += my_strlen(args[i]) + 1;
+    full_command = malloc(sizeof(char) * (len + 1));
+    if (!full_command)
+        return NULL;
+    full_command[0] = '\0';
+    for (int i = 2; args[i]; i++) {
+        my_strcat(full_command, args[i]);
+        if (args[i + 1])
+            my_strcat(full_command, " ");
+    }
+    return full_command;
+}
+
+void exec_alias(shell_t *shell)
+{
+    char *command = NULL;
+
+    if (!shell->arg_col[1] || !shell->arg_col[2]) {
+        display_aliases(shell);
+        return;
+    }
+    command = get_full_command(shell->arg_col);
+    if (command) {
+        add_alias(shell, shell->arg_col[1], command);
+        free(command);
+    }
+}
