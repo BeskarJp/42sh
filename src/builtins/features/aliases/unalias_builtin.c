@@ -12,7 +12,7 @@
  *
  * @param shell Shell structure
  * @param aliases The aliases structure
- * @param old The old linked list or NULL if head
+ * @param old The old linked list or NULL
  */
 void delete_alias_node(shell_t *shell, alias_t *aliases, alias_t *old)
 {
