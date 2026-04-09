@@ -8,7 +8,26 @@
 #include "shell.h"
 
 /**
- * @brief Executes a builtin among setenv/unsetenv/cd if recognized
+ * @brief Executes a builtin among alias/unalias if recognized
+ *
+ * @param shell Shell structure
+ * @return int. 1 if builtin is handled, 0 if not
+ */
+int builtin_exec_continue(shell_t *shell)
+{
+    if (my_strcmp(shell->arg_col[0], "alias") == 0) {
+        exec_alias(shell);
+        return 1;
+    }
+    if (my_strcmp(shell->arg_col[0], "unalias") == 0) {
+        exec_unalias(shell);
+        return 1;
+    }
+    return 0;
+}
+
+/**
+ * @brief Executes a builtin among setenv/unsetenv/cd/history if recognized
  *
  * @param shell Shell structure
  * @return int. 1 if builtin is handled, 0 if not
@@ -31,6 +50,8 @@ int builtin_exec(shell_t *shell)
         display_history(shell);
         return 1;
     }
+    if (builtin_exec_continue(shell) == 1)
+        return 1;
     return 0;
 }
 
