@@ -25,5 +25,6 @@ char *my_strcpy(char *dest, char const *src);
 char *my_strdup(char const *src);
 int my_strlen(char const *str);
 int my_strncmp(char const *s1, char const *s2, int n);
+char *str_nfuse(char **buff, int start, int end, char sep);
 
 #endif /* MY */
