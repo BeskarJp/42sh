@@ -95,6 +95,8 @@ void execute_command(shell_t *shell);
 void line_executor(shell_t *shell, char *line);
 
 
+void alias_checker(shell_t *shell, token_tree_t *arbre);
+
 void run_pipe(shell_t *shell, token_tree_t *tree);
 void left_double_redirection(char *delimiter);
 void run_redirection(shell_t *shell, token_tree_t *tree);

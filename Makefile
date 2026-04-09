@@ -35,6 +35,7 @@ SRC	=	lib/my/mini_printf.c	\
 		src/environment/find_pathway.c	\
 		src/shell/shell_prompt_line.c	\
 		src/shell/shell_request.c	\
+		src/token_tree/execution/features/aliases/alias_checker.c	\
 		src/token_tree/execution/exec_pipe.c	\
 		src/token_tree/execution/exec_redirection_utils.c	\
 		src/token_tree/execution/exec_redirection.c	\
