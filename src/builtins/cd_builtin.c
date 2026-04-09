@@ -33,6 +33,8 @@ char *check_cd_flag(shell_t *shell)
 
     if (path == NULL || my_strcmp(path, "~") == 0)
         path = find_word_in_env(shell->copy_env, "HOME");
+    if (path == NULL)
+        return NULL;
     if (my_strcmp(path, "-") == 0) {
         if (shell->oldpwd == NULL) {
             write(2, "cd: OLDPWD not set\n", 20);
