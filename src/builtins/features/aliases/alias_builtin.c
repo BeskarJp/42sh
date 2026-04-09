@@ -9,17 +9,17 @@
 
 void display_aliases(shell_t *shell)
 {
-    alias_t *temp = shell->aliases;
+    alias_t *aliases = shell->aliases;
 
     if (shell->arg_col[1] == NULL) {
-        while (temp) {
-            my_printf("%s\t%s\n", temp->name, temp->command);
-            temp = temp->next;
+        while (aliases) {
+            my_printf("%s\t%s\n", aliases->name, aliases->command);
+            aliases = aliases->next;
         }
     } else {
-        temp = find_alias_by_name(shell->aliases, shell->arg_col[1]);
-        if (temp)
-            my_printf("%s\n", temp->command);
+        aliases = find_alias_by_name(shell->aliases, shell->arg_col[1]);
+        if (aliases)
+            my_printf("%s\n", aliases->command);
     }
 }
 
