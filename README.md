@@ -42,7 +42,7 @@ and you're ready to go!
 ## Error Handling
 
 The 42sh will return the same value as the TCSH shell, exemple:
-> **Exemple :** a segmentation fault will exit with the code 139, or the shell command ls will return 0 upon sucess.
+> **Exemple :** a segmentation fault will exit with the code 139, or the shell command ls will return 0 upon success.
 
 ---
 
