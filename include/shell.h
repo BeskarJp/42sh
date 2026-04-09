@@ -47,6 +47,12 @@ typedef struct struct_parse_s {
     token_tree_t *(*right_function)(char *);
 } struct_parse_t;
 
+typedef struct alias_s {
+    char *name;
+    char *command;
+    struct alias_s *next;
+} alias_t;
+
 typedef struct history_s {
     int index;
     char *command;
@@ -59,6 +65,7 @@ typedef struct shell_s {
     char **arg_col;
     char **copy_env;
     char *oldpwd;
+    alias_t *aliases;
     history_t *history;
 } shell_t;
 
@@ -67,6 +74,10 @@ void add_to_history_linked_list(shell_t *shell, char *line);
 void display_history(shell_t *shell);
 char *check_history_feature(shell_t *shell, char *line);
 
+void exec_alias(shell_t *shell);
+alias_t *find_alias_by_name(alias_t *aliases, char *name);
+void add_alias(shell_t *shell, char *name, char *command);
+void exec_unalias(shell_t *shell);
 
 int builtin_assembly(shell_t *shell);
 void exec_cd(shell_t *shell);
@@ -83,6 +94,8 @@ void print_shell_line(char **env);
 void execute_command(shell_t *shell);
 void line_executor(shell_t *shell, char *line);
 
+
+void alias_checker(shell_t *shell, token_tree_t *arbre);
 
 void run_pipe(shell_t *shell, token_tree_t *tree);
 void left_double_redirection(char *delimiter);
@@ -101,6 +114,7 @@ token_tree_t *parse_line(char *line);
 void check_execve_output_error(char *path);
 void check_strsignal(int status);
 void free_array(char **array);
+void free_aliases(alias_t *aliases);
 void free_history(history_t *history);
 void free_cd(shell_t *shell);
 void free_tree(token_tree_t *tree);

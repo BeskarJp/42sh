@@ -18,6 +18,7 @@ void initilize_struct(char **env, shell_t *shell)
     shell->copy_env = copy_environment(env);
     shell->oldpwd = NULL;
     shell->continue_shell = 1;
+    shell->aliases = NULL;
     shell->history = NULL;
 }
 
@@ -55,6 +56,8 @@ void shell_loop(shell_t *shell, size_t *len, char **line)
  */
 void free_shell(shell_t *shell, char *line)
 {
+    if (shell->aliases)
+        free_aliases(shell->aliases);
     if (shell->history)
         free_history(shell->history);
     if (shell->copy_env)

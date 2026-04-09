@@ -15,6 +15,7 @@
  */
 void run_simple_command(shell_t *shell, token_tree_t *tree)
 {
+    alias_checker(shell, tree);
     shell->arg_col = tree->args;
     if (!shell->arg_col || !shell->arg_col[0])
         return;
@@ -25,8 +26,8 @@ void run_simple_command(shell_t *shell, token_tree_t *tree)
 /**
  * @brief Traverses the token tree and executes nodes by type.
  *
- * @param shell Shell structure.
- * @param tree Token tree to execute.
+ * @param shell Shell structure
+ * @param tree Redirection tree
  */
 void run_tree(shell_t *shell, token_tree_t *tree)
 {

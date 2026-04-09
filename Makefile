@@ -21,6 +21,9 @@ SRC	=	lib/my/mini_printf.c	\
 		lib/my/my_strdup.c	\
 		lib/my/my_strlen.c	\
 		lib/my/my_strncmp.c	\
+		src/builtins/features/aliases/alias_builtin.c	\
+		src/builtins/features/aliases/alias_utils.c	\
+		src/builtins/features/aliases/unalias_builtin.c	\
 		src/builtins/features/history/history_builtin.c	\
 		src/builtins/features/history/history_feature.c	\
 		src/builtins/builtin_assembly.c	\
@@ -32,6 +35,7 @@ SRC	=	lib/my/mini_printf.c	\
 		src/environment/find_pathway.c	\
 		src/shell/shell_prompt_line.c	\
 		src/shell/shell_request.c	\
+		src/token_tree/execution/features/aliases/alias_checker.c	\
 		src/token_tree/execution/exec_pipe.c	\
 		src/token_tree/execution/exec_redirection_utils.c	\
 		src/token_tree/execution/exec_redirection.c	\
