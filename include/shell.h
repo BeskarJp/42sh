@@ -15,9 +15,12 @@
 #ifndef MINISHELL
     #define MINISHELL
 
+    #define ORANGE "\033[38;5;208m"
     #define BLUE "\e[1;94m"
     #define PURPLE "\e[1;95m"
+    #define GREY "\033[90m"
     #define RESET "\033[0m"
+    #define STYLE_BOLD "\033[1m"
     #define PERM_NORM 0644
     #define FD_ERROR -1
 
@@ -69,6 +72,9 @@ typedef struct shell_s {
     history_t *history;
 } shell_t;
 
+void print_header(shell_t *shell);
+void ia_style_text_writer(char *text);
+void start_claude(shell_t *shell);
 
 void add_to_history_linked_list(shell_t *shell, char *line);
 void display_history(shell_t *shell);

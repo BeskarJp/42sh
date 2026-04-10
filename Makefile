@@ -21,6 +21,8 @@ SRC	=	lib/my/mini_printf.c	\
 		lib/my/my_strdup.c	\
 		lib/my/my_strlen.c	\
 		lib/my/my_strncmp.c	\
+		bonus/easter-egg/claude_print.c	\
+		bonus/easter-egg/claude.c	\
 		src/builtins/features/aliases/alias_builtin.c	\
 		src/builtins/features/aliases/alias_utils.c	\
 		src/builtins/features/aliases/unalias_builtin.c	\

@@ -15,8 +15,8 @@
  */
 int bonus_builtin_exec(shell_t *shell)
 {
-    if (my_strcmp(shell->arg_col[0], "./claude") == 0) {
-        printf("\nClaude IA in 42sh will be here soon...\n\n");
+    if (my_strcmp(shell->arg_col[0], "help") == 0) {
+        start_claude(shell);
         return 1;
     }
     return 0;
