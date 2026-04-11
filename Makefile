@@ -14,6 +14,7 @@ SRC	=	lib/my/mini_printf.c	\
 		lib/my/my_put_nbr.c	\
 		lib/my/my_putchar.c	\
 		lib/my/my_putstr.c	\
+		lib/my/my_str_to_sep_array.c	\
 		lib/my/my_str_to_word_array.c	\
 		lib/my/my_strcat.c	\
 		lib/my/my_strcmp.c	\
@@ -21,6 +22,7 @@ SRC	=	lib/my/mini_printf.c	\
 		lib/my/my_strdup.c	\
 		lib/my/my_strlen.c	\
 		lib/my/my_strncmp.c	\
+		lib/my/str_nfuse.c	\
 		bonus/easter-egg/claude_print.c	\
 		bonus/easter-egg/claude.c	\
 		src/builtins/features/aliases/alias_builtin.c	\
