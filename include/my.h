@@ -18,6 +18,7 @@ int my_getnbr(char *str);
 int my_put_nbr(int nb);
 void my_putchar(char c);
 int my_putstr(char const *str);
+char **my_str_to_sep_array(const char *str, char const *seps);
 char **my_str_to_word_array(const char *str);
 char *my_strcat(char *dest, char const *src);
 int my_strcmp(char const *s1, char const *s2);

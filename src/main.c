@@ -33,8 +33,10 @@ void shell_loop(shell_t *shell, size_t *len, char **line)
 {
     while (shell->continue_shell) {
         print_shell_line(shell->copy_env);
-        if (getline(line, len, stdin) == -1)
+        if (getline(line, len, stdin) == -1) {
+            my_putchar('\n');
             break;
+        }
         if ((*line)[0] != '\0' && (*line)[my_strlen(*line) - 1] == '\n')
             (*line)[my_strlen(*line) - 1] = '\0';
         *line = check_history_feature(shell, *line);
