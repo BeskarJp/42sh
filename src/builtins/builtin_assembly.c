@@ -8,14 +8,15 @@
 #include "shell.h"
 
 /**
- * @brief Executes a bonus builtin among claude if recognized
+ * @brief Executes a bonus builtin among EpiClaude if recognized
  *
  * @param shell Shell structure
  * @return int. 1 if builtin is handled, 0 if not
  */
 int bonus_builtin_exec(shell_t *shell)
 {
-    if (my_strcmp(shell->arg_col[0], "help") == 0) {
+    if (my_strcmp(shell->arg_col[0], "help") == 0 ||
+        my_strcmp(shell->arg_col[0], "epiclaude") == 0) {
         start_claude(shell);
         return 1;
     }
