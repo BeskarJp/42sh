@@ -25,7 +25,7 @@ void start_claude(shell_t *shell)
         if (line[0] != '\0')
             handle_input(line);
     }
-    ia_style_text_writer("\n\nBye Bye ! Returning to 42sh", SLOW);
+    ia_style_text_writer("\nBye Bye ! Returning to 42sh", SLOW);
     ia_style_text_writer(" ...\n\n", ULTRA_SLOW);
     if (line)
         free(line);
