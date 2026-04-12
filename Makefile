@@ -23,10 +23,10 @@ SRC	=	lib/my/mini_printf.c	\
 		lib/my/my_strlen.c	\
 		lib/my/my_strncmp.c	\
 		lib/my/str_nfuse.c	\
-		bonus/easter-egg/claude_input.c	\
-		bonus/easter-egg/claude_print.c	\
-		bonus/easter-egg/claude_utils.c	\
-		bonus/easter-egg/claude.c	\
+		bonus/epiclaude/epiclaude_input.c	\
+		bonus/epiclaude/epiclaude_print.c	\
+		bonus/epiclaude/epiclaude_utils.c	\
+		bonus/epiclaude/epiclaude.c	\
 		src/builtins/features/aliases/alias_builtin.c	\
 		src/builtins/features/aliases/alias_utils.c	\
 		src/builtins/features/aliases/unalias_builtin.c	\
