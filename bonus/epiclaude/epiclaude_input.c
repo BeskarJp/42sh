@@ -7,21 +7,34 @@
 
 #include "shell.h"
 
-void handle_input(char *line)
+int handle_basic_commands(char *line)
 {
+    if (my_strcmp(line, "whereami") == 0) {
+        ia_style_text_writer("\nI don't know where we are ...\n\n", SLOW);
+        ia_style_text_writer("But it doesn't matter where we are,", SLOW);
+        ia_style_text_writer(" it's a huge party here !!!\n\n", SLOW);
+        return 1;
+    }
     if (my_strcmp(line, "help") == 0) {
         ia_style_text_writer("\nYou only can write 'notions'", BASIC);
         ia_style_text_writer(" or 'explain line <command>'.\n\n", BASIC);
-        return;
+        return 1;
     }
     if (my_strcmp(line, "notions") == 0) {
         print_explication_shell();
-        return;
+        return 1;
     }
     if (my_strncmp(line, "explain line ", 13) == 0) {
         explain_command_line(line + 13);
-        return;
+        return 1;
     }
+    return 0;
+}
+
+void handle_input(char *line)
+{
+    if (handle_basic_commands(line) == 1)
+        return;
     ia_style_text_writer("\nI don't understand. Try 'notions'", BASIC);
     ia_style_text_writer(" or 'explain line <command>'.\n\n", BASIC);
 }
