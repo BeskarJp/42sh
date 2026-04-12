@@ -23,6 +23,7 @@ SRC	=	lib/my/mini_printf.c	\
 		lib/my/my_strlen.c	\
 		lib/my/my_strncmp.c	\
 		lib/my/str_nfuse.c	\
+		bonus/epiclaude/epiclaude_explain.c	\
 		bonus/epiclaude/epiclaude_input.c	\
 		bonus/epiclaude/epiclaude_print.c	\
 		bonus/epiclaude/epiclaude_utils.c	\
