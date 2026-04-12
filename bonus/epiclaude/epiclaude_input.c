@@ -11,12 +11,17 @@ void handle_input(char *line)
 {
     if (my_strcmp(line, "help") == 0) {
         ia_style_text_writer("\nYou only can write 'notions'", BASIC);
-        ia_style_text_writer(" for the moment.\n\n", BASIC);
+        ia_style_text_writer(" or 'explain line <command>'.\n\n", BASIC);
         return;
     }
     if (my_strcmp(line, "notions") == 0) {
         print_explication_shell();
         return;
     }
-    ia_style_text_writer("I don't understand. Try 'notions'.\n", BASIC);
+    if (my_strncmp(line, "explain line ", 13) == 0) {
+        explain_command_line(line + 13);
+        return;
+    }
+    ia_style_text_writer("\nI don't understand. Try 'notions'", BASIC);
+    ia_style_text_writer(" or 'explain line <command>'.\n\n", BASIC);
 }
