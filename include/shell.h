@@ -5,6 +5,7 @@
 ** Include of Project
 */
 
+#include <sys/stat.h>
 #include <sys/wait.h>
 #include <string.h>
 #include <fcntl.h>
@@ -116,6 +117,7 @@ void print_explication_shell(void);
 
 // bonus/easter-egg/claude_utils.c
 char *user_of_shell(char **env);
+void display_line_in_file(char *line_in_file, int size);
 void ia_style_text_writer(char *text, int speed);
 
 // bonus/easter-egg/claude.c

@@ -16,6 +16,18 @@ char *user_of_shell(char **env)
     return "Blud";
 }
 
+void display_line_in_file(char *line_in_file, int size)
+{
+    if (line_in_file == NULL || size >= 0) {
+        ia_style_text_writer("\nThere are nothing in 'notions.rdr' file", SLOW);
+        ia_style_text_writer(" ...", ULTRA_SLOW);
+    }
+    line_in_file[size] = '\0';
+    ia_style_text_writer("\n", SLOW);
+    ia_style_text_writer(line_in_file, FAST);
+    ia_style_text_writer("\n", ULTRA_SLOW);
+}
+
 void ia_style_text_writer(char *text, int speed)
 {
     for (int i = 0; text[i] != '\0'; i++) {
