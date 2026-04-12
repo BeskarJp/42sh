@@ -25,8 +25,21 @@ void print_header(shell_t *shell)
 
 void print_explication_shell(void)
 {
-    ia_style_text_writer("\nHere is what this 42sh version can do :\n", BASIC);
-    ia_style_text_writer(" - Execute standard shell commands with the", FAST);
-    ia_style_text_writer("ir flags (for example 'ls', 'ls -l', etc)\n", FAST);
-    my_putchar('\n');
+    const char *fileway = "./bonus/epiclaude/notion_file/notions.rdr";
+    char *line_in_file = NULL;
+    struct stat sb;
+    int fd = open(fileway, O_RDONLY);
+
+    if (fd == -1 || stat(fileway, &sb) == -1) {
+        ia_style_text_writer("\nSorry, I need my 'notions.rdr' file", SLOW);
+        ia_style_text_writer(" ...\n\n", ULTRA_SLOW);
+        return;
+    }
+    line_in_file = malloc(sizeof(char) * (sb.st_size + 1));
+    if (line_in_file == NULL)
+        return;
+    if (read(fd, line_in_file, sb.st_size) >= 0)
+        display_line_in_file(line_in_file, sb.st_size);
+    free(line_in_file);
+    close(fd);
 }
