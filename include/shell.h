@@ -25,6 +25,13 @@
     #define RESET "\033[0m"
     #define STYLE_BOLD "\033[1m"
 
+// Define speed of write for Epi Claude
+
+    #define FAST 20000
+    #define BASIC 40000
+    #define SLOW 50000
+    #define ULTRA_SLOW 175000
+
 // Define numbers in shell
 
     #define PERM_NORM 0644
@@ -96,8 +103,22 @@ typedef struct shell_s {
     history_t *history;
 } shell_t;
 
+
+// bonus/easter-egg/claude_explain.c
+
+
+// bonus/ester-egg/claude_input.c
+void handle_input(char *line);
+
+// bonus/ester-egg/claude_print.c
 void print_header(shell_t *shell);
-void ia_style_text_writer(char *text);
+void print_explication_shell(void);
+
+// bonus/easter-egg/claude_utils.c
+char *user_of_shell(char **env);
+void ia_style_text_writer(char *text, int speed);
+
+// bonus/easter-egg/claude.c
 void start_claude(shell_t *shell);
 
 // src/buitlins/features/aliases/alias_builtin.c

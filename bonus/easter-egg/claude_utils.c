@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2026
 ** 42sh
 ** File description:
-** Utils for Epi Claude
+** Utils for EpiClaude
 */
 
 #include "shell.h"
@@ -16,12 +16,11 @@ char *user_of_shell(char **env)
     return "Blud";
 }
 
-void ia_style_text_writer(char *text)
+void ia_style_text_writer(char *text, int speed)
 {
     for (int i = 0; text[i] != '\0'; i++) {
         my_putchar(text[i]);
         fflush(stdout);
-        usleep(40000);
+        usleep(speed);
     }
-    my_putchar('\n');
 }
