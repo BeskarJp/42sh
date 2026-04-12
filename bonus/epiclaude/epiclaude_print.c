@@ -15,7 +15,8 @@ void print_header(shell_t *shell)
     my_printf("\033[H\033[J");
     my_printf("\n%s [#] %s EpiClaude Code %s version 42.sh",
         ORANGE, STYLE_BOLD, GREY);
-    my_printf("\033[22m (For quit EpiClaude, try 'exit' or 'quit')\n\n");
+    my_printf("\033[22m (For quit EpiClaude,");
+    my_printf(" try 'exit' or 'quit' or 'close')\n\n");
     sprintf(welcome, "Hello %s ! How are you ?\n", username);
     my_printf("%s ", RESET);
     ia_style_text_writer(welcome, SLOW);
