@@ -1,6 +1,58 @@
 U ls
-C permet d'énumérer les fichiers d'un dossier.
+C List  information  about  the FILEs.
 U cd
-C permet de changer de répertoire.
+C Can change of folders.
 U cat
-C permet de lire des fichiers.
+C Concatenate FILE(s) to standard output.
+U pwd
+C Print the full filename of the current working directory.
+U mkdir
+C Make directories.
+U rm
+C Remove files or directories.
+U cp
+C Copy files and directories.
+U mv
+C Move (rename) files.
+U touch
+C Update the access and modification times of each FILE to the current time.
+U man
+C An interface to the system reference manuals.
+U grep
+C Print lines that match patterns.
+U find
+C Search for files in a directory hierarchy.
+U chmod
+C Change file mode bits (change permissions).
+U chown
+C Change file owner and group.
+U sudo
+C Execute a command as another user.
+U df
+C Report file system disk space usage.
+U du
+C Estimate file space usage.
+U top
+C Display Linux processes.
+U ps
+C Report a snapshot of the current processes.
+U kill
+C Send a signal to a process.
+U tar
+C An archiving utility.
+U ssh
+C OpenSSH SSH client (remote login program).
+U scp
+C Secure copy (remote file copy program).
+U curl
+C Transfer a URL.
+U wget
+C The non-interactive network downloader.
+U head
+C Output the first part of files.
+U tail
+C Output the last part of files.
+U ln
+C Make links between files.
+U echo
+C Display a line of text.
