@@ -7,6 +7,11 @@
 
 #include "shell.h"
 
+/**
+ * @brief Prints the EpiClaude welcome header
+ *
+ * @param shell Shell structure
+ */
 void print_header(shell_t *shell)
 {
     char *username = user_of_shell(shell->copy_env);
@@ -23,6 +28,9 @@ void print_header(shell_t *shell)
     my_putchar('\n');
 }
 
+/**
+ * @brief Reads and prints the EpiClaude notions file
+ */
 void print_explication_shell(void)
 {
     const char *fileway = "./bonus/epiclaude/rdr_files/notions.rdr";

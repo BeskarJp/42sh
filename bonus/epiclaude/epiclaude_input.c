@@ -7,6 +7,12 @@
 
 #include "shell.h"
 
+/**
+ * @brief Handles extended bonus commands for EpiClaude
+ *
+ * @param line Input line from the user
+ * @return int. 1 if the command was recognized or 0 if otherwise
+ */
 int continue_bonus_commands(char *line)
 {
     if (my_strcmp(line, "leandre") == 0) {
@@ -17,6 +23,12 @@ int continue_bonus_commands(char *line)
     return 0;
 }
 
+/**
+ * @brief Handles EpiClaude bonus commands not in the main command list
+ *
+ * @param line Input line from the user
+ * @return int. 1 if the bonus command was processed or 0 if otherwise
+ */
 int bonus_commands(char *line)
 {
     if (my_strcmp(line, "whereami") == 0) {
@@ -40,6 +52,12 @@ int bonus_commands(char *line)
     return 0;
 }
 
+/**
+ * @brief Handles the main EpiClaude commands
+ *
+ * @param line Input line from the user
+ * @return int. 1 if the command was processed or 0 if otherwise
+ */
 int handle_basic_commands(char *line)
 {
     if (my_strcmp(line, "help") == 0) {
@@ -60,6 +78,11 @@ int handle_basic_commands(char *line)
     return 0;
 }
 
+/**
+ * @brief Handles an unrecognized input line for EpiClaude
+ *
+ * @param line Input line from the user
+ */
 void handle_input(char *line)
 {
     if (handle_basic_commands(line) == 1)
