@@ -16,7 +16,7 @@
 int bonus_builtin_exec(shell_t *shell)
 {
     if (my_strcmp(shell->arg_col[0], "help") == 0 ||
-        my_strcmp(shell->arg_col[0], "epiclaude") == 0) {
+        my_strcmp(shell->arg_col[0], "./claude") == 0) {
         start_claude(shell);
         return 1;
     }
