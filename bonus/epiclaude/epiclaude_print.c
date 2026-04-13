@@ -25,7 +25,7 @@ void print_header(shell_t *shell)
 
 void print_explication_shell(void)
 {
-    const char *fileway = "./bonus/epiclaude/notion_file/notions.rdr";
+    const char *fileway = "./bonus/epiclaude/rdr_files/notions.rdr";
     char *line_in_file = NULL;
     struct stat sb;
     int fd = open(fileway, O_RDONLY);
