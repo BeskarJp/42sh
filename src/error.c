@@ -8,6 +8,18 @@
 #include "shell.h"
 
 /**
+ * @brief Handle the Ctrl + C in shell
+ *
+ * @param sigint Varibale which is cast in void for Ctrl + C
+ */
+void handle_sigint(int sigint)
+{
+    (void)sigint;
+    my_printf("\n%sCtrl + C prompt", PURPLE);
+    my_printf(" (push entry for shell prompt)%s $> ", RESET);
+}
+
+/**
  * @brief Displays an error by an execution error code
  *
  * @param path Path of the command failed
