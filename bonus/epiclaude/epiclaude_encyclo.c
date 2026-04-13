@@ -7,13 +7,23 @@
 
 #include "shell.h"
 
+/**
+ * @brief Displays extra command explanation text
+ *
+ * @param line Line read from the commands file
+ */
 void display_text(char *line)
 {
-    ia_style_text_writer("      -> More of this command : ", FAST);
+    ia_style_text_writer("\t-> More of this command : ", FAST);
     ia_style_text_writer(line + 2, FAST);
     ia_style_text_writer("\n", FAST);
 }
 
+/**
+ * @brief Prints additional explanation for a known command (in commands.rdr)
+ *
+ * @param command Command name to look in the commands file
+ */
 void print_more_of_command(char *command)
 {
     FILE *fd = fopen("./bonus/epiclaude/rdr_files/commands.rdr", "r");
