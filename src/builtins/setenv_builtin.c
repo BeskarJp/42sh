@@ -49,6 +49,18 @@ void make_env_bigger(shell_t *shell, char *new_line)
 }
 
 /**
+ * @brief Write the error message setenv display.
+ *
+ * @return int. alway's retrn 84.
+ */
+static int return_error(void)
+{
+    write(2,
+        "setenv: Variable name must contain alphanumeric characters.\n", 61);
+    return 84;
+}
+
+/**
  * @brief Checks that setenv arguments are valid
  *
  * @param shell Shell structure
@@ -67,8 +79,7 @@ int check_setenv(shell_t *shell)
         if (!((alphabet >= 'a' && alphabet <= 'z') ||
                 (alphabet >= 'A' && alphabet <= 'Z') ||
                 (alphabet >= '0' && alphabet <= '9'))) {
-            write(2, "setenv: Variable name must be alphanumeric.\n", 44);
-            return 84;
+            return return_error();
         }
     }
     return 0;
