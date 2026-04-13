@@ -1,3 +1,19 @@
 With that shell, you can :
 
   - Execute standard shell commands with their flags (for example 'ls', 'ls -l', etc).
+
+  - Use pipes to connect multiple commands and transfer data between them ('|').
+
+  - Redirect command output to a file ('>') or append it to an existing file ('>>').
+
+  - Redirect file content as input for a command ('<') or use heredocs ('<<').
+
+  - Manage environment variables with built-in commands ('setenv', 'unsetenv', 'env').
+
+  - Create and use custom command shortcuts with the alias system ('alias').
+
+  - Navigate through your directories and manage the session ('cd', 'exit').
+
+  - Access and reuse your previous commands thanks to the history feature.
+
+  - Execute sequences of commands separated by semicolons (';').
