@@ -105,6 +105,9 @@ typedef struct shell_s {
 } shell_t;
 
 
+// bonus/easter-egg/epiclaude_encyclo.c
+void print_more_of_command(char *command);
+
 // bonus/easter-egg/claude_explain.c
 void explain_tree(token_tree_t *tree, int *step);
 void explain_command_line(char *command);

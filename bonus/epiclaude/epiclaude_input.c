@@ -7,7 +7,7 @@
 
 #include "shell.h"
 
-int handle_basic_commands(char *line)
+int bonus_commands(char *line)
 {
     if (my_strcmp(line, "whereami") == 0) {
         ia_style_text_writer("\nI don't know where we are ...\n\n", SLOW);
@@ -15,6 +15,21 @@ int handle_basic_commands(char *line)
         ia_style_text_writer(" it's a huge party here !!!\n\n", SLOW);
         return 1;
     }
+    if (my_strcmp(line, "antoiix") == 0) {
+        ia_style_text_writer("\nLet's me ask to Antoine Orange ...\n\n", SLOW);
+        ia_style_text_writer("He said skill issue ...\n\n", SLOW);
+        return 1;
+    }
+    if (my_strcmp(line, "eliott") == 0) {
+        ia_style_text_writer("\nLet's me ask to Eliott the AER ...\n\n", SLOW);
+        ia_style_text_writer("42 sh ? Pourquoi pas Wolf3D ???\n\n", SLOW);
+        return 1;
+    }
+    return 0;
+}
+
+int handle_basic_commands(char *line)
+{
     if (my_strcmp(line, "help") == 0) {
         ia_style_text_writer("\nYou only can write 'notions'", BASIC);
         ia_style_text_writer(" or 'explain line <command>'.\n\n", BASIC);
@@ -28,6 +43,8 @@ int handle_basic_commands(char *line)
         explain_command_line(line + 13);
         return 1;
     }
+    if (bonus_commands(line) == 1)
+        return 1;
     return 0;
 }
 
