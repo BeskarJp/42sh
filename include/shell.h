@@ -6,6 +6,7 @@
 */
 
 #include <sys/wait.h>
+#include <signal.h>
 #include <string.h>
 #include <fcntl.h>
 #include <errno.h>
@@ -170,6 +171,7 @@ token_tree_t *parse_redirections(char *line);
 token_tree_t *parse_line(char *line);
 
 // src/error.c
+void handle_sigint(int sigint);
 void check_execve_output_error(char *path);
 void check_strsignal(int status);
 
