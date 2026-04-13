@@ -7,6 +7,11 @@
 
 #include "shell.h"
 
+/**
+ * @brief Starts the EpiClaude interactive mode
+ *
+ * @param shell Shell structure
+ */
 void start_claude(shell_t *shell)
 {
     ssize_t read_bytes = 0;

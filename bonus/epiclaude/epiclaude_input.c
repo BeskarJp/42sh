@@ -7,6 +7,28 @@
 
 #include "shell.h"
 
+/**
+ * @brief Handles extended bonus commands for EpiClaude
+ *
+ * @param line Input line from the user
+ * @return int. 1 if the command was recognized or 0 if otherwise
+ */
+int continue_bonus_commands(char *line)
+{
+    if (my_strcmp(line, "leandre") == 0) {
+        ia_style_text_writer("\nLet me ask Léandre the AER ...\n\n", SLOW);
+        ia_style_text_writer("Is it graphic ? Go ask Eliott ... \n\n", SLOW);
+        return 1;
+    }
+    return 0;
+}
+
+/**
+ * @brief Handles EpiClaude bonus commands not in the main command list
+ *
+ * @param line Input line from the user
+ * @return int. 1 if the bonus command was processed or 0 if otherwise
+ */
 int bonus_commands(char *line)
 {
     if (my_strcmp(line, "whereami") == 0) {
@@ -16,18 +38,26 @@ int bonus_commands(char *line)
         return 1;
     }
     if (my_strcmp(line, "antoiix") == 0) {
-        ia_style_text_writer("\nLet's me ask to Antoine Orange ...\n\n", SLOW);
+        ia_style_text_writer("\nLet me ask Antoine Orange ...\n\n", SLOW);
         ia_style_text_writer("He said skill issue ...\n\n", SLOW);
         return 1;
     }
     if (my_strcmp(line, "eliott") == 0) {
-        ia_style_text_writer("\nLet's me ask to Eliott the AER ...\n\n", SLOW);
+        ia_style_text_writer("\nLet me ask Eliott the AER ...\n\n", SLOW);
         ia_style_text_writer("42 sh ? Pourquoi pas Wolf3D ???\n\n", SLOW);
         return 1;
     }
+    if (continue_bonus_commands(line) == 1)
+        return 1;
     return 0;
 }
 
+/**
+ * @brief Handles the main EpiClaude commands
+ *
+ * @param line Input line from the user
+ * @return int. 1 if the command was processed or 0 if otherwise
+ */
 int handle_basic_commands(char *line)
 {
     if (my_strcmp(line, "help") == 0) {
@@ -48,6 +78,11 @@ int handle_basic_commands(char *line)
     return 0;
 }
 
+/**
+ * @brief Handles an unrecognized input line for EpiClaude
+ *
+ * @param line Input line from the user
+ */
 void handle_input(char *line)
 {
     if (handle_basic_commands(line) == 1)
