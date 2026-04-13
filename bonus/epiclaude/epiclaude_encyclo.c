@@ -9,7 +9,7 @@
 
 void display_text(char *line)
 {
-    ia_style_text_writer("      -> More of this command : ", FAST);
+    ia_style_text_writer("\t-> More of this command : ", FAST);
     ia_style_text_writer(line + 2, FAST);
     ia_style_text_writer("\n", FAST);
 }
