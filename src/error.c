@@ -7,6 +7,11 @@
 
 #include "shell.h"
 
+/**
+ * @brief Handle the Ctrl + C in shell
+ *
+ * @param sigint Varibale which is cast in void for Ctrl + C
+ */
 void handle_sigint(int sigint)
 {
     (void)sigint;
