@@ -1,12 +1,6 @@
 U ls
-C This command lists all files and directories in your current path.
+C permet d'énumérer les fichiers d'un dossier.
 U cd
-C This is a builtin used to change your current working directory.
-U pwd
-C It stands for 'Print Working Directory' and shows your full current path.
-U grep
-C This tool searches for text patterns within files or standard input.
+C permet de changer de répertoire.
 U cat
-C This command reads files and displays their content on the terminal.
-U echo
-C It displays a line of text or variables to the standard output.
+C permet de lire des fichiers.

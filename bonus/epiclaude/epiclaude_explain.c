@@ -7,7 +7,7 @@
 
 #include "shell.h"
 
-void explain_command(token_tree_t *tree, int *step)
+void explain_simple_command(token_tree_t *tree, int *step)
 {
     if (!tree->args || !tree->args[0])
         return;
@@ -24,6 +24,7 @@ void explain_command(token_tree_t *tree, int *step)
         }
     }
     ia_style_text_writer("\n", FAST);
+    print_more_of_command(tree->args[0]);
     (*step)++;
 }
 
@@ -73,7 +74,7 @@ void explain_tree(token_tree_t *tree, int *step)
         explain_redirections(tree, step);
         return;
     }
-    explain_command(tree, step);
+    explain_simple_command(tree, step);
 }
 
 void explain_command_line(char *command)
