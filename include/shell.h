@@ -5,6 +5,7 @@
 ** Include of Project
 */
 
+#include <sys/stat.h>
 #include <sys/wait.h>
 #include <signal.h>
 #include <string.h>
@@ -19,9 +20,19 @@
 
 // Define color in shell
 
+    #define ORANGE "\033[38;5;208m"
     #define BLUE "\e[1;94m"
     #define PURPLE "\e[1;95m"
+    #define GREY "\033[90m"
     #define RESET "\033[0m"
+    #define STYLE_BOLD "\033[1m"
+
+// Define speed of write for Epi Claude
+
+    #define FAST 20000
+    #define BASIC 40000
+    #define SLOW 50000
+    #define ULTRA_SLOW 175000
 
 // Define numbers in shell
 
@@ -94,6 +105,28 @@ typedef struct shell_s {
     history_t *history;
 } shell_t;
 
+
+// bonus/easter-egg/epiclaude_encyclo.c
+void print_more_of_command(char *command);
+
+// bonus/easter-egg/claude_explain.c
+void explain_tree(token_tree_t *tree, int *step);
+void explain_command_line(char *command);
+
+// bonus/ester-egg/claude_input.c
+void handle_input(char *line);
+
+// bonus/ester-egg/claude_print.c
+void print_header(shell_t *shell);
+void print_explication_shell(void);
+
+// bonus/easter-egg/claude_utils.c
+char *user_of_shell(char **env);
+void display_line_in_file(char *line_in_file, int size);
+void ia_style_text_writer(char *text, int speed);
+
+// bonus/easter-egg/claude.c
+void start_claude(shell_t *shell);
 
 // src/buitlins/features/aliases/alias_builtin.c
 void exec_alias(shell_t *shell);
