@@ -45,12 +45,17 @@ char *copy_word(const char *src, int i, int len)
 {
     char *word = malloc(sizeof(char) * (len + 1));
     int j = 0;
+    int k = 0;
 
     if (word == NULL)
         return NULL;
-    for (; j < len; j++)
-        word[j] = src[i + j];
-    word[j] = '\0';
+    for (; j < len; j++) {
+        if (src[i + j] == '"' || src[i + j] == '\'')
+            j++;
+        word[k] = src[i + j];
+        k++;
+    }
+    word[k] = '\0';
     return word;
 }
 
