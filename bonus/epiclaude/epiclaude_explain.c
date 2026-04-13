@@ -9,6 +9,8 @@
 
 void explain_command(token_tree_t *tree, int *step)
 {
+    if (!tree->args || !tree->args[0])
+        return;
     my_printf("%s Step %d :%s ", ORANGE, *step, RESET);
     ia_style_text_writer("Execute the command '", FAST);
     ia_style_text_writer(tree->args[0], FAST);
@@ -31,6 +33,7 @@ void explain_pipe_and_semicolons(token_tree_t *tree, int *step)
         explain_tree(tree->left, step);
         my_printf("%s Step %d :%s ", ORANGE, *step, RESET);
         ia_style_text_writer("We continue with the next command\n", FAST);
+        (*step)++;
         explain_tree(tree->right, step);
     }
     if (tree->type == PIPE) {
@@ -60,6 +63,8 @@ void explain_redirections(token_tree_t *tree, int *step)
 
 void explain_tree(token_tree_t *tree, int *step)
 {
+    if (!tree)
+        return;
     if (tree->type == SEMICOLONS || tree->type == PIPE) {
         explain_pipe_and_semicolons(tree, step);
         return;
@@ -76,7 +81,7 @@ void explain_command_line(char *command)
     token_tree_t *tree = parse_line(command);
     int step = 1;
 
-    if (!tree) {
+    if (!tree || (tree->type == SIMPLE_COMMAND && !tree->args[0])) {
         ia_style_text_writer("\n", 2000000);
         ia_style_text_writer("Sorry, I can't parse this command.\n\n", BASIC);
         return;
