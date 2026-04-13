@@ -32,6 +32,7 @@ void initilize_struct(char **env, shell_t *shell)
 void shell_loop(shell_t *shell, size_t *len, char **line)
 {
     while (shell->continue_shell) {
+        signal(SIGINT, handle_sigint);
         print_shell_line(shell->copy_env);
         if (getline(line, len, stdin) == -1) {
             my_putchar('\n');
@@ -87,6 +88,7 @@ int main(int argc, char **argv, char **env)
     (void)argc;
     (void)argv;
     initilize_struct(env, &shell);
+    signal(SIGINT, handle_sigint);
     shell_loop(&shell, &len, &line);
     free_shell(&shell, line);
     return 0;

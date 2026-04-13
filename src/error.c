@@ -7,6 +7,13 @@
 
 #include "shell.h"
 
+void handle_sigint(int sigint)
+{
+    (void)sigint;
+    my_printf("\n%sCtrl + C prompt", PURPLE);
+    my_printf(" (push entry for shell prompt)%s $> ", RESET);
+}
+
 /**
  * @brief Displays an error by an execution error code
  *
