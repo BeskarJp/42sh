@@ -7,6 +7,12 @@
 
 #include "shell.h"
 
+/**
+ * @brief Explains a simple command node in parse tree
+ *
+ * @param tree Command tree node to explain
+ * @param step Current explanation step counter
+ */
 void explain_simple_command(token_tree_t *tree, int *step)
 {
     if (!tree->args || !tree->args[0])
@@ -28,6 +34,12 @@ void explain_simple_command(token_tree_t *tree, int *step)
     (*step)++;
 }
 
+/**
+ * @brief Explains pipe and semicolon nodes in parse tree
+ *
+ * @param tree Parse tree node to explain
+ * @param step Current explanation step counter
+ */
 void explain_pipe_and_semicolons(token_tree_t *tree, int *step)
 {
     if (tree->type == SEMICOLONS) {
@@ -62,6 +74,12 @@ void explain_redirections(token_tree_t *tree, int *step)
     (*step)++;
 }
 
+/**
+ * @brief Recursively explains a parse tree structure
+ *
+ * @param tree Parse tree node to explain
+ * @param step Current explanation step counter
+ */
 void explain_tree(token_tree_t *tree, int *step)
 {
     if (!tree)
@@ -77,6 +95,11 @@ void explain_tree(token_tree_t *tree, int *step)
     explain_simple_command(tree, step);
 }
 
+/**
+ * @brief Parses and explains a command line by EpiClaude
+ *
+ * @param command Command line to explain
+ */
 void explain_command_line(char *command)
 {
     token_tree_t *tree = parse_line(command);
