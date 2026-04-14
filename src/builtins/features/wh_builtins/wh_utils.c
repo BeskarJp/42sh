@@ -7,6 +7,12 @@
 
 #include "shell.h"
 
+/**
+ * @brief Checks if the command is in shell builtin
+ *
+ * @param command Command name to check
+ * @return int. 1 if builtin is handled, 0 if not
+ */
 int check_if_builtin(char *command)
 {
     if (my_strcmp(command, "cd") == 0 || my_strcmp(command, "setenv") == 0 ||
@@ -19,6 +25,12 @@ int check_if_builtin(char *command)
     return 0;
 }
 
+/**
+ * @brief Prints all matching executable paths for a command in PATH
+ *
+ * @param copy_pathway Copy of PATH env variable
+ * @param command Command name to find
+ */
 void print_when_where_match(char *copy_pathway, char *command)
 {
     char *directory = strtok(copy_pathway, ":");

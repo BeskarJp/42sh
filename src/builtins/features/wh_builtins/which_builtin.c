@@ -7,6 +7,12 @@
 
 #include "shell.h"
 
+/**
+ * @brief Find a single command for the which builtin
+ *
+ * @param shell Shell structure
+ * @param command Command name to find
+ */
 void process_which_command(shell_t *shell, char *command)
 {
     alias_t *alias = find_alias_by_name(shell->aliases, command);
@@ -28,6 +34,11 @@ void process_which_command(shell_t *shell, char *command)
         my_printf("%s: Command not found.\n", command);
 }
 
+/**
+ * @brief Executes the which builtin command
+ *
+ * @param shell Shell structure
+ */
 void exec_which(shell_t *shell)
 {
     if (shell->arg_col[1] == NULL) {

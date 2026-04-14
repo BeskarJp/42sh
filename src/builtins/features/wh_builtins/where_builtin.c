@@ -7,6 +7,12 @@
 
 #include "shell.h"
 
+/**
+ * @brief Find a single command for the where builtin
+ *
+ * @param shell Shell structure
+ * @param command Command name to find
+ */
 void process_where_command(shell_t *shell, char *command)
 {
     alias_t *alias = find_alias_by_name(shell->aliases, command);
@@ -26,6 +32,11 @@ void process_where_command(shell_t *shell, char *command)
     }
 }
 
+/**
+ * @brief Executes the where builtin command
+ *
+ * @param shell Shell structure
+ */
 void exec_where(shell_t *shell)
 {
     if (shell->arg_col[1] == NULL) {
