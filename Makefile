@@ -34,6 +34,9 @@ SRC	=	lib/my/mini_printf.c	\
 		src/builtins/features/aliases/unalias_builtin.c	\
 		src/builtins/features/history/history_builtin.c	\
 		src/builtins/features/history/history_feature.c	\
+		src/builtins/features/wh_builtins/wh_utils.c	\
+		src/builtins/features/wh_builtins/where_builtin.c	\
+		src/builtins/features/wh_builtins/which_builtin.c	\
 		src/builtins/builtin_assembly.c	\
 		src/builtins/cd_builtin.c	\
 		src/builtins/env_builtin.c	\

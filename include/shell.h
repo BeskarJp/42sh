@@ -145,6 +145,16 @@ void display_history(shell_t *shell);
 // src/buitlins/features/history/history_feature.c
 char *check_history_feature(shell_t *shell, char *line);
 
+//src/builtins/features/wh_builtins/wh_utils.c
+int check_if_builtin(char *command);
+void print_when_where_match(char *copy_pathway, char *command);
+
+//src/builtins/features/wh_builtins/where_builtin.c
+void exec_where(shell_t *shell);
+
+//src/builtins/features/wh_builtins/which_builtin.c
+void exec_which(shell_t *shell);
+
 // src/buitlins/builtin_assembly.c
 int builtin_assembly(shell_t *shell);
 
@@ -166,6 +176,7 @@ char *find_word_in_env(char **env, char *word);
 char *add_line_in_env(char *nom, char *valeur);
 
 // src/environment/find_pathway.c
+char *create_path_way(char *dir, char *command);
 char *find_command_path(char *cmd, char **env);
 
 // src/shell/shell_prompt_line.c
