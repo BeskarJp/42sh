@@ -24,7 +24,7 @@ int bonus_builtin_exec(shell_t *shell)
 }
 
 /**
- * @brief Executes a builtin among alias/unalias if recognized
+ * @brief Executes a builtin among alias/unalias/which/where if recognized
  *
  * @param shell Shell structure
  * @return int. 1 if builtin is handled, 0 if not
@@ -37,6 +37,14 @@ int builtin_exec_continue(shell_t *shell)
     }
     if (my_strcmp(shell->arg_col[0], "unalias") == 0) {
         exec_unalias(shell);
+        return 1;
+    }
+    if (my_strcmp(shell->arg_col[0], "which") == 0) {
+        exec_which(shell);
+        return 1;
+    }
+    if (my_strcmp(shell->arg_col[0], "where") == 0) {
+        exec_where(shell);
         return 1;
     }
     if (bonus_builtin_exec(shell) == 1)
