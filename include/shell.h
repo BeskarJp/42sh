@@ -52,6 +52,14 @@ typedef enum node_type_e {
     REDIR_DB_GAUCHE,
 } node_type_t;
 
+
+/**
+ * @brief Variables for the inhibitors
+ */
+typedef struct inhibitors_s {
+    char *user;
+} inhibitors_t;
+
 /**
  * @brief Node of the parsed command tree
  */
@@ -103,6 +111,7 @@ typedef struct shell_s {
     char *oldpwd;
     alias_t *aliases;
     history_t *history;
+    inhibitors_t *inhibitors;
 } shell_t;
 
 
@@ -128,22 +137,25 @@ void ia_style_text_writer(char *text, int speed);
 // bonus/easter-egg/claude.c
 void start_claude(shell_t *shell);
 
-// src/buitlins/features/aliases/alias_builtin.c
+// src/builtins/features/aliases/alias_builtin.c
 void exec_alias(shell_t *shell);
 
-// src/buitlins/features/aliases/alias_utils.c
+// src/builtins/features/aliases/alias_utils.c
 alias_t *find_alias_by_name(alias_t *aliases, char *name);
 void add_alias(shell_t *shell, char *name, char *command);
 
-// src/buitlins/features/aliases/unalias_builtin.c
+// src/builtins/features/aliases/unalias_builtin.c
 void exec_unalias(shell_t *shell);
 
-// src/buitlins/features/history/history_builtin.c
+// src/builtins/features/history/history_builtin.c
 void add_to_history_linked_list(shell_t *shell, char *line);
 void display_history(shell_t *shell);
 
-// src/buitlins/features/history/history_feature.c
+// src/builtins/features/history/history_feature.c
 char *check_history_feature(shell_t *shell, char *line);
+
+// src/nuiltins/features/inhibitors/inhibitors.c
+int check_user(char *line, shell_t *env);
 
 //src/builtins/features/wh_builtins/wh_utils.c
 int check_if_builtin(char *command);
@@ -155,19 +167,19 @@ void exec_where(shell_t *shell);
 //src/builtins/features/wh_builtins/which_builtin.c
 void exec_which(shell_t *shell);
 
-// src/buitlins/builtin_assembly.c
+// src/builtins/builtin_assembly.c
 int builtin_assembly(shell_t *shell);
 
-// src/buitlins/cd_builtin.c
+// src/builtins/cd_builtin.c
 void exec_cd(shell_t *shell);
 
-// src/buitlins/env_builtin.c
+// src/builtins/env_builtin.c
 void display_env(shell_t *shell);
 
-// src/buitlins/setenv_builtin.c
+// src/builtins/setenv_builtin.c
 void exec_setenv(shell_t *shell);
 
-// src/buitlins/unsetenv_builtin.c
+// src/builtins/unsetenv_builtin.c
 void exec_unsetenv(shell_t *shell);
 
 // src/environment/env_interract.c
