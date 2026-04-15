@@ -52,9 +52,11 @@ void line_executor(shell_t *shell, char *line)
         return;
     if (check_user(line, shell) == 1)
         is_user = true;
-    tree = parse_line(line);
-    if (is_user == false && tree != NULL) {
-        run_tree(shell, tree);
-        free_tree(tree);
+    if (is_user == false) {
+        tree = parse_line(line);
+        if (tree != NULL) {
+            run_tree(shell, tree);
+            free_tree(tree);
+        }
     }
 }
