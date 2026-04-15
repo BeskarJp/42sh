@@ -7,7 +7,7 @@
 
 CC = 	epiclang
 
-CFLAGS	= -Wall -Wextra -I./include -g
+CFLAGS	= -Wall -Wextra -I./include
 
 SRC	=	lib/my/mini_printf.c	\
 		lib/my/my_getnbr.c	\
