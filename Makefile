@@ -7,7 +7,7 @@
 
 CC = 	epiclang
 
-CFLAGS	= -Wall -Wextra -I./include
+CFLAGS	= -Wall -Wextra -I./include -g
 
 SRC	=	lib/my/mini_printf.c	\
 		lib/my/my_getnbr.c	\
@@ -34,6 +34,7 @@ SRC	=	lib/my/mini_printf.c	\
 		src/builtins/features/aliases/unalias_builtin.c	\
 		src/builtins/features/history/history_builtin.c	\
 		src/builtins/features/history/history_feature.c	\
+		src/builtins/features/inhibitors/inhibitors.c	\
 		src/builtins/features/wh_builtins/wh_utils.c	\
 		src/builtins/features/wh_builtins/where_builtin.c	\
 		src/builtins/features/wh_builtins/which_builtin.c	\
