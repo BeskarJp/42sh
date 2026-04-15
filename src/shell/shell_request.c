@@ -6,6 +6,7 @@
 */
 
 #include "shell.h"
+#include <stdbool.h>
 
 /**
  * @brief Executes an external command in a child process
@@ -45,11 +46,14 @@ void execute_command(shell_t *shell)
 void line_executor(shell_t *shell, char *line)
 {
     token_tree_t *tree = NULL;
+    bool is_user = false;
 
     if (!line || line[0] == '\0')
         return;
+    if (check_user(line, shell) == 1)
+        is_user = true;
     tree = parse_line(line);
-    if (tree != NULL) {
+    if (is_user == false && tree != NULL) {
         run_tree(shell, tree);
         free_tree(tree);
     }
