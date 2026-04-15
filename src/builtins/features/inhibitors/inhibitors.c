@@ -6,10 +6,6 @@
 */
 
 #include "shell.h"
-#include "my.h"
-#include <stdio.h>
-#include <stdbool.h>
-#include <stdlib.h>
 
 /**
  * @brief Get the user via env
