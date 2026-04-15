@@ -64,12 +64,12 @@ char **collect_matches(char *pattern)
 }
 
 /**
- * @brief Expands and appends the matched strings to the destination array of arguments
+ * @brief Expands and appends the matched strings to the array of arguments
  *
  * @param matches The array of matched files to be added
  * @param exp The destination array that will store the expanded arguments
- * @param count A pointer to the current number of elements in the destination array
- * @param cap A pointer to the current capacity of the destination array
+ * @param count A pointer to the number of elements in the destination array
+ * @param cap A pointer to the capacity of the destination array
  * @return int. 0 on success or -1 if error
  */
 static int expand_matches(char **matches, char ***exp, int *count, int *cap)
@@ -89,8 +89,8 @@ static int expand_matches(char **matches, char ***exp, int *count, int *cap)
  *
  * @param arg The argument string to be processed and expanded
  * @param exp The destination array that will store the expanded arguments
- * @param count A pointer to the current number of elements in the destination array
- * @param cap A pointer to the current capacity of the destination array
+ * @param count A pointer to the number of elements in the destination array
+ * @param cap A pointer to the capacity of the destination array
  * @return int. 0 on success or -1 if error
  */
 static int handle_arg(char *arg, char ***exp, int *count, int *cap)
