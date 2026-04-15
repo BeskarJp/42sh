@@ -4,8 +4,15 @@
 ** File description:
 ** exec_globbings_utlis for 42sh
 */
+
 #include "shell.h"
 
+/**
+ * @brief Frees the array of matches up
+ *
+ * @param matches The array of matched strings to be freed.
+ * @param i The index up to which the strings should be freed.
+ */
 static void free_matches_until(char **matches, size_t i)
 {
     size_t j;
@@ -56,6 +63,15 @@ char **collect_matches(char *pattern)
     return matches;
 }
 
+/**
+ * @brief Expands and appends the matched strings to the destination array of arguments
+ *
+ * @param matches The array of matched files to be added
+ * @param exp The destination array that will store the expanded arguments
+ * @param count A pointer to the current number of elements in the destination array
+ * @param cap A pointer to the current capacity of the destination array
+ * @return int. 0 on success or -1 if error
+ */
 static int expand_matches(char **matches, char ***exp, int *count, int *cap)
 {
     int j;
@@ -68,6 +84,15 @@ static int expand_matches(char **matches, char ***exp, int *count, int *cap)
     return 0;
 }
 
+/**
+ * @brief Processes a single argument by checking for globbing patterns
+ *
+ * @param arg The argument string to be processed and expanded
+ * @param exp The destination array that will store the expanded arguments
+ * @param count A pointer to the current number of elements in the destination array
+ * @param cap A pointer to the current capacity of the destination array
+ * @return int. 0 on success or -1 if error
+ */
 static int handle_arg(char *arg, char ***exp, int *count, int *cap)
 {
     char **matches;
