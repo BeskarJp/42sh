@@ -45,6 +45,8 @@ SRC	=	lib/my/mini_printf.c	\
 		src/shell/shell_request.c	\
 		src/token_tree/execution/features/aliases/alias_checker.c	\
 		src/token_tree/execution/exec_pipe.c	\
+		src/token_tree/execution/exec_globbings_utils.c	\
+		src/token_tree/execution/exec_globbings.c	\
 		src/token_tree/execution/exec_redirection_utils.c	\
 		src/token_tree/execution/exec_redirection.c	\
 		src/token_tree/execution/exec_tree.c	\

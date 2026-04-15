@@ -12,6 +12,8 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <time.h>
+#include <dirent.h>
+#include <glob.h>
 #include "my.h"
 
 #ifndef MINISHELL
@@ -180,6 +182,14 @@ void alias_checker(shell_t *shell, token_tree_t *arbre);
 
 // src/token_tree/execution/exec_pipe.c
 void run_pipe(shell_t *shell, token_tree_t *tree);
+
+// src/token_tree/execution/exec_globbings.c
+int is_globbing_pattern(char *str);
+int count_args(char **args);
+int append_match(char ***exp, int *count, int *cap, char *str);
+char **collect_matches(char *pattern);
+int expand_all_args(char **args, char **expanded, int *count, int *capacity);
+char **expand_globbing(char **args);
 
 // src/token_tree/execution/exec_redirection_utils.c
 void left_double_redirection(char *delimiter);
