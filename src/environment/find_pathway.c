@@ -72,7 +72,7 @@ char *find_command_path(char *command, char **env)
     char *path_copy = NULL;
     char *path_way = NULL;
 
-    if (env == NULL  || command == NULL)
+    if (env == NULL || command == NULL)
         return NULL;
     if (strchr(command, '/') != NULL) {
         if (access(command, F_OK) == 0)

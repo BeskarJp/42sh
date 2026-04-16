@@ -52,7 +52,13 @@ void recursive_alias_checker(shell_t *shell, token_tree_t *tree,
     char **command_to_lunch;
     char **aliases_buffer;
 
-    if (*recursive_count > 20 || !tree->args || !tree->args[0])
+    if (*recursive_count > 20) {
+        write(2, "Alias loop.\n", 12);
+        free_array(tree->args);
+        tree->args = NULL;
+        return;
+    }
+    if (!tree->args || !tree->args[0])
         return;
     correlation = find_alias_by_name(shell->aliases, tree->args[0]);
     if (correlation == NULL)
