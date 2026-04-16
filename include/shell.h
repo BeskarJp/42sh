@@ -48,6 +48,8 @@
 typedef enum node_type_e {
     SIMPLE_COMMAND,
     SEMICOLONS,
+    AND_OPERATOR,
+    OR_OPERATOR,
     PIPE,
     REDIR_DROITE,
     REDIR_DB_DROITE,
@@ -140,6 +142,7 @@ typedef struct shell_s {
     pid_t shell_pgid;
     int shell_terminal;
     int interactive;
+    int exit_status;
 } shell_t;
 
 
@@ -236,7 +239,10 @@ int exec_fg(shell_t *shell);
 int exec_bg(shell_t *shell);
 
 // src/token_tree/execution/features/aliases/alias_checker.c
-void alias_checker(shell_t *shell, token_tree_t *arbre);
+void alias_checker(shell_t *shell, token_tree_t *tree);
+
+//src/token_tree/execution/exec_operators.c
+void exec_operators(shell_t *shell, token_tree_t *tree);
 
 // src/token_tree/execution/exec_pipe.c
 void run_pipe(shell_t *shell, token_tree_t *tree);
