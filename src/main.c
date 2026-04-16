@@ -20,6 +20,31 @@ void initilize_struct(char **env, shell_t *shell)
     shell->continue_shell = 1;
     shell->aliases = NULL;
     shell->history = NULL;
+    shell->inhibitors = NULL;
+    shell->jobs = NULL;
+    shell->next_job_id = 1;
+    shell->shell_pgid = 0;
+    shell->shell_terminal = STDIN_FILENO;
+    shell->interactive = 0;
+}
+
+/**
+ * @brief Displays the prompt, refreshes jobs and reads one input line
+ *
+ * @param shell Shell structure
+ * @param len Size of the allocated buffer for line
+ * @param line Buffer for the command line input
+ * @return int. -1 when end of input is reached, 0 otherwise
+ */
+static int read_user_line(shell_t *shell, size_t *len, char **line)
+{
+    refresh_jobs(shell);
+    notify_done_jobs(shell);
+    signal(SIGINT, handle_sigint);
+    print_shell_line(shell->copy_env);
+    if (getline(line, len, stdin) == -1)
+        return -1;
+    return 0;
 }
 
 /**
@@ -32,9 +57,7 @@ void initilize_struct(char **env, shell_t *shell)
 void shell_loop(shell_t *shell, size_t *len, char **line)
 {
     while (shell->continue_shell) {
-        signal(SIGINT, handle_sigint);
-        print_shell_line(shell->copy_env);
-        if (getline(line, len, stdin) == -1) {
+        if (read_user_line(shell, len, line) == -1) {
             my_putchar('\n');
             break;
         }
@@ -63,6 +86,8 @@ void free_shell(shell_t *shell, char *line)
         free_aliases(shell->aliases);
     if (shell->history)
         free_history(shell->history);
+    if (shell->jobs)
+        free_jobs(shell->jobs);
     if (shell->copy_env)
         free_array(shell->copy_env);
     if (shell->oldpwd)
@@ -88,6 +113,7 @@ int main(int argc, char **argv, char **env)
     (void)argc;
     (void)argv;
     initilize_struct(env, &shell);
+    init_job_control(&shell);
     signal(SIGINT, handle_sigint);
     shell_loop(&shell, &len, &line);
     free_shell(&shell, line);
