@@ -9,6 +9,8 @@ CC = 	epiclang
 
 CFLAGS	= -Wall -Wextra -I./include
 
+TFLAGS	=	--coverage -lcriterion
+
 SRC	=	lib/my/mini_printf.c	\
 		lib/my/my_getnbr.c	\
 		lib/my/my_put_nbr.c	\
@@ -82,7 +84,7 @@ $(NAME):	$(OBJ)
 	@echo "Everything is compiled"
 
 tests_run:
-	@$(CC) -o $(NAME_TEST) $(SRC_TESTS) $(TESTS_FILES) $(CFLAGS) --coverage -lcriterion
+	@$(CC) -o $(NAME_TEST) $(SRC_TESTS) $(TESTS_FILES) $(CFLAGS) $(TFLAGS)
 	@make clean
 	@echo Units Tests are compiled
 	./$(NAME_TEST)

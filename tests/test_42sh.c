@@ -15,6 +15,28 @@ void redirect_all_stdout(void)
     cr_redirect_stderr();
 }
 
+Test(lib_my, test_strlen)
+{
+    cr_assert_eq(my_strlen("EpiClaude"), 9);
+    cr_assert_eq(my_strlen(""), 0);
+}
+
+Test(env_logic, test_find_env)
+{
+    char *fake_env[] = {"PATH=/bin", "USER=claude", NULL};
+    char *res = find_word_in_env(fake_env, "USER");
+
+    cr_assert_str_eq(res, "claude");
+}
+
+Test(path_logic, test_path_with_slash)
+{
+    char *fake_env[] = {"PATH=/", NULL};
+    char *res = find_command_path("bin/ls", fake_env);
+
+    cr_assert_null(res);
+}
+
 Test(parsing, create_tree_node)
 {
     token_tree_t *node = create_branch_by_type(PIPE);
