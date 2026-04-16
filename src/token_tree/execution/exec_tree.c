@@ -38,6 +38,8 @@ void run_tree(shell_t *shell, token_tree_t *tree)
         run_tree(shell, tree->left);
         run_tree(shell, tree->right);
     }
+    if (tree->type == AND_OPERATOR || tree->type == OR_OPERATOR)
+        exec_operators(shell, tree);
     if (tree->type == PIPE)
         run_pipe(shell, tree);
     if (tree->type >= REDIR_DROITE && tree->type <= REDIR_DB_GAUCHE)
