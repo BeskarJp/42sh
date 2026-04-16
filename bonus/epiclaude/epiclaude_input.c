@@ -61,15 +61,15 @@ int bonus_commands(char *line)
 int handle_basic_commands(char *line)
 {
     if (my_strcmp(line, "help") == 0) {
-        ia_style_text_writer("\nYou only can write 'notions'", BASIC);
-        ia_style_text_writer(" or 'explain line <command>'.\n\n", BASIC);
+        ia_style_text_writer("\nYou can only write 'notions'", BASIC);
+        ia_style_text_writer(" or 'explain this <command>'.\n\n", BASIC);
         return 1;
     }
     if (my_strcmp(line, "notions") == 0) {
         print_explication_shell();
         return 1;
     }
-    if (my_strncmp(line, "explain line ", 13) == 0) {
+    if (my_strncmp(line, "explain this ", 13) == 0) {
         explain_command_line(line + 13);
         return 1;
     }
@@ -88,5 +88,5 @@ void handle_input(char *line)
     if (handle_basic_commands(line) == 1)
         return;
     ia_style_text_writer("\nI don't understand. Try 'notions'", BASIC);
-    ia_style_text_writer(" or 'explain line <command>'.\n\n", BASIC);
+    ia_style_text_writer(" or 'explain this <command>'.\n\n", BASIC);
 }
