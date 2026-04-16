@@ -58,17 +58,6 @@ void free_history(history_t *history)
 }
 
 /**
- * @brief Free allocated resources for the oldpwd variable
- *
- * @param shell Shell structure
- */
-void free_cd(shell_t *shell)
-{
-    if (shell->oldpwd)
-        free(shell->oldpwd);
-}
-
-/**
  * @brief Recursive free for token_tree_t tree
  *
  * @param tree Token tree to free

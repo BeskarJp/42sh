@@ -105,6 +105,26 @@ typedef struct history_s {
 } history_t;
 
 /**
+ * @brief State of a shell job
+ */
+typedef enum job_state_e {
+    JOB_RUNNING,
+    JOB_STOPPED,
+    JOB_DONE,
+} job_state_t;
+
+/**
+ * @brief Linked list of jobs for job control
+ */
+typedef struct job_s {
+    int id;
+    pid_t pgid;
+    char *command;
+    job_state_t state;
+    struct job_s *next;
+} job_t;
+
+/**
  * @brief Shell basic struct
  */
 typedef struct shell_s {
@@ -115,6 +135,11 @@ typedef struct shell_s {
     alias_t *aliases;
     history_t *history;
     inhibitors_t *inhibitors;
+    job_t *jobs;
+    int next_job_id;
+    pid_t shell_pgid;
+    int shell_terminal;
+    int interactive;
 } shell_t;
 
 
@@ -201,6 +226,15 @@ void print_shell_line(char **env);
 void execute_command(shell_t *shell);
 void line_executor(shell_t *shell, char *line);
 
+// src/job_control/job_control.c
+void init_job_control(shell_t *shell);
+void refresh_jobs(shell_t *shell);
+void notify_done_jobs(shell_t *shell);
+int add_job(shell_t *shell, pid_t pgid, char **args, job_state_t state);
+int exec_jobs(shell_t *shell);
+int exec_fg(shell_t *shell);
+int exec_bg(shell_t *shell);
+
 // src/token_tree/execution/features/aliases/alias_checker.c
 void alias_checker(shell_t *shell, token_tree_t *arbre);
 
@@ -246,7 +280,7 @@ void check_strsignal(int status);
 void free_array(char **array);
 void free_aliases(alias_t *aliases);
 void free_history(history_t *history);
-void free_cd(shell_t *shell);
+void free_jobs(job_t *jobs);
 void free_tree(token_tree_t *tree);
 
 #endif /* MINISHELL */
