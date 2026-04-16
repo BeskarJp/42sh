@@ -58,7 +58,7 @@ void shell_loop(shell_t *shell, size_t *len, char **line)
 {
     while (shell->continue_shell) {
         if (read_user_line(shell, len, line) == -1) {
-            my_putchar('\n');
+            my_printf("exit\n");
             break;
         }
         if ((*line)[0] != '\0' && (*line)[my_strlen(*line) - 1] == '\n')
