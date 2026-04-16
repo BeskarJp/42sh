@@ -39,6 +39,29 @@ char **change_tree_command_to_alias(char **aliases_buffer, char **argv_tree)
 }
 
 /**
+ * @brief Substitutes the first argument of the tree with its alias value
+ *
+ * @param tree Token tree structure
+ * @param recursive_count Pointer the counter for handle infinite loops
+ * @return int. 1 if substitution succeeded or 0 is error
+ */
+int apply_alias_substitution(token_tree_t *tree, alias_t *correlation)
+{
+    char **aliases_buffer = my_str_to_word_array(correlation->command);
+    char **command_launch;
+
+    if (!aliases_buffer)
+        return 0;
+    command_launch = change_tree_command_to_alias(aliases_buffer, tree->args);
+    free_array(aliases_buffer);
+    if (command_launch == NULL)
+        return 0;
+    free_array(tree->args);
+    tree->args = command_launch;
+    return 1;
+}
+
+/**
  * @brief Recursively checks and applies aliases to command arguments
  *
  * @param shell Shell structure
@@ -49,8 +72,6 @@ void recursive_alias_checker(shell_t *shell, token_tree_t *tree,
     int *recursive_count)
 {
     alias_t *correlation;
-    char **command_to_lunch;
-    char **aliases_buffer;
 
     if (*recursive_count > 20) {
         write(2, "Alias loop.\n", 12);
@@ -58,20 +79,15 @@ void recursive_alias_checker(shell_t *shell, token_tree_t *tree,
         tree->args = NULL;
         return;
     }
-    if (!tree->args || !tree->args[0])
+    if (!tree || !tree->args || !tree->args[0])
         return;
     correlation = find_alias_by_name(shell->aliases, tree->args[0]);
     if (correlation == NULL)
         return;
-    aliases_buffer = my_str_to_word_array(correlation->command);
-    command_to_lunch = change_tree_command_to_alias(aliases_buffer, tree->args);
-    if (command_to_lunch == NULL)
-        return;
-    free_array(tree->args);
-    free_array(aliases_buffer);
-    tree->args = command_to_lunch;
-    (*recursive_count)++;
-    recursive_alias_checker(shell, tree, recursive_count);
+    if (apply_alias_substitution(tree, correlation)) {
+        (*recursive_count)++;
+        recursive_alias_checker(shell, tree, recursive_count);
+    }
 }
 
 /**
