@@ -6,7 +6,6 @@
 */
 
 #include "shell.h"
-#include <stdbool.h>
 
 /**
  * @brief Detects a trailing background token and removes it from argv
@@ -117,8 +116,12 @@ static void handle_foreground_job(shell_t *shell, pid_t pid)
     waitpid(pid, &status, WUNTRACED);
     if (WIFSTOPPED(status))
         handle_stopped_job(shell, pid);
-    if (WIFSIGNALED(status))
+    if (WIFSIGNALED(status)) {
         check_strsignal(status);
+        shell->exit_status = WTERMSIG(status) + 128;
+    }
+    if (WIFEXITED(status))
+        shell->exit_status = WEXITSTATUS(status);
     if (shell->interactive)
         tcsetpgrp(shell->shell_terminal, shell->shell_pgid);
 }
