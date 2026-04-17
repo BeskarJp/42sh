@@ -110,8 +110,9 @@ void explain_command_line(char *command)
         ia_style_text_writer("Sorry, I can't parse this command.\n\n", BASIC);
         return;
     }
-    ia_style_text_writer("\nI will now explain this command :", BASIC);
+    ia_style_text_writer("\nLet me look it up...", BASIC);
     ia_style_text_writer("\n\n", 1500000);
+    ia_style_text_writer("Found it !\n\n", BASIC);
     explain_tree(tree, &step);
     ia_style_text_writer("\nThat's it ! If you need any explanation,", SLOW);
     ia_style_text_writer(" don't hesitate !\n\n", SLOW);
