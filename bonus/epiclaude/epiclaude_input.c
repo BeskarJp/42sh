@@ -20,6 +20,11 @@ int continue_bonus_commands(char *line)
         ia_style_text_writer("Is it graphic ? Go ask Eliott ... \n\n", SLOW);
         return 1;
     }
+    if (my_strcmp(line, "hugo") == 0) {
+        ia_style_text_writer("\nHugo ?\n\n", SLOW);
+        ia_style_text_writer("Don't you mean Hugoat ?\n\n", SLOW);
+        return 1;
+    }
     return 0;
 }
 
