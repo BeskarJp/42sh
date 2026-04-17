@@ -56,7 +56,7 @@ void make_env_bigger(shell_t *shell, char *new_line)
 static int return_error(void)
 {
     write(2,
-        "setenv: Variable name must contain alphanumeric characters.\n", 61);
+        "setenv: Variable name must contain alphanumeric characters.\n", 60);
     return 84;
 }
 
