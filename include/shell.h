@@ -168,6 +168,9 @@ void ia_style_text_writer(char *text, int speed);
 // bonus/easter-egg/claude.c
 void start_claude(shell_t *shell);
 
+// bonus/echo_output.c
+int exec_echo(shell_t *shell);
+
 // src/builtins/features/aliases/alias_builtin.c
 void exec_alias(shell_t *shell);
 

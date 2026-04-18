@@ -29,6 +29,7 @@ SRC	=	lib/my/mini_printf.c	\
 		bonus/epiclaude/epiclaude_print.c	\
 		bonus/epiclaude/epiclaude_utils.c	\
 		bonus/epiclaude/epiclaude.c	\
+		bonus/echo_output.c	\
 		src/builtins/features/aliases/alias_builtin.c	\
 		src/builtins/features/aliases/alias_utils.c	\
 		src/builtins/features/aliases/unalias_builtin.c	\
