@@ -44,6 +44,10 @@ int bonus_builtin_exec(shell_t *shell)
         start_claude(shell);
         return 1;
     }
+    if (my_strcmp(shell->arg_col[0], "echo") == 0) {
+        exec_echo(shell);
+        return 1;
+    }
     return 0;
 }
 
@@ -151,12 +155,14 @@ int builtin_assembly(shell_t *shell)
     }
     if (my_strcmp(shell->arg_col[0], "env") == 0) {
         display_env(shell);
+        shell->exit_status = 0;
         return 1;
     }
     if (builtin_exec(shell) == 1)
         return 1;
     if (my_strcmp(shell->arg_col[0], "cactus") == 0) {
         bonus_builtin_ascii_art_cactus();
+        shell->exit_status = 0;
         return 1;
     }
     return 0;

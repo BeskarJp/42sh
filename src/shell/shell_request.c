@@ -51,6 +51,7 @@ static int handle_not_found(shell_t *shell)
 {
     write(2, shell->arg_col[0], my_strlen(shell->arg_col[0]));
     write(2, ": Command not found.\n", 21);
+    shell->exit_status = 1;
     return 0;
 }
 
