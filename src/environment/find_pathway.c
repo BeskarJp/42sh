@@ -78,7 +78,7 @@ char *find_command_path(char *command, char **env)
         return NULL;
     }
     if (path_line_in_env == NULL)
-        path_copy = my_strdup("/usr/bin:/bin"); 
+        path_copy = my_strdup("/usr/bin:/bin");
     else
         path_copy = my_strdup(path_line_in_env);
     if (path_copy == NULL)
