@@ -2,13 +2,13 @@
 ** EPITECH PROJECT, 2026
 ** echo_output
 ** File description:
-** bonus with Travis for 42sh bu Hugo Minet
+** bonus with Travis for 42sh by Hugo Minet
 */
 
 #include "shell.h"
 
 /**
- * @brief exec the builtin created by Hugo Minet who is in love to Travis Scott
+ * @brief exec the builtin created by Hugo Minet who is in love with Travi$ Scott
  *
  */
 void bonus_builtin_ascii_art_cactus(void)
