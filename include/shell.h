@@ -146,6 +146,9 @@ typedef struct shell_s {
 } shell_t;
 
 
+// bonus/echo_output/echo_output.c
+int exec_echo(shell_t *shell);
+
 // bonus/easter-egg/epiclaude_encyclo.c
 void print_more_of_command(char *command);
 
@@ -168,8 +171,8 @@ void ia_style_text_writer(char *text, int speed);
 // bonus/easter-egg/claude.c
 void start_claude(shell_t *shell);
 
-// bonus/echo_output.c
-int exec_echo(shell_t *shell);
+// bonus/travis_builtin/travis_builtin.c
+void bonus_builtin_ascii_art_cactus(void);
 
 // src/builtins/features/aliases/alias_builtin.c
 void exec_alias(shell_t *shell);
