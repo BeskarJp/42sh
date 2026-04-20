@@ -8,7 +8,7 @@
 #include "shell.h"
 
 /**
- * @brief exec the builtin created by Hugo Minet who is in love with Travi$ Scott
+ * @brief builtin created by Hugo Minet who is in love with Travi$ Scott
  *
  */
 void bonus_builtin_ascii_art_cactus(void)
