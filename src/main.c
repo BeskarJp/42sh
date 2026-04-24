@@ -18,8 +18,8 @@ void initilize_struct(char **env, shell_t *shell)
     shell->copy_env = copy_environment(env);
     shell->oldpwd = NULL;
     shell->continue_shell = 1;
-    shell->aliases = NULL;
     shell->history = NULL;
+    shell->local_env = NULL;
 }
 
 /**
@@ -32,12 +32,9 @@ void initilize_struct(char **env, shell_t *shell)
 void shell_loop(shell_t *shell, size_t *len, char **line)
 {
     while (shell->continue_shell) {
-        signal(SIGINT, handle_sigint);
         print_shell_line(shell->copy_env);
-        if (getline(line, len, stdin) == -1) {
-            my_putchar('\n');
+        if (getline(line, len, stdin) == -1)
             break;
-        }
         if ((*line)[0] != '\0' && (*line)[my_strlen(*line) - 1] == '\n')
             (*line)[my_strlen(*line) - 1] = '\0';
         *line = check_history_feature(shell, *line);
@@ -59,8 +56,6 @@ void shell_loop(shell_t *shell, size_t *len, char **line)
  */
 void free_shell(shell_t *shell, char *line)
 {
-    if (shell->aliases)
-        free_aliases(shell->aliases);
     if (shell->history)
         free_history(shell->history);
     if (shell->copy_env)
@@ -88,7 +83,6 @@ int main(int argc, char **argv, char **env)
     (void)argc;
     (void)argv;
     initilize_struct(env, &shell);
-    signal(SIGINT, handle_sigint);
     shell_loop(&shell, &len, &line);
     free_shell(&shell, line);
     return 0;
