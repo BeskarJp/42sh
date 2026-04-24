@@ -59,7 +59,6 @@ static int read_user_line(shell_t *shell, size_t *len, char **line)
 void shell_loop(shell_t *shell, size_t *len, char **line)
 {
     while (shell->continue_shell) {
-        print_shell_line(shell->copy_env);
         if (read_user_line(shell, len, line) == -1) {
             my_printf("\n");
             break;
@@ -85,6 +84,8 @@ void shell_loop(shell_t *shell, size_t *len, char **line)
  */
 void free_shell(shell_t *shell, char *line)
 {
+    if (shell->aliases)
+        free_aliases(shell->aliases);
     if (shell->history)
         free_history(shell->history);
     if (shell->jobs)
