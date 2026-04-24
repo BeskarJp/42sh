@@ -51,7 +51,7 @@ void make_env_bigger(shell_t *shell, char *new_line)
 /**
  * @brief Write the error message setenv display.
  *
- * @return int. alway's retrn 84.
+ * @return int. always return 84.
  */
 static int return_error(void)
 {
