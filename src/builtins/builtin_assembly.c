@@ -140,6 +140,10 @@ int builtin_assembly(shell_t *shell)
         shell->exit_status = 0;
         return 1;
     }
+    if (my_strcmp(shell->arg_col[0], "export") == 0) {
+        export_builtin(shell);
+        return 1;
+    }
     if (builtin_exec(shell) == 1)
         return 1;
     return 0;

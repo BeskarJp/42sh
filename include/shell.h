@@ -107,6 +107,16 @@ typedef struct history_s {
 } history_t;
 
 /**
+ * @brief Linked list for local env variables
+ */
+typedef struct env_s {
+    char *var;
+    char *value;
+    int temp;
+    struct env_s *next;
+} env_t;
+
+/**
  * @brief State of a shell job
  */
 typedef enum job_state_e {
@@ -134,6 +144,7 @@ typedef struct shell_s {
     char **arg_col;
     char **copy_env;
     char *oldpwd;
+    env_t *local_env;
     alias_t *aliases;
     history_t *history;
     inhibitors_t *inhibitors;
@@ -171,13 +182,33 @@ void ia_style_text_writer(char *text, int speed);
 // bonus/easter-egg/claude.c
 void start_claude(shell_t *shell);
 
+// src/builtins/features/variables/local_env_utils.c
+void display_local_env(shell_t *shell);
+void add_to_local_env(shell_t *shell, char *line, int state);
+void rm_local_env_var(shell_t *shell, char *name);
+int var_declared(shell_t *shell, int n);
+void handle_local_var(shell_t *shell);
+
+// src/builtins/features/variables/temp_var.c
+void local_and_cmd(shell_t *shell);
+
+// src/builtins/features/variables/export_builtin.c
+void export_builtin(shell_t *shell);
+void export_helper(shell_t *shell, env_t *var);
+env_t *find_var_by_name(env_t *local, char *name);
+
+// src/buitlins/features/aliases/alias_builtin.c
+void exec_alias(shell_t *shell);
+
+// src/buitlins/features/aliases/unalias_builtin.c
+void delete_alias_node(shell_t *shell, alias_t *aliases, alias_t *old);
+
+// src/buitlins/features/aliases/alias_utils.c
 // bonus/travis_builtin/travis_builtin.c
 void bonus_builtin_ascii_art_cactus(void);
 
-// src/builtins/features/aliases/alias_builtin.c
-void exec_alias(shell_t *shell);
-
 // src/builtins/features/aliases/alias_utils.c
+
 alias_t *find_alias_by_name(alias_t *aliases, char *name);
 void add_alias(shell_t *shell, char *name, char *command);
 
@@ -215,6 +246,7 @@ void display_env(shell_t *shell);
 
 // src/builtins/setenv_builtin.c
 void exec_setenv(shell_t *shell);
+void make_env_bigger(shell_t *shell, char *new_line);
 
 // src/builtins/unsetenv_builtin.c
 void exec_unsetenv(shell_t *shell);
