@@ -20,8 +20,13 @@ void run_simple_command(shell_t *shell, token_tree_t *tree)
     shell->arg_col = tree->args;
     if (!shell->arg_col || !shell->arg_col[0])
         return;
-    if (builtin_assembly(shell) == 0)
+    if (builtin_assembly(shell) == 0) {
+        if (var_declared(shell, 0) == 0) {
+            handle_local_var(shell);
+            return;
+        }
         execute_command(shell);
+    }
 }
 
 /**
