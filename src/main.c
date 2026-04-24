@@ -18,6 +18,7 @@ void initilize_struct(char **env, shell_t *shell)
     shell->copy_env = copy_environment(env);
     shell->oldpwd = NULL;
     shell->continue_shell = 1;
+    shell->aliases = NULL;
     shell->history = NULL;
     shell->local_env = NULL;
     shell->inhibitors = NULL;
