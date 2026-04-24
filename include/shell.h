@@ -182,35 +182,18 @@ void ia_style_text_writer(char *text, int speed);
 // bonus/easter-egg/claude.c
 void start_claude(shell_t *shell);
 
-// src/builtins/features/variables/local_env_utils.c
-void display_local_env(shell_t *shell);
-void add_to_local_env(shell_t *shell, char *line, int state);
-void rm_local_env_var(shell_t *shell, char *name);
-int var_declared(shell_t *shell, int n);
-void handle_local_var(shell_t *shell);
-
-// src/builtins/features/variables/temp_var.c
-void local_and_cmd(shell_t *shell);
-
-// src/builtins/features/variables/export_builtin.c
-void export_builtin(shell_t *shell);
-void export_helper(shell_t *shell, env_t *var);
-env_t *find_var_by_name(env_t *local, char *name);
+// bonus/travis_builtin/travis_builtin.c
+void bonus_builtin_ascii_art_cactus(void);
 
 // src/buitlins/features/aliases/alias_builtin.c
 void exec_alias(shell_t *shell);
 
-// src/buitlins/features/aliases/unalias_builtin.c
-void delete_alias_node(shell_t *shell, alias_t *aliases, alias_t *old);
-
-// src/buitlins/features/aliases/alias_utils.c
-// bonus/travis_builtin/travis_builtin.c
-void bonus_builtin_ascii_art_cactus(void);
-
 // src/builtins/features/aliases/alias_utils.c
-
 alias_t *find_alias_by_name(alias_t *aliases, char *name);
 void add_alias(shell_t *shell, char *name, char *command);
+
+// src/buitlins/features/aliases/unalias_builtin.c
+void delete_alias_node(shell_t *shell, alias_t *aliases, alias_t *old);
 
 // src/builtins/features/aliases/unalias_builtin.c
 void exec_unalias(shell_t *shell);
@@ -224,6 +207,22 @@ char *check_history_feature(shell_t *shell, char *line);
 
 // src/nuiltins/features/inhibitors/inhibitors.c
 int check_user(char *line, shell_t *env);
+
+// src/builtins/features/variables/export_builtin.c
+void export_builtin(shell_t *shell);
+void export_helper(shell_t *shell, env_t *var);
+env_t *find_var_by_name(env_t *local, char *name);
+
+
+// src/builtins/features/variables/local_env_utils.c
+void display_local_env(shell_t *shell);
+void add_to_local_env(shell_t *shell, char *line, int state);
+void rm_local_env_var(shell_t *shell, char *name);
+int var_declared(shell_t *shell, int n);
+void handle_local_var(shell_t *shell);
+
+// src/builtins/features/variables/temp_var.c
+void local_and_cmd(shell_t *shell);
 
 //src/builtins/features/wh_builtins/wh_utils.c
 int check_if_builtin(char *command);
