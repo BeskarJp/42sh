@@ -16,7 +16,7 @@
  */
 char **change_tree_command_to_alias(char **aliases_buffer, char **argv_tree)
 {
-    char **command_to_lunch;
+    char **command_to_launch;
     int alias_len = 0;
     int tree_len = 0;
     int i = 0;
@@ -25,17 +25,17 @@ char **change_tree_command_to_alias(char **aliases_buffer, char **argv_tree)
         alias_len++;
     while (argv_tree[tree_len])
         tree_len++;
-    command_to_lunch = malloc(sizeof(char *) * (alias_len + tree_len));
-    if (command_to_lunch == NULL)
+    command_to_launch = malloc(sizeof(char *) * (alias_len + tree_len));
+    if (command_to_launch == NULL)
         return NULL;
     for (i = 0; i < alias_len; i++)
-        command_to_lunch[i] = my_strdup(aliases_buffer[i]);
+        command_to_launch[i] = my_strdup(aliases_buffer[i]);
     for (int j = 1; argv_tree[j]; j++) {
-        command_to_lunch[i] = my_strdup(argv_tree[j]);
+        command_to_launch[i] = my_strdup(argv_tree[j]);
         i++;
     }
-    command_to_lunch[i] = NULL;
-    return command_to_lunch;
+    command_to_launch[i] = NULL;
+    return command_to_launch;
 }
 
 /**
@@ -49,21 +49,21 @@ void recursive_alias_checker(shell_t *shell, token_tree_t *tree,
     int *recursive_count)
 {
     alias_t *correlation;
-    char **command_to_lunch;
-    char **aliases_buffer;
+    char **command_to_launch;
+    char **aliases_buff;
 
     if (*recursive_count > 20 || !tree->args || !tree->args[0])
         return;
     correlation = find_alias_by_name(shell->aliases, tree->args[0]);
     if (correlation == NULL)
         return;
-    aliases_buffer = my_str_to_word_array(correlation->command);
-    command_to_lunch = change_tree_command_to_alias(aliases_buffer, tree->args);
-    if (command_to_lunch == NULL)
+    aliases_buff = my_str_to_word_array(correlation->command);
+    command_to_launch = change_tree_command_to_alias(aliases_buff, tree->args);
+    if (command_to_launch == NULL)
         return;
     free_array(tree->args);
-    free_array(aliases_buffer);
-    tree->args = command_to_lunch;
+    free_array(aliases_buff);
+    tree->args = command_to_launch;
     (*recursive_count)++;
     recursive_alias_checker(shell, tree, recursive_count);
 }
