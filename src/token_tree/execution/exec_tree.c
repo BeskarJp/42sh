@@ -16,6 +16,7 @@
 void run_simple_command(shell_t *shell, token_tree_t *tree)
 {
     alias_checker(shell, tree);
+    tree->args = expand_globbing(tree->args);
     shell->arg_col = tree->args;
     if (!shell->arg_col || !shell->arg_col[0])
         return;
@@ -42,6 +43,8 @@ void run_tree(shell_t *shell, token_tree_t *tree)
         run_tree(shell, tree->left);
         run_tree(shell, tree->right);
     }
+    if (tree->type == AND_OPERATOR || tree->type == OR_OPERATOR)
+        exec_operators(shell, tree);
     if (tree->type == PIPE)
         run_pipe(shell, tree);
     if (tree->type >= REDIR_DROITE && tree->type <= REDIR_DB_GAUCHE)

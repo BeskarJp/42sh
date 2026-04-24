@@ -20,6 +20,16 @@ int bonus_builtin_exec(shell_t *shell)
         start_claude(shell);
         return 1;
     }
+    if (my_strcmp(shell->arg_col[0], "cactus") == 0 ||
+        my_strcmp(shell->arg_col[0], "travis") == 0){
+        bonus_builtin_ascii_art_cactus();
+        shell->exit_status = 0;
+        return 1;
+    }
+    if (my_strcmp(shell->arg_col[0], "echo") == 0) {
+        exec_echo(shell);
+        return 1;
+    }
     return 0;
 }
 
@@ -53,12 +63,29 @@ int builtin_exec_continue(shell_t *shell)
 }
 
 /**
- * @brief Executes a builtin among setenv/unsetenv/cd/history if recognized
+ * @brief Executes job-control builtins if the command matches
  *
  * @param shell Shell structure
- * @return int. 1 if builtin is handled, 0 if not
+ * @return int. 1 if a job builtin was handled, 0 if not
  */
-int builtin_exec(shell_t *shell)
+static int job_builtin_exec(shell_t *shell)
+{
+    if (my_strcmp(shell->arg_col[0], "jobs") == 0)
+        return exec_jobs(shell);
+    if (my_strcmp(shell->arg_col[0], "fg") == 0)
+        return exec_fg(shell);
+    if (my_strcmp(shell->arg_col[0], "bg") == 0)
+        return exec_bg(shell);
+    return 0;
+}
+
+/**
+ * @brief Executes the builtins tied to shell state management
+ *
+ * @param shell Shell structure
+ * @return int. 1 if a builtin was handled, 0 if not
+ */
+static int shell_state_builtin_exec(shell_t *shell)
 {
     if (my_strcmp(shell->arg_col[0], "setenv") == 0) {
         exec_setenv(shell);
@@ -76,6 +103,21 @@ int builtin_exec(shell_t *shell)
         display_history(shell);
         return 1;
     }
+    return 0;
+}
+
+/**
+ * @brief Executes a builtin among setenv/unsetenv/cd/history if recognized
+ *
+ * @param shell Shell structure
+ * @return int. 1 if builtin is handled, 0 if not
+ */
+int builtin_exec(shell_t *shell)
+{
+    if (job_builtin_exec(shell) == 1)
+        return 1;
+    if (shell_state_builtin_exec(shell) == 1)
+        return 1;
     if (builtin_exec_continue(shell) == 1)
         return 1;
     return 0;
@@ -95,6 +137,7 @@ int builtin_assembly(shell_t *shell)
     }
     if (my_strcmp(shell->arg_col[0], "env") == 0) {
         display_env(shell);
+        shell->exit_status = 0;
         return 1;
     }
     if (my_strcmp(shell->arg_col[0], "export") == 0) {

@@ -52,6 +52,31 @@ token_tree_t *parse_pipe(char *line)
 }
 
 /**
+ * @brief Parses line for find operators && + || and build the tree
+ *
+ * @param line Line to parse
+ * @return token_tree_t* Command tree
+ */
+token_tree_t *parse_logical(char *line)
+{
+    struct_parse_t data;
+
+    for (int i = my_strlen(line) - 1; i > 0; i--) {
+        if (line[i] == '&' && line[i - 1] == '&') {
+            data = (struct_parse_t){AND_OPERATOR, i - 1, 2,
+                parse_logical, parse_pipe};
+            return cut_branch(line, &data);
+        }
+        if (line[i] == '|' && line[i - 1] == '|') {
+            data = (struct_parse_t){OR_OPERATOR, i - 1, 2,
+                parse_logical, parse_pipe};
+            return cut_branch(line, &data);
+        }
+    }
+    return parse_pipe(line);
+}
+
+/**
  * @brief Parses line in the order ';', '|', then redirections/command.
  *
  * @param line Line to parse
@@ -65,9 +90,10 @@ token_tree_t *parse_line(char *line)
         return NULL;
     for (int i = my_strlen(line) - 1; i >= 0; i--) {
         if (line[i] == ';') {
-            data = (struct_parse_t){SEMICOLONS, i, 1, parse_line, parse_pipe};
+            data = (struct_parse_t){SEMICOLONS, i, 1,
+                parse_line, parse_logical};
             return cut_branch(line, &data);
         }
     }
-    return parse_pipe(line);
+    return parse_logical(line);
 }

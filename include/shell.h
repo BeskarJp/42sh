@@ -7,11 +7,14 @@
 
 #include <sys/stat.h>
 #include <sys/wait.h>
+#include <stdbool.h>
 #include <signal.h>
 #include <string.h>
 #include <fcntl.h>
 #include <errno.h>
 #include <time.h>
+#include <dirent.h>
+#include <glob.h>
 #include "my.h"
 
 #ifndef MINISHELL
@@ -45,12 +48,22 @@
 typedef enum node_type_e {
     SIMPLE_COMMAND,
     SEMICOLONS,
+    AND_OPERATOR,
+    OR_OPERATOR,
     PIPE,
     REDIR_DROITE,
     REDIR_DB_DROITE,
     REDIR_GAUCHE,
     REDIR_DB_GAUCHE,
 } node_type_t;
+
+
+/**
+ * @brief Variables for the inhibitors
+ */
+typedef struct inhibitors_s {
+    char *user;
+} inhibitors_t;
 
 /**
  * @brief Node of the parsed command tree
@@ -104,6 +117,26 @@ typedef struct env_s {
 } env_t;
 
 /**
+ * @brief State of a shell job
+ */
+typedef enum job_state_e {
+    JOB_RUNNING,
+    JOB_STOPPED,
+    JOB_DONE,
+} job_state_t;
+
+/**
+ * @brief Linked list of jobs for job control
+ */
+typedef struct job_s {
+    int id;
+    pid_t pgid;
+    char *command;
+    job_state_t state;
+    struct job_s *next;
+} job_t;
+
+/**
  * @brief Shell basic struct
  */
 typedef struct shell_s {
@@ -114,8 +147,18 @@ typedef struct shell_s {
     env_t *local_env;
     alias_t *aliases;
     history_t *history;
+    inhibitors_t *inhibitors;
+    job_t *jobs;
+    int next_job_id;
+    pid_t shell_pgid;
+    int shell_terminal;
+    int interactive;
+    int exit_status;
 } shell_t;
 
+
+// bonus/echo_output/echo_output.c
+int exec_echo(shell_t *shell);
 
 // bonus/easter-egg/epiclaude_encyclo.c
 void print_more_of_command(char *command);
@@ -161,18 +204,26 @@ void exec_alias(shell_t *shell);
 void delete_alias_node(shell_t *shell, alias_t *aliases, alias_t *old);
 
 // src/buitlins/features/aliases/alias_utils.c
+// bonus/travis_builtin/travis_builtin.c
+void bonus_builtin_ascii_art_cactus(void);
+
+// src/builtins/features/aliases/alias_utils.c
+
 alias_t *find_alias_by_name(alias_t *aliases, char *name);
 void add_alias(shell_t *shell, char *name, char *command);
 
-// src/buitlins/features/aliases/unalias_builtin.c
+// src/builtins/features/aliases/unalias_builtin.c
 void exec_unalias(shell_t *shell);
 
-// src/buitlins/features/history/history_builtin.c
+// src/builtins/features/history/history_builtin.c
 void add_to_history_linked_list(shell_t *shell, char *line);
 void display_history(shell_t *shell);
 
-// src/buitlins/features/history/history_feature.c
+// src/builtins/features/history/history_feature.c
 char *check_history_feature(shell_t *shell, char *line);
+
+// src/nuiltins/features/inhibitors/inhibitors.c
+int check_user(char *line, shell_t *env);
 
 //src/builtins/features/wh_builtins/wh_utils.c
 int check_if_builtin(char *command);
@@ -184,20 +235,20 @@ void exec_where(shell_t *shell);
 //src/builtins/features/wh_builtins/which_builtin.c
 void exec_which(shell_t *shell);
 
-// src/buitlins/builtin_assembly.c
+// src/builtins/builtin_assembly.c
 int builtin_assembly(shell_t *shell);
 
-// src/buitlins/cd_builtin.c
+// src/builtins/cd_builtin.c
 void exec_cd(shell_t *shell);
 
-// src/buitlins/env_builtin.c
+// src/builtins/env_builtin.c
 void display_env(shell_t *shell);
 
-// src/buitlins/setenv_builtin.c
+// src/builtins/setenv_builtin.c
 void exec_setenv(shell_t *shell);
 void make_env_bigger(shell_t *shell, char *new_line);
 
-// src/buitlins/unsetenv_builtin.c
+// src/builtins/unsetenv_builtin.c
 void exec_unsetenv(shell_t *shell);
 
 // src/environment/env_interract.c
@@ -216,11 +267,31 @@ void print_shell_line(char **env);
 void execute_command(shell_t *shell);
 void line_executor(shell_t *shell, char *line);
 
+// src/job_control/job_control.c
+void init_job_control(shell_t *shell);
+void refresh_jobs(shell_t *shell);
+void notify_done_jobs(shell_t *shell);
+int add_job(shell_t *shell, pid_t pgid, char **args, job_state_t state);
+int exec_jobs(shell_t *shell);
+int exec_fg(shell_t *shell);
+int exec_bg(shell_t *shell);
+
 // src/token_tree/execution/features/aliases/alias_checker.c
-void alias_checker(shell_t *shell, token_tree_t *arbre);
+void alias_checker(shell_t *shell, token_tree_t *tree);
+
+//src/token_tree/execution/exec_operators.c
+void exec_operators(shell_t *shell, token_tree_t *tree);
 
 // src/token_tree/execution/exec_pipe.c
 void run_pipe(shell_t *shell, token_tree_t *tree);
+
+// src/token_tree/execution/exec_globbings.c
+int is_globbing_pattern(char *str);
+int count_args(char **args);
+int append_match(char ***exp, int *count, int *cap, char *str);
+char **collect_matches(char *pattern);
+int expand_all_args(char **args, char **expanded, int *count, int *capacity);
+char **expand_globbing(char **args);
 
 // src/token_tree/execution/exec_redirection_utils.c
 void left_double_redirection(char *delimiter);
@@ -253,7 +324,7 @@ void check_strsignal(int status);
 void free_array(char **array);
 void free_aliases(alias_t *aliases);
 void free_history(history_t *history);
-void free_cd(shell_t *shell);
+void free_jobs(job_t *jobs);
 void free_tree(token_tree_t *tree);
 
 #endif /* MINISHELL */

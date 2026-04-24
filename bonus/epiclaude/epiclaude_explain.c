@@ -22,7 +22,7 @@ void explain_simple_command(token_tree_t *tree, int *step)
     ia_style_text_writer(tree->args[0], FAST);
     ia_style_text_writer("'", FAST);
     if (tree->args[1] != NULL) {
-        ia_style_text_writer(" with his arguments : ", FAST);
+        ia_style_text_writer(" with its arguments : ", FAST);
         for (int i = 1; tree->args[i]; i++) {
             ia_style_text_writer("[", FAST);
             ia_style_text_writer(tree->args[i], FAST);
@@ -110,10 +110,11 @@ void explain_command_line(char *command)
         ia_style_text_writer("Sorry, I can't parse this command.\n\n", BASIC);
         return;
     }
-    ia_style_text_writer("\nI explain now this command :", BASIC);
+    ia_style_text_writer("\nLet me look it up...", BASIC);
     ia_style_text_writer("\n\n", 1500000);
+    ia_style_text_writer("Found it !\n\n", BASIC);
     explain_tree(tree, &step);
-    ia_style_text_writer("\nThat's it ! If you need any explain,", SLOW);
+    ia_style_text_writer("\nThat's it ! If you need any explanation,", SLOW);
     ia_style_text_writer(" don't hesitate !\n\n", SLOW);
     free_tree(tree);
 }
