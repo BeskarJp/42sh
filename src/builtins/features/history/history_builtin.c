@@ -68,4 +68,5 @@ void display_history(shell_t *shell)
         my_printf("\t%d  %s   %s\n", temp->index, temp->time, temp->command);
         temp = temp->next;
     }
+    shell->exit_status = 0;
 }

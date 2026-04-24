@@ -23,17 +23,20 @@ SRC	=	lib/my/mini_printf.c	\
 		lib/my/my_strlen.c	\
 		lib/my/my_strncmp.c	\
 		lib/my/str_nfuse.c	\
+		bonus/echo_output/echo_output.c	\
 		bonus/epiclaude/epiclaude_encyclo.c	\
 		bonus/epiclaude/epiclaude_explain.c	\
 		bonus/epiclaude/epiclaude_input.c	\
 		bonus/epiclaude/epiclaude_print.c	\
 		bonus/epiclaude/epiclaude_utils.c	\
 		bonus/epiclaude/epiclaude.c	\
+		bonus/travis_builtin/travis_builtin.c	\
 		src/builtins/features/aliases/alias_builtin.c	\
 		src/builtins/features/aliases/alias_utils.c	\
 		src/builtins/features/aliases/unalias_builtin.c	\
 		src/builtins/features/history/history_builtin.c	\
 		src/builtins/features/history/history_feature.c	\
+		src/builtins/features/inhibitors/inhibitors.c	\
 		src/builtins/features/wh_builtins/wh_utils.c	\
 		src/builtins/features/wh_builtins/where_builtin.c	\
 		src/builtins/features/wh_builtins/which_builtin.c	\
@@ -47,9 +50,14 @@ SRC	=	lib/my/mini_printf.c	\
 		src/builtins/unsetenv_builtin.c	\
 		src/environment/env_interract.c	\
 		src/environment/find_pathway.c	\
+		src/job_control/job_control_core.c	\
+		src/job_control/job_control_builtins.c	\
 		src/shell/shell_prompt_line.c	\
 		src/shell/shell_request.c	\
 		src/token_tree/execution/features/aliases/alias_checker.c	\
+		src/token_tree/execution/exec_globbings_utils.c	\
+		src/token_tree/execution/exec_globbings.c	\
+		src/token_tree/execution/exec_operators.c	\
 		src/token_tree/execution/exec_pipe.c	\
 		src/token_tree/execution/exec_redirection_utils.c	\
 		src/token_tree/execution/exec_redirection.c	\

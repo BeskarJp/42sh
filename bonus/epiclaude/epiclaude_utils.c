@@ -31,7 +31,7 @@ char *user_of_shell(char **env)
 void display_line_in_file(char *line_in_file, int size)
 {
     if (line_in_file == NULL || size == 0) {
-        ia_style_text_writer("\nThere are nothing in 'notions.rdr' file", SLOW);
+        ia_style_text_writer("\nThere is nothing in 'notions.rdr' file", SLOW);
         ia_style_text_writer(" ...\n\n", ULTRA_SLOW);
         return;
     }
