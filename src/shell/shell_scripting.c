@@ -94,9 +94,9 @@ static void wait_bash_child(shell_t *shell, pid_t pid)
         tcsetpgrp(shell->shell_terminal, shell->shell_pgid);
 }
 
-    /**
-     * @brief Restores default signal handlers in the child process
-     */
+/**
+ * @brief Restores default signal handlers in the child process
+ */
 static void reset_child_signals(void)
 {
     signal(SIGINT, SIG_DFL);

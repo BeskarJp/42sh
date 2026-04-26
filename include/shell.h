@@ -42,6 +42,7 @@
     #define PERM_NORM 0644
     #define FD_ERROR -1
 
+    
 /**
  * @brief Define type for parse line command
  */
@@ -212,7 +213,6 @@ int check_user(char *line, shell_t *env);
 void export_builtin(shell_t *shell);
 void export_helper(shell_t *shell, env_t *var);
 env_t *find_var_by_name(env_t *local, char *name);
-
 
 // src/builtins/features/variables/local_env_utils.c
 void display_local_env(shell_t *shell);
