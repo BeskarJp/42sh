@@ -266,6 +266,9 @@ void print_shell_line(char **env);
 void execute_command(shell_t *shell);
 void line_executor(shell_t *shell, char *line);
 
+// src/shell/shell_scripting.c
+bool try_execute_bash_script(shell_t *shell, char *line);
+
 // src/job_control/job_control.c
 void init_job_control(shell_t *shell);
 void refresh_jobs(shell_t *shell);
