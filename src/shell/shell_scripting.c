@@ -7,6 +7,13 @@
 
 #include "shell.h"
 
+/**
+ * @brief Checks whether a character can be used in an identifier
+ *
+ * @param c Character to test
+ * @return bool True when c is alphanumeric or '_'
+ */
+
 static bool is_ident_char(char c)
 {
     if (c >= 'a' && c <= 'z')
@@ -17,6 +24,14 @@ static bool is_ident_char(char c)
         return true;
     return c == '_';
 }
+
+/**
+ * @brief Finds a keyword as a standalone token in a line
+ *
+ * @param line Input line
+ * @param key Keyword to detect
+ * @return bool True when key is found as a complete token
+ */
 
 static bool has_keyword(char *line, char *key)
 {
@@ -35,6 +50,13 @@ static bool has_keyword(char *line, char *key)
     return false;
 }
 
+/**
+ * @brief Detects lines that should be delegated to bash
+ *
+ * @param line Input line
+ * @return bool True when bash-specific syntax is detected
+ */
+
 static bool is_bash_script_line(char *line)
 {
     if (strstr(line, "[[") != NULL || strstr(line, "]]") != NULL)
@@ -51,6 +73,13 @@ static bool is_bash_script_line(char *line)
         return true;
     return has_keyword(line, "case") && has_keyword(line, "esac");
 }
+
+/**
+ * @brief Waits for the bash child and updates shell status
+ *
+ * @param shell Shell structure
+ * @param pid Child process id
+ */
 
 static void wait_bash_child(shell_t *shell, pid_t pid)
 {
@@ -69,6 +98,10 @@ static void wait_bash_child(shell_t *shell, pid_t pid)
         tcsetpgrp(shell->shell_terminal, shell->shell_pgid);
 }
 
+    /**
+     * @brief Restores default signal handlers in the child process
+     */
+
 static void reset_child_signals(void)
 {
     signal(SIGINT, SIG_DFL);
@@ -78,6 +111,14 @@ static void reset_child_signals(void)
     signal(SIGTTOU, SIG_DFL);
     signal(SIGCHLD, SIG_DFL);
 }
+
+/**
+ * @brief Runs one command line through /bin/bash -c
+ *
+ * @param shell Shell structure
+ * @param line Script line to execute
+ * @return int 0 on success, 1 on fork error
+ */
 
 static int run_bash_script(shell_t *shell, char *line)
 {
@@ -98,6 +139,14 @@ static int run_bash_script(shell_t *shell, char *line)
     wait_bash_child(shell, pid);
     return 0;
 }
+
+/**
+ * @brief Tries to execute bash-style scripting syntax
+ *
+ * @param shell Shell structure
+ * @param line Input line
+ * @return bool True when the line was handled by this function
+ */
 
 bool try_execute_bash_script(shell_t *shell, char *line)
 {
