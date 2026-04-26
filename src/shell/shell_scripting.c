@@ -13,7 +13,6 @@
  * @param c Character to test
  * @return bool True when c is alphanumeric or '_'
  */
-
 static bool is_ident_char(char c)
 {
     if (c >= 'a' && c <= 'z')
@@ -32,7 +31,6 @@ static bool is_ident_char(char c)
  * @param key Keyword to detect
  * @return bool True when key is found as a complete token
  */
-
 static bool has_keyword(char *line, char *key)
 {
     char *found = strstr(line, key);
@@ -56,7 +54,6 @@ static bool has_keyword(char *line, char *key)
  * @param line Input line
  * @return bool True when bash-specific syntax is detected
  */
-
 static bool is_bash_script_line(char *line)
 {
     if (strstr(line, "[[") != NULL || strstr(line, "]]") != NULL)
@@ -80,7 +77,6 @@ static bool is_bash_script_line(char *line)
  * @param shell Shell structure
  * @param pid Child process id
  */
-
 static void wait_bash_child(shell_t *shell, pid_t pid)
 {
     int status = 0;
@@ -101,7 +97,6 @@ static void wait_bash_child(shell_t *shell, pid_t pid)
     /**
      * @brief Restores default signal handlers in the child process
      */
-
 static void reset_child_signals(void)
 {
     signal(SIGINT, SIG_DFL);
@@ -119,7 +114,6 @@ static void reset_child_signals(void)
  * @param line Script line to execute
  * @return int 0 on success, 1 on fork error
  */
-
 static int run_bash_script(shell_t *shell, char *line)
 {
     char *bash_args[] = {"/bin/bash", "-c", line, NULL};
@@ -147,7 +141,6 @@ static int run_bash_script(shell_t *shell, char *line)
  * @param line Input line
  * @return bool True when the line was handled by this function
  */
-
 bool try_execute_bash_script(shell_t *shell, char *line)
 {
     if (!is_bash_script_line(line))
