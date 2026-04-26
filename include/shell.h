@@ -42,7 +42,7 @@
     #define PERM_NORM 0644
     #define FD_ERROR -1
 
-    
+
 /**
  * @brief Define type for parse line command
  */
