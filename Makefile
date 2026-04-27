@@ -98,9 +98,11 @@ $(NAME):	$(OBJ)
 
 tests_run:
 	@$(CC) -o $(NAME_TEST) $(SRC_TESTS) $(TESTS_FILES) $(CFLAGS) $(TFLAGS)
-	@make clean
 	@echo Units Tests are compiled
 	./$(NAME_TEST)
+
+coverage:
+	@gcovr --gcov-executable "llvm-cov gcov" -e tests/
 
 clean:
 	@rm -f $(OBJ)
