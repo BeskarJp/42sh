@@ -42,12 +42,15 @@
     #define PERM_NORM 0644
     #define FD_ERROR -1
 
+
 /**
  * @brief Define type for parse line command
  */
 typedef enum node_type_e {
     SIMPLE_COMMAND,
     SEMICOLONS,
+    AND_OPERATOR,
+    OR_OPERATOR,
     PIPE,
     REDIR_DROITE,
     REDIR_DB_DROITE,
@@ -105,6 +108,16 @@ typedef struct history_s {
 } history_t;
 
 /**
+ * @brief Linked list for local env variables
+ */
+typedef struct env_s {
+    char *var;
+    char *value;
+    int temp;
+    struct env_s *next;
+} env_t;
+
+/**
  * @brief State of a shell job
  */
 typedef enum job_state_e {
@@ -132,6 +145,7 @@ typedef struct shell_s {
     char **arg_col;
     char **copy_env;
     char *oldpwd;
+    env_t *local_env;
     alias_t *aliases;
     history_t *history;
     inhibitors_t *inhibitors;
@@ -140,8 +154,12 @@ typedef struct shell_s {
     pid_t shell_pgid;
     int shell_terminal;
     int interactive;
+    int exit_status;
 } shell_t;
 
+
+// bonus/echo_output/echo_output.c
+int exec_echo(shell_t *shell);
 
 // bonus/easter-egg/epiclaude_encyclo.c
 void print_more_of_command(char *command);
@@ -165,12 +183,18 @@ void ia_style_text_writer(char *text, int speed);
 // bonus/easter-egg/claude.c
 void start_claude(shell_t *shell);
 
-// src/builtins/features/aliases/alias_builtin.c
+// bonus/travis_builtin/travis_builtin.c
+void bonus_builtin_ascii_art_cactus(void);
+
+// src/buitlins/features/aliases/alias_builtin.c
 void exec_alias(shell_t *shell);
 
 // src/builtins/features/aliases/alias_utils.c
 alias_t *find_alias_by_name(alias_t *aliases, char *name);
 void add_alias(shell_t *shell, char *name, char *command);
+
+// src/buitlins/features/aliases/unalias_builtin.c
+void delete_alias_node(shell_t *shell, alias_t *aliases, alias_t *old);
 
 // src/builtins/features/aliases/unalias_builtin.c
 void exec_unalias(shell_t *shell);
@@ -184,6 +208,28 @@ char *check_history_feature(shell_t *shell, char *line);
 
 // src/nuiltins/features/inhibitors/inhibitors.c
 int check_user(char *line, shell_t *env);
+
+// src/builtins/features/variables/export_builtin.c
+void export_builtin(shell_t *shell);
+void export_helper(shell_t *shell, env_t *var);
+env_t *find_var_by_name(env_t *local, char *name);
+
+// src/builtins/features/variables/var_declared.c
+int var_declared(shell_t *shell, int n);
+
+// src/builtins/features/variables/local_env_utils.c
+void display_local_env(shell_t *shell);
+void add_to_local_env(shell_t *shell, char *line, int state);
+void rm_local_env_var(shell_t *shell, char *name);
+void handle_local_var(shell_t *shell);
+void local_var_only(shell_t *shell);
+
+// src/builtins/features/variables/temp_var.c
+void local_and_cmd(shell_t *shell);
+
+// src/builtins/features/variables/set_unset_builtin.c
+int set_builtin(shell_t *shell);
+int unset_builtin(shell_t *shell);
 
 //src/builtins/features/wh_builtins/wh_utils.c
 int check_if_builtin(char *command);
@@ -206,6 +252,7 @@ void display_env(shell_t *shell);
 
 // src/builtins/setenv_builtin.c
 void exec_setenv(shell_t *shell);
+void make_env_bigger(shell_t *shell, char *new_line);
 
 // src/builtins/unsetenv_builtin.c
 void exec_unsetenv(shell_t *shell);
@@ -226,6 +273,9 @@ void print_shell_line(char **env);
 void execute_command(shell_t *shell);
 void line_executor(shell_t *shell, char *line);
 
+// src/shell/shell_scripting.c
+bool try_execute_bash_script(shell_t *shell, char *line);
+
 // src/job_control/job_control.c
 void init_job_control(shell_t *shell);
 void refresh_jobs(shell_t *shell);
@@ -236,7 +286,10 @@ int exec_fg(shell_t *shell);
 int exec_bg(shell_t *shell);
 
 // src/token_tree/execution/features/aliases/alias_checker.c
-void alias_checker(shell_t *shell, token_tree_t *arbre);
+void alias_checker(shell_t *shell, token_tree_t *tree);
+
+//src/token_tree/execution/exec_operators.c
+void exec_operators(shell_t *shell, token_tree_t *tree);
 
 // src/token_tree/execution/exec_pipe.c
 void run_pipe(shell_t *shell, token_tree_t *tree);

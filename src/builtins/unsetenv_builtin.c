@@ -51,9 +51,11 @@ void exec_unsetenv(shell_t *shell)
 {
     if (shell->arg_col[1] == NULL) {
         write(2, "unsetenv: Add one argument after.\n", 35);
+        shell->exit_status = 1;
         return;
     }
     for (int i = 1; shell->arg_col[i] != NULL; i++) {
         delete_var(shell, shell->arg_col[i]);
     }
+    shell->exit_status = 0;
 }
