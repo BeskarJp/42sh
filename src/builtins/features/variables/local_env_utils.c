@@ -77,30 +77,7 @@ void rm_local_env_var(shell_t *shell, char *name)
     }
 }
 
-int var_declared(shell_t *shell, int n)
-{
-    char *first = shell->arg_col[n];
-    int count = 0;
-    int i = 0;
-
-    while (first[i] != '\0') {
-        if (first[i] == '=')
-            count++;
-        if ((first[i] >= 'a' && first[i] <= 'z') ||
-            (first[i] >= 'A' && first[i] <= 'Z') ||
-            (first[i] >= '0' && first[i] <= '9') ||
-            (first[i] == '=')) {
-            i++;
-        } else {
-            return 84;
-        }
-    }
-    if (count != 1)
-        return 84;
-    return 0;
-}
-
-static void local_var_only(shell_t *shell)
+void local_var_only(shell_t *shell)
 {
     for (int i = 0; shell->arg_col[i] != NULL; i++)
         add_to_local_env(shell, shell->arg_col[i], 0);

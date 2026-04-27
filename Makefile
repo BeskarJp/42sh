@@ -41,7 +41,9 @@ SRC	=	lib/my/mini_printf.c	\
 		src/builtins/features/wh_builtins/where_builtin.c	\
 		src/builtins/features/wh_builtins/which_builtin.c	\
 		src/builtins/features/variables/local_env_utils.c	\
+		src/builtins/features/variables/var_declared.c	\
 		src/builtins/features/variables/export_builtin.c	\
+		src/builtins/features/variables/set_unset_builtin.c	\
 		src/builtins/features/variables/temp_var.c	\
 		src/builtins/builtin_assembly.c	\
 		src/builtins/cd_builtin.c	\
