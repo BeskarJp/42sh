@@ -51,3 +51,12 @@ Test(parsing, parse_logical_complex)
     cr_assert_eq(tree->left->type, AND_OPERATOR);
     free_tree(tree);
 }
+
+Test(parsing, parse_operators_priority)
+{
+    token_tree_t *tree = parse_line("ls && cat file || echo error");
+
+    cr_assert_eq(tree->type, OR_OPERATOR);
+    cr_assert_eq(tree->left->type, AND_OPERATOR);
+    free_tree(tree);
+}
