@@ -80,7 +80,8 @@ NAME	=	42sh
 
 SRC_TESTS	=	$(filter-out src/main.c, $(SRC))
 
-TESTS_FILES	=	tests/test_42sh.c
+TESTS_FILES	=	tests/test_exec.c	\
+				tests/test_parsing.c
 
 NAME_TEST	=	unit_tests
 
