@@ -1,12 +1,12 @@
 # 42sh
 
-TCSH Shell made in EPITECH.
+TCSH-like Shell made in EPITECH.
 
 --- 
 
 ## Description
 
-sequel of minishell 1 and 2, 42sh is a full recreation of the TCSH Shell, including various features, ranging from basic commands (like ls or echo), builtin commands (such as cd and setenv) and even redirections (for exemple: "|", ">" or even ">>"), full list of major 42sh features can be found below:
+Conclusion of minishell 1 and 2, 42sh is a full recreation of the TCSH Shell, including various features, ranging from basic commands (like ls or echo), builtin commands (such as cd and setenv) and even redirections (for exemple: "|", ">" or even ">>"), the full list of major 42sh features can be found below:
 
 * **MAJOR FEATURES** :
     * `inhibitors`
@@ -25,7 +25,7 @@ sequel of minishell 1 and 2, 42sh is a full recreation of the TCSH Shell, includ
 
  ## Usage
 
-First, you have to make it an executable:
+First, you have to build it as an executable:
 ```bash
 make
 ```
@@ -48,6 +48,6 @@ The 42sh will return the same value as the TCSH shell, exemple:
 
 ## Notes
 
-- This projet as been made in the **C** language.
+- This projet was written in **C**.
 - This project is absolutely **NOT** for sale.
-- Beware EPITECH students, any attempt of stealing the code will result with a -42.
+- Beware EPITECH students, any attempt of stealing the code will result in a -42.
