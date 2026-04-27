@@ -213,6 +213,8 @@ void export_builtin(shell_t *shell);
 void export_helper(shell_t *shell, env_t *var);
 env_t *find_var_by_name(env_t *local, char *name);
 
+// src/builtins/features/variables/var_declared.c
+int var_declared(shell_t *shell, int n);
 
 // src/builtins/features/variables/local_env_utils.c
 void display_local_env(shell_t *shell);
@@ -220,9 +222,14 @@ void add_to_local_env(shell_t *shell, char *line, int state);
 void rm_local_env_var(shell_t *shell, char *name);
 int var_declared(shell_t *shell, int n);
 void handle_local_var(shell_t *shell);
+void local_var_only(shell_t *shell);
 
 // src/builtins/features/variables/temp_var.c
 void local_and_cmd(shell_t *shell);
+
+// src/builtins/features/variables/set_unset_builtin.c
+int set_builtin(shell_t *shell);
+int unset_builtin(shell_t *shell);
 
 //src/builtins/features/wh_builtins/wh_utils.c
 int check_if_builtin(char *command);
