@@ -9,12 +9,6 @@
 #include <criterion/redirect.h>
 #include "shell.h"
 
-void redirect_all_stdout(void)
-{
-    cr_redirect_stdout();
-    cr_redirect_stderr();
-}
-
 Test(lib_my, test_strlen)
 {
     cr_assert_eq(my_strlen("EpiClaude"), 9);
@@ -70,4 +64,21 @@ Test(env, format_env_line)
 
     cr_assert_str_eq(line, "USER=bocal");
     free(line);
+}
+
+Test(pipe, create_pathway)
+{
+    char *path = create_path_way("/usr/bin", "ls");
+
+    cr_assert_str_eq(path, "/usr/bin/ls");
+    free(path);
+}
+
+Test(pipe, find_command_path)
+{
+    char *env[] = {"PATH=/usr/bin:/bin", NULL};
+    char *cmd_path = find_command_path("ls", env);
+
+    cr_assert_str_eq(cmd_path, "/usr/bin/ls");
+    free(cmd_path);
 }
