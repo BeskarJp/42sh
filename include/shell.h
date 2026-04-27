@@ -42,6 +42,7 @@
     #define PERM_NORM 0644
     #define FD_ERROR -1
 
+
 /**
  * @brief Define type for parse line command
  */
@@ -220,7 +221,6 @@ int var_declared(shell_t *shell, int n);
 void display_local_env(shell_t *shell);
 void add_to_local_env(shell_t *shell, char *line, int state);
 void rm_local_env_var(shell_t *shell, char *name);
-int var_declared(shell_t *shell, int n);
 void handle_local_var(shell_t *shell);
 void local_var_only(shell_t *shell);
 
@@ -272,6 +272,9 @@ void print_shell_line(char **env);
 // src/shell/shell_request.c
 void execute_command(shell_t *shell);
 void line_executor(shell_t *shell, char *line);
+
+// src/shell/shell_scripting.c
+bool try_execute_bash_script(shell_t *shell, char *line);
 
 // src/job_control/job_control.c
 void init_job_control(shell_t *shell);
