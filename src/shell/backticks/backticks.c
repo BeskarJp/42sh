@@ -7,6 +7,13 @@
 
 #include "shell.h"
 
+/**
+ * @brief Execute a command within backticks and capture its output
+ *
+ * @param shell Shell structure for context and execution
+ * @param command The command string extracted from backticks
+ * @return char*. The output of the command
+ */
 char *exec_backtick(shell_t *shell, char *command)
 {
     char *out = NULL;
@@ -30,6 +37,12 @@ char *exec_backtick(shell_t *shell, char *command)
     return out;
 }
 
+/**
+ * @brief Locate the start and end indices of the first pair of backticks
+ *
+ * @param line The command line to search
+ * @param indices Array of two integers to store [start, end]
+ */
 void find_backticks(char *line, int *indices)
 {
     for (int i = 0; line[i] != '\0'; i++) {
@@ -44,6 +57,13 @@ void find_backticks(char *line, int *indices)
     }
 }
 
+/**
+ * @brief Main function to handle backtick substitution recursively
+ *
+ * @param shell Shell structure
+ * @param line The raw command line
+ * @return char*. The processed command line with all substitutions done
+ */
 char *handle_backticks(shell_t *shell, char *line)
 {
     int indices[2] = {-1, -1};
