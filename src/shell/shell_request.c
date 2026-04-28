@@ -184,6 +184,9 @@ void line_executor(shell_t *shell, char *line)
     if (check_user(line, shell) == 1)
         is_user = true;
     if (is_user == false) {
+        if (try_execute_bash_script(shell, line)) {
+            return;
+        }
         tree = parse_line(line);
         if (tree != NULL) {
             run_tree(shell, tree);
