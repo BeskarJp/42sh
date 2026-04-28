@@ -10,12 +10,16 @@
 int set_builtin(shell_t *shell)
 {
     char **temp = NULL;
+    int j = 0;
 
     if (shell->arg_col[1] == NULL) {
         write(2, "set: Not enough arguments.\n", 27);
         return 0;
     }
-    temp = malloc(sizeof(shell->arg_col));
+    while (shell->arg_col[j] != NULL) {
+        j++;
+    }
+    temp = malloc(sizeof(char *) * j);
     for (int i = 0; shell->arg_col[i] != NULL; i++)
         temp[i] = my_strdup(shell->arg_col[i + 1]);
     shell->arg_col = temp;
@@ -27,7 +31,7 @@ int set_builtin(shell_t *shell)
 int unset_builtin(shell_t *shell)
 {
     if (shell->arg_col[1] == NULL) {
-        write(2, "set: Not enough arguments.\n", 27);
+        write(2, "unset: Not enough arguments.\n", 29);
         return 0;
     }
     for (int i = 1; shell->arg_col[i] != NULL; i++)
