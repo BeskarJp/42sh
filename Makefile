@@ -9,6 +9,8 @@ CC = 	epiclang
 
 CFLAGS	= -Wall -Wextra -I./include
 
+TFLAGS	=	--coverage -lcriterion
+
 SRC	=	lib/my/mini_printf.c	\
 		lib/my/my_getnbr.c	\
 		lib/my/my_put_nbr.c	\
@@ -78,7 +80,11 @@ NAME	=	42sh
 
 SRC_TESTS	=	$(filter-out src/main.c, $(SRC))
 
-TESTS_FILES	=	tests/test_42sh.c
+TESTS_FILES	=	tests/test_builtins.c	\
+				tests/test_env.c	\
+				tests/test_exec_utils.c	\
+				tests/test_exec.c	\
+				tests/test_parsing.c
 
 NAME_TEST	=	unit_tests
 
@@ -91,10 +97,12 @@ $(NAME):	$(OBJ)
 	@echo "Everything is compiled"
 
 tests_run:
-	@$(CC) -o $(NAME_TEST) $(SRC_TESTS) $(TESTS_FILES) $(CFLAGS) --coverage -lcriterion
-	@make clean
+	@$(CC) -o $(NAME_TEST) $(SRC_TESTS) $(TESTS_FILES) $(CFLAGS) $(TFLAGS)
 	@echo Units Tests are compiled
 	./$(NAME_TEST)
+
+coverage:
+	@gcovr --gcov-executable "llvm-cov gcov" -e tests/
 
 clean:
 	@rm -f $(OBJ)
