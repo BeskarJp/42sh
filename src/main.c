@@ -70,6 +70,7 @@ void shell_loop(shell_t *shell, size_t *len, char **line)
             *len = 0;
             continue;
         }
+        *line = handle_backticks(shell, *line);
         if ((*line)[0] != '\0') {
             add_to_history_linked_list(shell, *line);
             line_executor(shell, *line);
