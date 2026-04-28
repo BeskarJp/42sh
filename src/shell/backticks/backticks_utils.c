@@ -17,13 +17,13 @@ void replace_newlines(char *buffer, int bytes)
 
 char *join_and_free(char *old, char *buffer)
 {
-    size_t len = strlen(old) + strlen(buffer) + 1;
+    size_t len = my_strlen(old) + my_strlen(buffer) + 1;
     char *new = malloc(sizeof(char) * len);
 
     if (!new)
         return NULL;
-    strcpy(new, old);
-    strcat(new, buffer);
+    my_strcpy(new, old);
+    my_strcat(new, buffer);
     free(old);
     return new;
 }
@@ -31,7 +31,7 @@ char *join_and_free(char *old, char *buffer)
 char *read_pipe(int fd)
 {
     char buffer[1024];
-    char *old = strdup("");
+    char *old = my_strdup("");
     int bytes = 0;
 
     if (!old)
