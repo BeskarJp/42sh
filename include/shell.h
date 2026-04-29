@@ -167,6 +167,9 @@ char *load_file(char *filepath);
 void save_file(char *filepath, char *line);
 void handle_emac_input(int pid_count, char *line, int *len);
 
+// bonus/emac/emac.c
+int exec_emac(shell_t *shell);
+
 // bonus/easter-egg/epiclaude_encyclo.c
 void print_more_of_command(char *command);
 
