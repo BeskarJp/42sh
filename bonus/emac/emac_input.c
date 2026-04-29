@@ -42,6 +42,6 @@ void handle_emac_input(int pid_count, emac_t *editor)
         editor->cursor_in_file++;
     if (pid_count == KEY_BACKSPACE || pid_count == 127)
         delete_character(editor);
-    if (pid_count >= 32 && pid_count <= 126 || pid_count == '\n')
+    if ((pid_count >= 32 && pid_count <= 126) || pid_count == '\n')
         insert_character(editor, pid_count);
 }
