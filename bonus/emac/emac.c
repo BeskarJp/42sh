@@ -31,18 +31,10 @@ int check_emac_permissions(char *path)
     return 0;
 }
 
-int exec_emac(shell_t *shell)
+void run_editor_session(char *path)
 {
-    char *line = NULL;
-    char *path = shell->arg_col[1];
+    char *line = load_file(path);
 
-    if (!path) {
-        write(2, "emac: Missing filename\n", 24);
-        return shell->exit_status = 1;
-    }
-    if (check_emac_permissions(path) == 1)
-        return shell->exit_status = 1;
-    line = load_file(path);
     initscr();
     raw();
     noecho();
@@ -51,5 +43,22 @@ int exec_emac(shell_t *shell)
     endwin();
     save_file(path, line);
     free(line);
-    return shell->exit_status = 0;
+}
+
+int exec_emac(shell_t *shell)
+{
+    char *path = shell->arg_col[1];
+
+    if (!path) {
+        write(2, "emac: Missing filename\n", 24);
+        shell->exit_status = 1;
+        return 1;
+    }
+    if (check_emac_permissions(path) == 1) {
+        shell->exit_status = 1;
+        return 1;
+    }
+    run_editor_session(path);
+    shell->exit_status = 0;
+    return 0;
 }
