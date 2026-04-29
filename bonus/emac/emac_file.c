@@ -34,6 +34,6 @@ void save_emac_file(emac_t *editor)
         mvprintw(0, 0, "Error: Cannot save file!");
         return;
     }
-    write(fd, editor->file_buffer, editor->len);
+    write(fd, editor->file_buffer, editor->text_len);
     close(fd);
 }
