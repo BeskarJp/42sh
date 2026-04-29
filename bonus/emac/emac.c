@@ -56,7 +56,7 @@ int exec_emac(shell_t *shell)
     if (!editor.file_buffer)
         return 1;
     editor.text_len = my_strlen(editor.file_buffer);
-    editor.cursor_in_file = editor.text_len;
+    editor.cursor_in_file = 0;
     editor.running = 1;
     run_editor_loop(&editor);
     free(editor.file_buffer);

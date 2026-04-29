@@ -179,6 +179,9 @@ void save_emac_file(emacs_t *editor);
 // bonus/emac/emac_input.c
 void handle_emac_input(int ch, emacs_t *editor);
 
+// bonus/emac/emac_move.c
+void move_vertical(emacs_t *editor, int direction);
+
 // bonus/emac/emac.c
 int exec_emac(shell_t *shell);
 

@@ -40,6 +40,8 @@ void handle_emac_input(int pid_count, emacs_t *editor)
         editor->cursor_in_file--;
     if (pid_count == KEY_RIGHT && editor->cursor_in_file < editor->text_len)
         editor->cursor_in_file++;
+    if (pid_count == KEY_UP || pid_count == KEY_DOWN)
+        move_vertical(editor, pid_count);
     if (pid_count == KEY_BACKSPACE || pid_count == 127)
         delete_character(editor);
     if ((pid_count >= 32 && pid_count <= 126) || pid_count == '\n')
