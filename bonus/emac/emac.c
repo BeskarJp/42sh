@@ -13,9 +13,11 @@ void base_of_emac_visual(emacs_t *editor)
     int y = 1;
 
     clear();
+    attron(A_REVERSE);
     mvprintw(0, 0,
-        "### emac: %s ('Ctrl + S' for Save and  'Ctrl + X' for Quit) ###",
+        "###   emac: %s 'Ctrl + S' for Save and  'Ctrl + X' for Quit   ###",
         editor->pathline);
+    attroff(A_REVERSE);
     mvprintw(1, 0, "%s", editor->file_buffer);
     for (int i = 0; i < editor->cursor_in_file; i++) {
         if (editor->file_buffer[i] == '\n') {
