@@ -28,6 +28,7 @@ SRC	=	lib/my/mini_printf.c	\
 		bonus/echo_output/echo_output.c	\
 		bonus/emac/emac_file.c	\
 		bonus/emac/emac_input.c	\
+		bonus/emac/emac_move.c	\
 		bonus/emac/emac.c	\
 		bonus/epiclaude/epiclaude_encyclo.c	\
 		bonus/epiclaude/epiclaude_explain.c	\
