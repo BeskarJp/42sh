@@ -7,14 +7,15 @@
 
 #include "shell.h"
 
-void base_of_emac_visual(emac_t *editor)
+void base_of_emac_visual(emacs_t *editor)
 {
     int x = 0;
     int y = 1;
 
     clear();
-    mvprintw(0, 0, "--- EMAC: %s ('Ctrl + S' for Save and", editor->pathline);
-    mvprintw(0, 0, " 'Ctrl + X' for Quit) ---");
+    mvprintw(0, 0,
+        "### emac: %s ('Ctrl + S' for Save and  'Ctrl + X' for Quit) ###",
+        editor->pathline);
     mvprintw(1, 0, "%s", editor->file_buffer);
     for (int i = 0; i < editor->cursor_in_file; i++) {
         if (editor->file_buffer[i] == '\n') {
@@ -27,7 +28,7 @@ void base_of_emac_visual(emac_t *editor)
     refresh();
 }
 
-void run_editor_loop(emac_t *editor)
+void run_editor_loop(emacs_t *editor)
 {
     initscr();
     raw();
@@ -42,7 +43,7 @@ void run_editor_loop(emac_t *editor)
 
 int exec_emac(shell_t *shell)
 {
-    emac_t editor;
+    emacs_t editor;
 
     if (!shell->arg_col[1]) {
         write(2, "emac: Need file\n", 16);

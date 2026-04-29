@@ -26,7 +26,7 @@ char *load_emac_file(char *pathline)
     return file_buffer;
 }
 
-void save_emac_file(emac_t *editor)
+void save_emac_file(emacs_t *editor)
 {
     int fd = open(editor->pathline, O_WRONLY | O_CREAT | O_TRUNC, PERM_NORM);
 
