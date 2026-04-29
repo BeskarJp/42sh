@@ -7,7 +7,6 @@
 
 #include "shell.h"
 
-
 void loop_editor(char *line)
 {
     int pid_count = 0;

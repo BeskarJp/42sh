@@ -1,8 +1,8 @@
 /*
 ** EPITECH PROJECT, 2026
 ** 42sh
-** line description:
-** Utils for mini emac
+** File description:
+** Utils for emac
 */
 
 #include "shell.h"
@@ -39,10 +39,12 @@ void save_file(char *filepath, char *line)
 
 void handle_emac_input(int pid_count, char *line, int *len)
 {
-    if ((pid_count == KEY_BACKSPACE || pid_count == 127 || pid_count == '\b') && *len > 0) {
+    if ((pid_count == KEY_BACKSPACE || pid_count == 127 ||
+            pid_count == '\b') && *len > 0) {
         (*len)--;
         line[*len] = '\0';
-    } else if (pid_count != 24 && *len < 4095 && pid_count >= 32 && pid_count <= 126) {
+    } else if (pid_count != 24 && *len < 4095 && pid_count >= 32 &&
+        pid_count <= 126) {
         line[*len] = (char)pid_count;
         (*len)++;
         line[*len] = '\0';
