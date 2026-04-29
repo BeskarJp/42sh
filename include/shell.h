@@ -62,13 +62,13 @@ typedef enum node_type_e {
 /**
  * @brief Variables for emac bonus
  */
-typedef struct emac_s {
+typedef struct emacs_s {
     char *file_buffer;
     char *pathline;
     int cursor_in_file;
     int text_len;
     int running;
-} emac_t;
+} emacs_t;
 
 /**
  * @brief Variables for the inhibitors
@@ -174,10 +174,10 @@ int exec_echo(shell_t *shell);
 
 // bonus/emac/emac_file.c
 char *load_emac_file(char *path);
-void save_emac_file(emac_t *editor);
+void save_emac_file(emacs_t *editor);
 
 // bonus/emac/emac_input.c
-void handle_emac_input(int ch, emac_t *editor);
+void handle_emac_input(int ch, emacs_t *editor);
 
 // bonus/emac/emac.c
 int exec_emac(shell_t *shell);

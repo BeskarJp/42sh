@@ -7,7 +7,7 @@
 
 #include "shell.h"
 
-void insert_character(emac_t *editor, int pid_count)
+void insert_character(emacs_t *editor, int pid_count)
 {
     if (editor->text_len >= 4094)
         return;
@@ -19,7 +19,7 @@ void insert_character(emac_t *editor, int pid_count)
     editor->file_buffer[editor->text_len] = '\0';
 }
 
-void delete_character(emac_t *editor)
+void delete_character(emacs_t *editor)
 {
     if (editor->cursor_in_file <= 0)
         return;
@@ -30,7 +30,7 @@ void delete_character(emac_t *editor)
     editor->file_buffer[editor->text_len] = '\0';
 }
 
-void handle_emac_input(int pid_count, emac_t *editor)
+void handle_emac_input(int pid_count, emacs_t *editor)
 {
     if (pid_count == 24)
         editor->running = 0;
