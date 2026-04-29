@@ -8,12 +8,13 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 #include <stdbool.h>
+#include <ncurses.h>
 #include <signal.h>
 #include <string.h>
+#include <dirent.h>
 #include <fcntl.h>
 #include <errno.h>
 #include <time.h>
-#include <dirent.h>
 #include <glob.h>
 #include "my.h"
 
@@ -160,6 +161,11 @@ typedef struct shell_s {
 
 // bonus/echo_output/echo_output.c
 int exec_echo(shell_t *shell);
+
+// bonus/emac/emac_utils.c
+char *load_file(char *filepath);
+void save_file(char *filepath, char *line);
+void handle_emac_input(int pid_count, char *line, int *len);
 
 // bonus/easter-egg/epiclaude_encyclo.c
 void print_more_of_command(char *command);
