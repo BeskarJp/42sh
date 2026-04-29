@@ -59,6 +59,16 @@ typedef enum node_type_e {
     REDIR_DB_GAUCHE,
 } node_type_t;
 
+/**
+ * @brief Variables for emac bonus
+ */
+typedef struct emac_s {
+    char *file_buffer;
+    char *pathline;
+    int cursor_in_file;
+    int text_len;
+    int running;
+} emac_t;
 
 /**
  * @brief Variables for the inhibitors
@@ -162,10 +172,12 @@ typedef struct shell_s {
 // bonus/echo_output/echo_output.c
 int exec_echo(shell_t *shell);
 
-// bonus/emac/emac_utils.c
-char *load_file(char *filepath);
-void save_file(char *filepath, char *line);
-void handle_emac_input(int pid_count, char *line, int *len);
+// bonus/emac/emac_file.c
+char *load_emac_file(char *path);
+void save_emac_file(emac_t *editor);
+
+// bonus/emac/emac_input.c
+void handle_emac_input(int ch, emac_t *editor);
 
 // bonus/emac/emac.c
 int exec_emac(shell_t *shell);
