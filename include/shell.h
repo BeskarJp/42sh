@@ -266,6 +266,22 @@ char *add_line_in_env(char *nom, char *valeur);
 char *create_path_way(char *dir, char *command);
 char *find_command_path(char *cmd, char **env);
 
+// src/job_control/job_control.c
+void init_job_control(shell_t *shell);
+void refresh_jobs(shell_t *shell);
+void notify_done_jobs(shell_t *shell);
+int add_job(shell_t *shell, pid_t pgid, char **args, job_state_t state);
+int exec_jobs(shell_t *shell);
+int exec_fg(shell_t *shell);
+int exec_bg(shell_t *shell);
+
+// src/shell/backticks/backticks_utils.c
+char *read_pipe(int fd);
+char *rebuild_line(char *line, int start, int end, char *out);
+
+// src/shell/backticks/backticks.c
+char *handle_backticks(shell_t *shell, char *line);
+
 // src/shell/shell_prompt_line.c
 void print_shell_line(char **env);
 
@@ -275,15 +291,6 @@ void line_executor(shell_t *shell, char *line);
 
 // src/shell/shell_scripting.c
 bool try_execute_bash_script(shell_t *shell, char *line);
-
-// src/job_control/job_control.c
-void init_job_control(shell_t *shell);
-void refresh_jobs(shell_t *shell);
-void notify_done_jobs(shell_t *shell);
-int add_job(shell_t *shell, pid_t pgid, char **args, job_state_t state);
-int exec_jobs(shell_t *shell);
-int exec_fg(shell_t *shell);
-int exec_bg(shell_t *shell);
 
 // src/token_tree/execution/features/aliases/alias_checker.c
 void alias_checker(shell_t *shell, token_tree_t *tree);
