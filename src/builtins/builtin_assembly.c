@@ -30,6 +30,10 @@ int bonus_builtin_exec(shell_t *shell)
         exec_echo(shell);
         return 1;
     }
+    if (my_strcmp(shell->arg_col[0], "emac") == 0) {
+        exec_emac(shell);
+        return 1;
+    }
     return 0;
 }
 
