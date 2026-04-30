@@ -17,3 +17,5 @@ With that shell, you can :
   - Access and reuse your previous commands thanks to the history feature.
 
   - Execute sequences of commands separated by semicolons (';').
+
+  - Replaces the models with the list of corresponding files (*, ?, []).

@@ -62,11 +62,13 @@ void exec_cd(shell_t *shell)
     }
     if (chdir(path) == -1) {
         cd_error_output(path);
+        shell->exit_status = 1;
         if (curr_dir)
             free(curr_dir);
     } else {
         if (shell->oldpwd)
             free(shell->oldpwd);
         shell->oldpwd = curr_dir;
+        shell->exit_status = 0;
     }
 }

@@ -20,6 +20,16 @@ int bonus_builtin_exec(shell_t *shell)
         start_claude(shell);
         return 1;
     }
+    if (my_strcmp(shell->arg_col[0], "cactus") == 0 ||
+        my_strcmp(shell->arg_col[0], "travis") == 0){
+        bonus_builtin_ascii_art_cactus();
+        shell->exit_status = 0;
+        return 1;
+    }
+    if (my_strcmp(shell->arg_col[0], "echo") == 0) {
+        exec_echo(shell);
+        return 1;
+    }
     return 0;
 }
 
@@ -114,6 +124,33 @@ int builtin_exec(shell_t *shell)
 }
 
 /**
+ * @brief Executes a builtin among set/unset/local/export
+ *
+ * @param shell Shell structure
+ * @return int. 1 if builtin is handled, 0 if not
+ */
+int builtin_local(shell_t *shell)
+{
+    if (my_strcmp(shell->arg_col[0], "set") == 0) {
+        set_builtin(shell);
+        return 1;
+    }
+    if (my_strcmp(shell->arg_col[0], "unset") == 0) {
+        unset_builtin(shell);
+        return 1;
+    }
+    if (my_strcmp(shell->arg_col[0], "local") == 0) {
+        display_local_env(shell);
+        return 1;
+    }
+    if (my_strcmp(shell->arg_col[0], "export") == 0) {
+        export_builtin(shell);
+        return 1;
+    }
+    return 0;
+}
+
+/**
  * @brief Handles all builtin commands recognized by the shell
  *
  * @param shell Shell structure
@@ -127,8 +164,15 @@ int builtin_assembly(shell_t *shell)
     }
     if (my_strcmp(shell->arg_col[0], "env") == 0) {
         display_env(shell);
+        shell->exit_status = 0;
         return 1;
     }
+    if (my_strcmp(shell->arg_col[0], "cwd") == 0) {
+        cwd_builtin(shell);
+        return 1;
+    }
+    if (builtin_local(shell) == 1)
+        return 1;
     if (builtin_exec(shell) == 1)
         return 1;
     return 0;
