@@ -255,6 +255,9 @@ void local_and_cmd(shell_t *shell);
 int set_builtin(shell_t *shell);
 int unset_builtin(shell_t *shell);
 
+// src/builtins/features/special_var/cwd_builtin.c
+void cwd_builtin(shell_t *shell);
+
 //src/builtins/features/wh_builtins/wh_utils.c
 int check_if_builtin(char *command);
 void print_when_where_match(char *copy_pathway, char *command);
