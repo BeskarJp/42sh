@@ -167,6 +167,10 @@ int builtin_assembly(shell_t *shell)
         shell->exit_status = 0;
         return 1;
     }
+    if (my_strcmp(shell->arg_col[0], "cwd") == 0) {
+        cwd_builtin(shell);
+        return 1;
+    }
     if (builtin_local(shell) == 1)
         return 1;
     if (builtin_exec(shell) == 1)
