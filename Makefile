@@ -104,7 +104,7 @@ $(NAME):	$(OBJ)
 	@echo "Everything is compiled"
 
 tests_run:
-	@$(CC) -o $(NAME_TEST) $(SRC_TESTS) $(TESTS_FILES) $(CFLAGS) $(TFLAGS)
+	@$(CC) -o $(NAME_TEST) $(SRC_TESTS) $(TESTS_FILES) $(CFLAGS) $(TFLAGS) -lncurses
 	@echo Units Tests are compiled
 	./$(NAME_TEST)
 
