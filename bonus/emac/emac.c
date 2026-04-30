@@ -7,6 +7,11 @@
 
 #include "shell.h"
 
+/**
+ * @brief Draws the Emacs-like editor interface and positions the cursor
+ *
+ * @param editor Editor state containing buffer and path information
+ */
 void base_of_emac_visual(emacs_t *editor)
 {
     int x = 0;
@@ -30,6 +35,11 @@ void base_of_emac_visual(emacs_t *editor)
     refresh();
 }
 
+/**
+ * @brief Runs the main input loop for the Emacs-like editor
+ *
+ * @param editor Editor state used during the editing session
+ */
 void run_editor_loop(emacs_t *editor)
 {
     initscr();
@@ -43,6 +53,12 @@ void run_editor_loop(emacs_t *editor)
     endwin();
 }
 
+/**
+ * @brief Executes the emac builtin command
+ *
+ * @param shell Shell structure
+ * @return int. 0 on success if fail
+ */
 int exec_emac(shell_t *shell)
 {
     emacs_t editor;

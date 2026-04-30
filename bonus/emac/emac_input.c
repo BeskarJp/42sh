@@ -7,6 +7,12 @@
 
 #include "shell.h"
 
+/**
+ * @brief Inserts a character into the editor buffer at the cursor position
+ *
+ * @param editor Editor state containing file buffer and cursor
+ * @param pid_count Character code to insert
+ */
 void insert_character(emacs_t *editor, int pid_count)
 {
     if (editor->text_len >= 4094)
@@ -19,6 +25,11 @@ void insert_character(emacs_t *editor, int pid_count)
     editor->file_buffer[editor->text_len] = '\0';
 }
 
+/**
+ * @brief Deletes the character immediately before the cursor
+ *
+ * @param editor Editor state containing file buffer and cursor
+ */
 void delete_character(emacs_t *editor)
 {
     if (editor->cursor_in_file <= 0)
@@ -30,6 +41,12 @@ void delete_character(emacs_t *editor)
     editor->file_buffer[editor->text_len] = '\0';
 }
 
+/**
+ * @brief Handles keyboard input for the Emacs-like editor
+ *
+ * @param pid_count Input key code or character
+ * @param editor Editor state to update
+ */
 void handle_emac_input(int pid_count, emacs_t *editor)
 {
     if (pid_count == 24)
