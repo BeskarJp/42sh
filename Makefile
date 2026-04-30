@@ -9,6 +9,8 @@ CC = 	epiclang
 
 CFLAGS	= -Wall -Wextra -I./include
 
+TFLAGS	=	--coverage -lcriterion
+
 SRC	=	lib/my/mini_printf.c	\
 		lib/my/my_getnbr.c	\
 		lib/my/my_put_nbr.c	\
@@ -23,12 +25,14 @@ SRC	=	lib/my/mini_printf.c	\
 		lib/my/my_strlen.c	\
 		lib/my/my_strncmp.c	\
 		lib/my/str_nfuse.c	\
+		bonus/echo_output/echo_output.c	\
 		bonus/epiclaude/epiclaude_encyclo.c	\
 		bonus/epiclaude/epiclaude_explain.c	\
 		bonus/epiclaude/epiclaude_input.c	\
 		bonus/epiclaude/epiclaude_print.c	\
 		bonus/epiclaude/epiclaude_utils.c	\
 		bonus/epiclaude/epiclaude.c	\
+		bonus/travis_builtin/travis_builtin.c	\
 		src/builtins/features/aliases/alias_builtin.c	\
 		src/builtins/features/aliases/alias_utils.c	\
 		src/builtins/features/aliases/unalias_builtin.c	\
@@ -38,6 +42,12 @@ SRC	=	lib/my/mini_printf.c	\
 		src/builtins/features/wh_builtins/wh_utils.c	\
 		src/builtins/features/wh_builtins/where_builtin.c	\
 		src/builtins/features/wh_builtins/which_builtin.c	\
+		src/builtins/features/variables/local_env_utils.c	\
+		src/builtins/features/variables/var_declared.c	\
+		src/builtins/features/special_var/cwd_builtin.c	\
+		src/builtins/features/variables/export_builtin.c	\
+		src/builtins/features/variables/set_unset_builtin.c	\
+		src/builtins/features/variables/temp_var.c	\
 		src/builtins/builtin_assembly.c	\
 		src/builtins/cd_builtin.c	\
 		src/builtins/env_builtin.c	\
@@ -47,11 +57,15 @@ SRC	=	lib/my/mini_printf.c	\
 		src/environment/find_pathway.c	\
 		src/job_control/job_control_core.c	\
 		src/job_control/job_control_builtins.c	\
+		src/shell/backticks/backticks_utils.c	\
+		src/shell/backticks/backticks.c	\
 		src/shell/shell_prompt_line.c	\
+		src/shell/shell_scripting.c	\
 		src/shell/shell_request.c	\
 		src/token_tree/execution/features/aliases/alias_checker.c	\
 		src/token_tree/execution/exec_globbings_utils.c	\
 		src/token_tree/execution/exec_globbings.c	\
+		src/token_tree/execution/exec_operators.c	\
 		src/token_tree/execution/exec_pipe.c	\
 		src/token_tree/execution/exec_redirection_utils.c	\
 		src/token_tree/execution/exec_redirection.c	\
@@ -69,7 +83,11 @@ NAME	=	42sh
 
 SRC_TESTS	=	$(filter-out src/main.c, $(SRC))
 
-TESTS_FILES	=	tests/test_42sh.c
+TESTS_FILES	=	tests/test_builtins.c	\
+				tests/test_env.c	\
+				tests/test_exec_utils.c	\
+				tests/test_exec.c	\
+				tests/test_parsing.c
 
 NAME_TEST	=	unit_tests
 
@@ -82,10 +100,12 @@ $(NAME):	$(OBJ)
 	@echo "Everything is compiled"
 
 tests_run:
-	@$(CC) -o $(NAME_TEST) $(SRC_TESTS) $(TESTS_FILES) $(CFLAGS) --coverage -lcriterion
-	@make clean
+	@$(CC) -o $(NAME_TEST) $(SRC_TESTS) $(TESTS_FILES) $(CFLAGS) $(TFLAGS)
 	@echo Units Tests are compiled
 	./$(NAME_TEST)
+
+coverage:
+	@gcovr --gcov-executable "llvm-cov gcov" -e tests/
 
 clean:
 	@rm -f $(OBJ)

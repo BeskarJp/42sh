@@ -51,12 +51,12 @@ void make_env_bigger(shell_t *shell, char *new_line)
 /**
  * @brief Write the error message setenv display.
  *
- * @return int. alway's retrn 84.
+ * @return int. always return 84.
  */
 static int return_error(void)
 {
     write(2,
-        "setenv: Variable name must contain alphanumeric characters.\n", 61);
+        "setenv: Variable name must contain alphanumeric characters.\n", 60);
     return 84;
 }
 
@@ -86,23 +86,14 @@ int check_setenv(shell_t *shell)
 }
 
 /**
- * @brief Executes the setenv command (adds or modifies a variable).
+ * @brief Updates an environment variable if it exists, otherwise adds it.
  *
  * @param shell Shell structure.
+ * @param added_line New formatted environment line (NAME=VALUE).
+ * @param len_name Length of the variable name.
  */
-void exec_setenv(shell_t *shell)
+static void update_env_variable(shell_t *shell, char *added_line, int len_name)
 {
-    char *added_line = NULL;
-    int len_name = 0;
-
-    if (check_setenv(shell) == 84)
-        return;
-    len_name = my_strlen(shell->arg_col[1]);
-    added_line = add_line_in_env(shell->arg_col[1], shell->arg_col[2]);
-    if (shell->copy_env == NULL) {
-        make_env_bigger(shell, added_line);
-        return;
-    }
     for (int i = 0; shell->copy_env[i] != NULL; i++) {
         if (my_strncmp(shell->copy_env[i], shell->arg_col[1], len_name) == 0
             && shell->copy_env[i][len_name] == '=') {
@@ -112,4 +103,29 @@ void exec_setenv(shell_t *shell)
         }
     }
     make_env_bigger(shell, added_line);
+}
+
+/**
+ * @brief Executes the setenv command(adds or modifies an environment variable).
+ *
+ * @param shell Shell structure.
+ */
+void exec_setenv(shell_t *shell)
+{
+    char *added_line = NULL;
+    int len_name = 0;
+
+    if (check_setenv(shell) == 84) {
+        shell->exit_status = 1;
+        return;
+    }
+    len_name = my_strlen(shell->arg_col[1]);
+    added_line = add_line_in_env(shell->arg_col[1], shell->arg_col[2]);
+    if (shell->copy_env == NULL) {
+        make_env_bigger(shell, added_line);
+        shell->exit_status = 0;
+        return;
+    }
+    update_env_variable(shell, added_line, len_name);
+    shell->exit_status = 0;
 }

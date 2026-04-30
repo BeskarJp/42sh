@@ -6,7 +6,6 @@
 */
 
 #include "shell.h"
-#include <stdbool.h>
 
 /**
  * @brief Detects a trailing background token and removes it from argv
@@ -52,6 +51,7 @@ static int handle_not_found(shell_t *shell)
 {
     write(2, shell->arg_col[0], my_strlen(shell->arg_col[0]));
     write(2, ": Command not found.\n", 21);
+    shell->exit_status = 1;
     return 0;
 }
 
@@ -117,8 +117,12 @@ static void handle_foreground_job(shell_t *shell, pid_t pid)
     waitpid(pid, &status, WUNTRACED);
     if (WIFSTOPPED(status))
         handle_stopped_job(shell, pid);
-    if (WIFSIGNALED(status))
+    if (WIFSIGNALED(status)) {
         check_strsignal(status);
+        shell->exit_status = WTERMSIG(status) + 128;
+    }
+    if (WIFEXITED(status))
+        shell->exit_status = WEXITSTATUS(status);
     if (shell->interactive)
         tcsetpgrp(shell->shell_terminal, shell->shell_pgid);
 }
@@ -180,6 +184,9 @@ void line_executor(shell_t *shell, char *line)
     if (check_user(line, shell) == 1)
         is_user = true;
     if (is_user == false) {
+        if (try_execute_bash_script(shell, line)) {
+            return;
+        }
         tree = parse_line(line);
         if (tree != NULL) {
             run_tree(shell, tree);

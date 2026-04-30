@@ -71,12 +71,14 @@ void initilize_struct(char **env, shell_t *shell)
     shell->continue_shell = 1;
     shell->aliases = NULL;
     shell->history = NULL;
+    shell->local_env = NULL;
     shell->inhibitors = NULL;
     shell->jobs = NULL;
     shell->next_job_id = 1;
     shell->shell_pgid = 0;
     shell->shell_terminal = STDIN_FILENO;
     shell->interactive = 0;
+    shell->exit_status = 0;
 }
 
 /**
@@ -113,7 +115,7 @@ void shell_loop(shell_t *shell, size_t *len, char **line)
 {
     while (shell->continue_shell) {
         if (read_user_line(shell, len, line) == -1) {
-            my_putchar('\n');
+            my_printf("\n");
             break;
         }
         if ((*line)[0] != '\0' && (*line)[my_strlen(*line) - 1] == '\n')
@@ -123,6 +125,7 @@ void shell_loop(shell_t *shell, size_t *len, char **line)
             *len = 0;
             continue;
         }
+        *line = handle_backticks(shell, *line);
         if ((*line)[0] != '\0') {
             add_to_history_linked_list(shell, *line);
             line_executor(shell, *line);
