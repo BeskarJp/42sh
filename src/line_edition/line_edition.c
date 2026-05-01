@@ -87,7 +87,7 @@ char *key_loop(line_edition_t *le)
     while (read(STDIN_FILENO, &le->key, 1) != -1) {
         if (handle_ctrl_d(le))
             return NULL;
-        if (handle_escape(le))
+        if (handle_keys(le))
             continue;
         if (handle_backspace(le))
             continue;

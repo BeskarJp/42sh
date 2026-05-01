@@ -292,7 +292,7 @@ int exec_bg(shell_t *shell);
 
 //src/line_edition/keys.c
 int handle_ctrl_d(line_edition_t *le);
-int handle_escape(line_edition_t *le);
+int handle_keys(line_edition_t *le);
 int handle_backspace(line_edition_t *le);
 
 // src/line_edition/line_edition.c
