@@ -215,15 +215,25 @@ void export_builtin(shell_t *shell);
 void export_helper(shell_t *shell, env_t *var);
 env_t *find_var_by_name(env_t *local, char *name);
 
+// src/builtins/features/variables/var_declared.c
+int var_declared(shell_t *shell, int n);
+
 // src/builtins/features/variables/local_env_utils.c
 void display_local_env(shell_t *shell);
 void add_to_local_env(shell_t *shell, char *line, int state);
 void rm_local_env_var(shell_t *shell, char *name);
-int var_declared(shell_t *shell, int n);
 void handle_local_var(shell_t *shell);
+void local_var_only(shell_t *shell);
 
 // src/builtins/features/variables/temp_var.c
 void local_and_cmd(shell_t *shell);
+
+// src/builtins/features/variables/set_unset_builtin.c
+int set_builtin(shell_t *shell);
+int unset_builtin(shell_t *shell);
+
+// src/builtins/features/special_var/cwd_builtin.c
+void cwd_builtin(shell_t *shell);
 
 //src/builtins/features/wh_builtins/wh_utils.c
 int check_if_builtin(char *command);
@@ -260,6 +270,22 @@ char *add_line_in_env(char *nom, char *valeur);
 char *create_path_way(char *dir, char *command);
 char *find_command_path(char *cmd, char **env);
 
+// src/job_control/job_control.c
+void init_job_control(shell_t *shell);
+void refresh_jobs(shell_t *shell);
+void notify_done_jobs(shell_t *shell);
+int add_job(shell_t *shell, pid_t pgid, char **args, job_state_t state);
+int exec_jobs(shell_t *shell);
+int exec_fg(shell_t *shell);
+int exec_bg(shell_t *shell);
+
+// src/shell/backticks/backticks_utils.c
+char *read_pipe(int fd);
+char *rebuild_line(char *line, int start, int end, char *out);
+
+// src/shell/backticks/backticks.c
+char *handle_backticks(shell_t *shell, char *line);
+
 // src/shell/shell_prompt_line.c
 void print_shell_line(char **env);
 
@@ -269,15 +295,6 @@ void line_executor(shell_t *shell, char *line);
 
 // src/shell/shell_scripting.c
 bool try_execute_bash_script(shell_t *shell, char *line);
-
-// src/job_control/job_control.c
-void init_job_control(shell_t *shell);
-void refresh_jobs(shell_t *shell);
-void notify_done_jobs(shell_t *shell);
-int add_job(shell_t *shell, pid_t pgid, char **args, job_state_t state);
-int exec_jobs(shell_t *shell);
-int exec_fg(shell_t *shell);
-int exec_bg(shell_t *shell);
 
 // src/token_tree/execution/features/aliases/alias_checker.c
 void alias_checker(shell_t *shell, token_tree_t *tree);
