@@ -47,7 +47,7 @@ static int read_user_line(shell_t *shell, size_t *len, char **line)
     print_shell_line(shell->copy_env);
     if (*line)
         free(*line);
-    *line = detect_arrow();
+    *line = detect_keys(shell);
     if (*line == NULL)
         return -1;
     return 0;

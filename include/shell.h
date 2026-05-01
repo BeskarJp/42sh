@@ -69,6 +69,7 @@ typedef struct line_edition_s {
     struct termios config;
     struct termios config_copy;
     int i;
+    int cursor_spot;
 } line_edition_t;
 
 /**
@@ -161,6 +162,7 @@ typedef struct shell_s {
     alias_t *aliases;
     history_t *history;
     inhibitors_t *inhibitors;
+    line_edition_t *le;
     job_t *jobs;
     int next_job_id;
     pid_t shell_pgid;
@@ -290,15 +292,18 @@ int exec_jobs(shell_t *shell);
 int exec_fg(shell_t *shell);
 int exec_bg(shell_t *shell);
 
-//src/line_edition/keys.c
+// src/line_edition/arrow.c
+void check_arrows(shell_t *shell);
+
+// src/line_edition/keys.c
 int handle_ctrl_d(line_edition_t *le);
-int handle_keys(line_edition_t *le);
+int handle_keys(shell_t *keys);
 int handle_backspace(line_edition_t *le);
 
 // src/line_edition/line_edition.c
 line_edition_t *check_config(line_edition_t *le);
-char *key_loop(line_edition_t *le);
-char *detect_arrow(void);
+char *key_loop(shell_t *shell);
+char *detect_keys(shell_t *shell);
 
 // src/shell/backticks/backticks_utils.c
 char *read_pipe(int fd);
