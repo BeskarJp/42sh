@@ -25,6 +25,7 @@ char *detect_arrow(void)
     char key = '\0';
     char *entire_line = NULL;
     int i = 0;
+    char *arrow_key = malloc(sizeof(char) * 2);
 
     if (tcgetattr(STDIN_FILENO, &config) == -1) {
         printf("Error: invalid character!\n");
@@ -44,13 +45,24 @@ char *detect_arrow(void)
             free(entire_line);
             return NULL;
         }
-        if (key == 127) {
-            write(STDOUT_FILENO, "\b \b", 3);
-            entire_line[i - 1] = '\0';
+        if (key == 27) {
+            if (read(STDIN_FILENO, &arrow_key[0], 1) != 1)
+                continue;
+            if (read(STDIN_FILENO, &arrow_key[1], 1) != 1)
+                continue;
+            continue;
         }
-        entire_line = realloc(entire_line, sizeof(char) * (i + 1));
+        if (key == 127) {
+            if (i > 0) {
+                i--;
+                entire_line[i] = '\0';
+                write(STDOUT_FILENO, "\b \b", 3);
+            }
+        }
+        entire_line = realloc(entire_line, i + 2);
         entire_line[i] = key;
         i++;
+        entire_line[i] = '\0';
         if (key == '\n')
             break;
     }
