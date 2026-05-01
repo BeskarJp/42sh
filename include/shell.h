@@ -15,6 +15,7 @@
 #include <time.h>
 #include <dirent.h>
 #include <glob.h>
+#include <termios.h>
 #include "my.h"
 
 #ifndef MINISHELL
@@ -58,6 +59,17 @@ typedef enum node_type_e {
     REDIR_DB_GAUCHE,
 } node_type_t;
 
+/**
+ * @brief Variables for the line edition
+ */
+typedef struct line_edition_s {
+    char *entire_line;
+    char *arrow_key;
+    char key;
+    struct termios config;
+    struct termios config_copy;
+    int i;
+} line_edition_t;
 
 /**
  * @brief Variables for the inhibitors
@@ -277,6 +289,16 @@ int add_job(shell_t *shell, pid_t pgid, char **args, job_state_t state);
 int exec_jobs(shell_t *shell);
 int exec_fg(shell_t *shell);
 int exec_bg(shell_t *shell);
+
+//src/line_edition/keys.c
+int handle_ctrl_d(line_edition_t *le);
+int handle_escape(line_edition_t *le);
+int handle_backspace(line_edition_t *le);
+
+// src/line_edition/line_edition.c
+line_edition_t *check_config(line_edition_t *le);
+char *key_loop(line_edition_t *le);
+char *detect_arrow(void);
 
 // src/shell/backticks/backticks_utils.c
 char *read_pipe(int fd);
