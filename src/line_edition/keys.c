@@ -21,11 +21,11 @@ int handle_ctrl_d(line_edition_t *le)
 }
 
 /**
- * @brief Check anyway arrow key has been pressed
+ * @brief Check if any arrow key has been pressed
  *
  * @param le Line edition structure
  */
-int handle_escape(line_edition_t *le)
+int handle_keys(line_edition_t *le)
 {
     if (le->key != 27)
         return 0;
