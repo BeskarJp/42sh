@@ -6,69 +6,6 @@
 */
 
 #include "shell.h"
-#include <termios.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-
-/**
- * @brief Read the line and if the function detect its an arrow key,
- * it will [something]
- *
- * @param shell Shell structure
- */
-char *detect_arrow(void)
-{
-    struct termios config;
-    struct termios config_copy;
-    char key = '\0';
-    char *entire_line = NULL;
-    int i = 0;
-    char *arrow_key = malloc(sizeof(char) * 2);
-
-    if (tcgetattr(STDIN_FILENO, &config) == -1) {
-        printf("Error: invalid character!\n");
-        return NULL;
-    }
-    config_copy = config;
-    config_copy.c_lflag &= ~(ICANON | ECHO);
-    if (tcsetattr(STDIN_FILENO, TCSANOW, &config_copy) == -1) {
-        printf("Error: invalid configuration!\n");
-        return NULL;
-    }
-    while (read(STDIN_FILENO, &key, 1) != -1) {
-        if (key == 'k') {
-            tcsetattr(STDIN_FILENO, TCSANOW, &config);
-            tcflush(STDIN_FILENO, TCIFLUSH);
-            free(entire_line);
-            return NULL;
-        }
-        if (key == 27) {
-            if (read(STDIN_FILENO, &arrow_key[0], 1) != 1)
-                continue;
-            if (read(STDIN_FILENO, &arrow_key[1], 1) != 1)
-                continue;
-            continue;
-        }
-        if (key == 127) {
-            if (i > 0) {
-                i--;
-                entire_line[i] = '\0';
-                write(STDOUT_FILENO, "\b \b", 3);
-            }
-        }
-        write(STDOUT_FILENO, &key, 1);
-        entire_line = realloc(entire_line, i + 2);
-        entire_line[i] = key;
-        i++;
-        entire_line[i] = '\0';
-        if (key == '\n')
-            break;
-    }
-    tcsetattr(STDIN_FILENO, TCSANOW, &config);
-    return entire_line;
-}
 
 /**
  * @brief Initializes Shell structure with the environment
