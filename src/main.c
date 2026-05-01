@@ -38,7 +38,6 @@ char *detect_arrow(void)
         return NULL;
     }
     while (read(STDIN_FILENO, &key, 1) != -1) {
-        write(STDOUT_FILENO, &key, 1);
         if (key == 'k') {
             tcsetattr(STDIN_FILENO, TCSANOW, &config);
             tcflush(STDIN_FILENO, TCIFLUSH);
@@ -59,6 +58,7 @@ char *detect_arrow(void)
                 write(STDOUT_FILENO, "\b \b", 3);
             }
         }
+        write(STDOUT_FILENO, &key, 1);
         entire_line = realloc(entire_line, i + 2);
         entire_line[i] = key;
         i++;
