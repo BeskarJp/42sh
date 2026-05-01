@@ -52,6 +52,7 @@ typedef enum node_type_e {
     AND_OPERATOR,
     OR_OPERATOR,
     PIPE,
+    SUBSHELL,
     REDIR_DROITE,
     REDIR_DB_DROITE,
     REDIR_GAUCHE,
@@ -283,6 +284,10 @@ void alias_checker(shell_t *shell, token_tree_t *tree);
 
 //src/token_tree/execution/exec_operators.c
 void exec_operators(shell_t *shell, token_tree_t *tree);
+
+// src/token_tree/execution/exec_parentheses.c
+void exec_parentheses(shell_t *shell, token_tree_t *tree);
+token_tree_t *parse_parentheses(char *line);
 
 // src/token_tree/execution/exec_pipe.c
 void run_pipe(shell_t *shell, token_tree_t *tree);
