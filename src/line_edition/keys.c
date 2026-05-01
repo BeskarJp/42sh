@@ -25,14 +25,15 @@ int handle_ctrl_d(line_edition_t *le)
  *
  * @param le Line edition structure
  */
-int handle_keys(line_edition_t *le)
+int handle_keys(shell_t *keys)
 {
-    if (le->key != 27)
+    if (keys->le->key != 27)
         return 0;
-    if (read(STDIN_FILENO, &le->arrow_key[0], 1) != 1)
+    if (read(STDIN_FILENO, &keys->le->arrow_key[0], 1) != 1)
         return 1;
-    if (read(STDIN_FILENO, &le->arrow_key[1], 1) != 1)
+    if (read(STDIN_FILENO, &keys->le->arrow_key[1], 1) != 1)
         return 1;
+    check_arrows(keys);
     return 1;
 }
 

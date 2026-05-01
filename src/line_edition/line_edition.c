@@ -34,6 +34,25 @@ static char *char_return(const char *str, line_edition_t *le, const char *flag)
 }
 
 /**
+ * @brief set the le structure
+ *
+ * @param le Line edition structure
+*/
+static line_edition_t *set_line_edition(line_edition_t *le)
+{
+    le->entire_line = NULL;
+    le->arrow_key = malloc(2);
+    if (!le->arrow_key)
+        return NULL;
+    le->arrow_key[0] = 0;
+    le->arrow_key[1] = 0;
+    le->key = '\0';
+    le->i = 0;
+    le->cursor_spot = 0;
+    return le;
+}
+
+/**
  * @brief Get the configuration of the current terminal and store
  * it inside the structure line_edition_t
  *
@@ -52,14 +71,9 @@ line_edition_t *check_config(line_edition_t *le)
         tcsetattr(STDIN_FILENO, TCSANOW, &le->config);
         return NULL;
     }
-    le->entire_line = NULL;
-    le->arrow_key = malloc(2);
-    if (!le->arrow_key) {
-        printf("invalid malloc arrow key");
+    le = set_line_edition(le);
+    if (!le)
         return NULL;
-    }
-    le->key = '\0';
-    le->i = 0;
     return le;
 }
 
@@ -82,12 +96,14 @@ static void set_line(line_edition_t *le)
  *
  * @param shell Shell structure
  */
-char *key_loop(line_edition_t *le)
+char *key_loop(shell_t *shell)
 {
+    line_edition_t *le = shell->le;
+
     while (read(STDIN_FILENO, &le->key, 1) != -1) {
         if (handle_ctrl_d(le))
             return NULL;
-        if (handle_keys(le))
+        if (handle_keys(shell))
             continue;
         if (handle_backspace(le))
             continue;
@@ -105,17 +121,17 @@ char *key_loop(line_edition_t *le)
  *
  * @param shell Shell structure
  */
-char *detect_arrow()
+char *detect_keys(shell_t *shell)
 {
-    line_edition_t *le = malloc(sizeof(line_edition_t));
     char *result = NULL;
 
-    if (!le)
-        return char_return("invalid malloc", le, "silent");
-    le = check_config(le);
-    if (le == NULL)
-        return char_return("check_config fail", le, "silent");
-    result = key_loop(le);
-    tcsetattr(STDIN_FILENO, TCSANOW, &le->config);
+    shell->le = malloc(sizeof(line_edition_t));
+    if (!shell->le)
+        return char_return("invalid malloc", shell->le, "silent");
+    shell->le = check_config(shell->le);
+    if (shell->le == NULL)
+        return char_return("check_config fail", shell->le, "silent");
+    result = key_loop(shell);
+    tcsetattr(STDIN_FILENO, TCSANOW, &shell->le->config);
     return result;
 }
