@@ -8,12 +8,13 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 #include <stdbool.h>
+#include <ncurses.h>
 #include <signal.h>
 #include <string.h>
+#include <dirent.h>
 #include <fcntl.h>
 #include <errno.h>
 #include <time.h>
-#include <dirent.h>
 #include <glob.h>
 #include <termios.h>
 #include "my.h"
@@ -58,6 +59,17 @@ typedef enum node_type_e {
     REDIR_GAUCHE,
     REDIR_DB_GAUCHE,
 } node_type_t;
+
+/**
+ * @brief Variables for emac bonus
+ */
+typedef struct emacs_s {
+    char *file_buffer;
+    char *pathline;
+    int cursor_in_file;
+    int text_len;
+    int running;
+} emacs_t;
 
 /**
  * @brief Variables for the inhibitors
@@ -174,6 +186,19 @@ typedef struct shell_s {
 
 // bonus/echo_output/echo_output.c
 int exec_echo(shell_t *shell);
+
+// bonus/emac/emac_file.c
+char *load_emac_file(char *path);
+void save_emac_file(emacs_t *editor);
+
+// bonus/emac/emac_input.c
+void handle_emac_input(int ch, emacs_t *editor);
+
+// bonus/emac/emac_move.c
+void move_vertical(emacs_t *editor, int direction);
+
+// bonus/emac/emac.c
+int exec_emac(shell_t *shell);
 
 // bonus/easter-egg/epiclaude_encyclo.c
 void print_more_of_command(char *command);
