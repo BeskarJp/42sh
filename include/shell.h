@@ -117,6 +117,7 @@ typedef struct line_edition_s {
     struct termios config;
     struct termios config_copy;
     int i;
+    int cursor_pos;
     history_t *current;
 } line_edition_t;
 

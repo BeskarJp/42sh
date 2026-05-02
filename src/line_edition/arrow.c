@@ -59,6 +59,7 @@ void handle_up(shell_t *shell)
     write(STDOUT_FILENO, shell->le->current->command,
         strlen(shell->le->current->command));
     shell->le->i = strlen(shell->le->current->command);
+    shell->le->cursor_pos = shell->le->i;
 }
 
 /**
@@ -74,6 +75,7 @@ void handle_down(shell_t *shell)
     while (shell->le->i > 0) {
         write(STDOUT_FILENO, "\b \b", 3);
         shell->le->i--;
+        shell->le->cursor_pos--;
     }
     free(shell->le->entire_line);
     if (shell->le->current->next != NULL) {
@@ -82,6 +84,7 @@ void handle_down(shell_t *shell)
         write(STDOUT_FILENO, shell->le->entire_line,
             strlen(shell->le->entire_line));
         shell->le->i = strlen(shell->le->entire_line);
+        shell->le->cursor_pos = strlen(shell->le->entire_line);
     } else {
         shell->le->current = NULL;
         shell->le->entire_line = strdup("");
@@ -97,11 +100,11 @@ void handle_down(shell_t *shell)
  */
 void handle_right(shell_t *shell)
 {
-    if (shell->le->i <= 0)
+    if (shell->le->entire_line == NULL)
         return;
-    if (shell->le->i < my_strlen(shell->le->entire_line)) {
+    if (shell->le->cursor_pos < (int)my_strlen(shell->le->entire_line)) {
         write(STDOUT_FILENO, "\033[C", 3);
-        shell->le->i++;
+        shell->le->cursor_pos++;
     }
 }
 
@@ -113,9 +116,11 @@ void handle_right(shell_t *shell)
  */
 void handle_left(shell_t *shell)
 {
-    if (shell->le->i > 0) {
+    if (shell->le->entire_line == NULL)
+        return;
+    if (shell->le->cursor_pos > 0) {
         write(STDOUT_FILENO, "\033[D", 3);
-        shell->le->i--;
+        shell->le->cursor_pos--;
     }
 }
 

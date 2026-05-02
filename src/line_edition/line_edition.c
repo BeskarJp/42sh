@@ -48,6 +48,8 @@ static line_edition_t *set_line_edition(line_edition_t *le)
     le->arrow_key[1] = 0;
     le->key = '\0';
     le->i = 0;
+    le->cursor_pos = 0;
+    le->current = NULL;
     return le;
 }
 
@@ -86,6 +88,7 @@ static void set_line(line_edition_t *le)
     le->entire_line = realloc(le->entire_line, le->i + 2);
     le->entire_line[le->i] = le->key;
     le->i++;
+    le->cursor_pos++;
     le->entire_line[le->i] = '\0';
 }
 
