@@ -48,7 +48,6 @@ static line_edition_t *set_line_edition(line_edition_t *le)
     le->arrow_key[1] = 0;
     le->key = '\0';
     le->i = 0;
-    le->cursor_spot = 0;
     return le;
 }
 
