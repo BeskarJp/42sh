@@ -60,19 +60,6 @@ typedef enum node_type_e {
 } node_type_t;
 
 /**
- * @brief Variables for the line edition
- */
-typedef struct line_edition_s {
-    char *entire_line;
-    char *arrow_key;
-    char key;
-    struct termios config;
-    struct termios config_copy;
-    int i;
-    int cursor_spot;
-} line_edition_t;
-
-/**
  * @brief Variables for the inhibitors
  */
 typedef struct inhibitors_s {
@@ -119,6 +106,19 @@ typedef struct history_s {
     char *time;
     struct history_s *next;
 } history_t;
+
+/**
+ * @brief Variables for the line edition
+ */
+typedef struct line_edition_s {
+    char *entire_line;
+    char *arrow_key;
+    char key;
+    struct termios config;
+    struct termios config_copy;
+    int i;
+    history_t *current;
+} line_edition_t;
 
 /**
  * @brief Linked list for local env variables
