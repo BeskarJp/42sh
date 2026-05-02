@@ -8,24 +8,35 @@
 #include "shell.h"
 
 /**
- * @brief If the current bar is empty, return the last cmd
+ * @brief Return the last command in history
+ * starting from the most recent to the oldest
  *
+ * @param tmp Head of the history linked list
+ */
+static history_t *get_last(history_t *tmp)
+{
+    while (tmp->next)
+        tmp = tmp->next;
+    return tmp;
+}
+
+/**
+ * @brief Return the command just before current in history
+ * starting from the oldest to the most recent
+ *
+ * @param tmp Head of the history linked list
  * @param shell Shell structure containing line edition data
  */
-static history_t *get_prev(history_t *tmp, shell_t *shell, char *str)
+static history_t *get_prev(history_t *tmp, shell_t *shell)
 {
-    if (strcmp(str, "empty") == 0) {
-        while (tmp->next)
-            tmp = tmp->next;
-        return tmp;
-    }
     while (tmp->next && tmp->next != shell->le->current)
         tmp = tmp->next;
     return tmp;
 }
 
 /**
- * @brief Load last command and print it
+ * @brief Reproduce the up arrow from tcsh shell, naviguate throught
+ * the history list and print it starting from the most recent to the oldest
  *
  * @param shell Shell structure containing line edition data
  */
@@ -36,9 +47,9 @@ void handle_up(shell_t *shell)
     if (!shell->history)
         return;
     if (shell->le->current == NULL)
-        shell->le->current = get_prev(tmp, shell, "empty");
+        shell->le->current = get_last(tmp);
     if (shell->le->current != NULL)
-        shell->le->current = get_prev(tmp, shell, "not empty");
+        shell->le->current = get_prev(tmp, shell);
     while (shell->le->i > 0) {
         write(STDOUT_FILENO, "\b \b", 3);
         shell->le->i--;
@@ -51,22 +62,36 @@ void handle_up(shell_t *shell)
 }
 
 /**
- * @brief Load current command and print it
+ * @brief Reproduce the down arrow from tcsh shell, naviguate throught
+ * the history list and print it starting from the oldest to the most recent
  *
  * @param shell Shell structure containing line edition data
  */
 void handle_down(shell_t *shell)
 {
+    if (shell->le->current == NULL)
+        return;
     while (shell->le->i > 0) {
         write(STDOUT_FILENO, "\b \b", 3);
         shell->le->i--;
     }
     free(shell->le->entire_line);
-    shell->le->entire_line = strdup("");
+    if (shell->le->current->next != NULL) {
+        shell->le->current = shell->le->current->next;
+        shell->le->entire_line = strdup(shell->le->current->command);
+        write(STDOUT_FILENO, shell->le->entire_line,
+            strlen(shell->le->entire_line));
+        shell->le->i = strlen(shell->le->entire_line);
+    } else {
+        shell->le->current = NULL;
+        shell->le->entire_line = strdup("");
+        shell->le->i = 0;
+    }
 }
 
 /**
- * @brief Used to move right without leaving the prompt
+ * @brief Reproduce the right arrow from tcsh shell
+ * Used to move right without leaving the prompt
  *
  * @param shell Shell structure containing line edition data
  */
@@ -81,7 +106,8 @@ void handle_right(shell_t *shell)
 }
 
 /**
- * @brief Used to move left without leaving the prompt
+ * @brief Reproduce the left arrow from tcsh shell
+ * Used to move left without leaving the prompt
  *
  * @param shell Shell structure containing line edition data
  */
