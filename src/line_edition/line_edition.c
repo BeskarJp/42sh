@@ -105,6 +105,8 @@ char *key_loop(shell_t *shell)
     while (read(STDIN_FILENO, &le->key, 1) != -1) {
         if (handle_ctrl_d(le))
             return NULL;
+        if (le->key == '\t')
+            continue;
         if (handle_keys(shell))
             continue;
         if (handle_backspace(le))
