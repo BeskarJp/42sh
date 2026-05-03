@@ -16,6 +16,7 @@
 #include <errno.h>
 #include <time.h>
 #include <glob.h>
+#include <termios.h>
 #include "my.h"
 
 #ifndef MINISHELL
@@ -42,6 +43,12 @@
 
     #define PERM_NORM 0644
     #define FD_ERROR -1
+
+// Define for line-edition
+
+    #define CTRL_D 4
+    #define ESC 27
+    #define BACKSPACE 127
 
 
 /**
@@ -119,6 +126,19 @@ typedef struct history_s {
 } history_t;
 
 /**
+ * @brief Variables for the line edition
+ */
+typedef struct line_edition_s {
+    char *entire_line;
+    char *arrow_key;
+    char key;
+    struct termios config;
+    struct termios config_copy;
+    int i;
+    history_t *current;
+} line_edition_t;
+
+/**
  * @brief Linked list for local env variables
  */
 typedef struct env_s {
@@ -160,6 +180,7 @@ typedef struct shell_s {
     alias_t *aliases;
     history_t *history;
     inhibitors_t *inhibitors;
+    line_edition_t *le;
     job_t *jobs;
     int next_job_id;
     pid_t shell_pgid;
@@ -301,6 +322,19 @@ int add_job(shell_t *shell, pid_t pgid, char **args, job_state_t state);
 int exec_jobs(shell_t *shell);
 int exec_fg(shell_t *shell);
 int exec_bg(shell_t *shell);
+
+// src/line_edition/arrow.c
+void check_arrows(shell_t *shell);
+
+// src/line_edition/keys.c
+int handle_ctrl_d(line_edition_t *le);
+int handle_keys(shell_t *keys);
+int handle_backspace(line_edition_t *le);
+
+// src/line_edition/line_edition.c
+line_edition_t *check_config(line_edition_t *le);
+char *key_loop(shell_t *shell);
+char *detect_keys(shell_t *shell);
 
 // src/shell/backticks/backticks_utils.c
 char *read_pipe(int fd);
