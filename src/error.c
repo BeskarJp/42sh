@@ -39,13 +39,14 @@ void check_execve_output_error(char *path)
  */
 void check_strsignal(int status)
 {
-    char *message_output = NULL;
     int nb_signal = 0;
 
     if (WIFSIGNALED(status)) {
         nb_signal = WTERMSIG(status);
-        message_output = strsignal(nb_signal);
-        write(2, message_output, strlen(message_output));
+        if (nb_signal == SIGFPE)
+            write(2, "Floating exception", 18);
+        else
+            write(2, strsignal(nb_signal), strlen(strsignal(nb_signal)));
         if (WCOREDUMP(status))
             write(2, " (core dumped)", 14);
         write(2, "\n", 1);
