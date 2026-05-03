@@ -354,12 +354,16 @@ void line_executor(shell_t *shell, char *line);
 bool try_execute_bash_script(shell_t *shell, char *line);
 
 // src/token_tree/execution/features/aliases/alias_checker.c
+char **change_tree_command_to_alias(char **aliases_buffer, char **argv_tree);
+int apply_alias_substitution(token_tree_t *tree, alias_t *correlation);
 void alias_checker(shell_t *shell, token_tree_t *tree);
 
 //src/token_tree/execution/exec_operators.c
 void exec_operators(shell_t *shell, token_tree_t *tree);
 
 // src/token_tree/execution/exec_pipe.c
+void child_one(shell_t *shell, token_tree_t *tree, pid_t child1, int pipefd[2]);
+void child_two(shell_t *shell, token_tree_t *tree, pid_t child2, int pipefd[2]);
 void run_pipe(shell_t *shell, token_tree_t *tree);
 
 // src/token_tree/execution/exec_globbings.c
@@ -374,9 +378,11 @@ char **expand_globbing(char **args);
 void left_double_redirection(char *delimiter);
 
 // src/token_tree/execution/exec_redirection.c
+int manipulate_file_with_type(token_tree_t *tree, int fd);
 void run_redirection(shell_t *shell, token_tree_t *tree);
 
 // src/token_tree/execution/exec_tree.c
+void run_simple_command(shell_t *shell, token_tree_t *tree);
 void run_tree(shell_t *shell, token_tree_t *tree);
 
 // src/token_tree/parse/clean_string.c

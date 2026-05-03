@@ -94,7 +94,7 @@ TESTS_FILES	=	tests/test_builtins.c	\
 				tests/test_env.c	\
 				tests/test_exec_utils.c	\
 				tests/test_exec.c	\
-				tests/test_parsing.c
+				tests/test_token_tree.c
 
 NAME_TEST	=	unit_tests
 
