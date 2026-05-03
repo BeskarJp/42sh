@@ -61,6 +61,9 @@ SRC	=	lib/my/mini_printf.c	\
 		src/environment/find_pathway.c	\
 		src/job_control/job_control_core.c	\
 		src/job_control/job_control_builtins.c	\
+		src/line_edition/line_edition.c	\
+		src/line_edition/keys.c			\
+		src/line_edition/arrow.c		\
 		src/shell/backticks/backticks_utils.c	\
 		src/shell/backticks/backticks.c	\
 		src/shell/shell_prompt_line.c	\
