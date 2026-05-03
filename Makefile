@@ -73,6 +73,7 @@ SRC	=	lib/my/mini_printf.c	\
 		src/token_tree/execution/exec_globbings_utils.c	\
 		src/token_tree/execution/exec_globbings.c	\
 		src/token_tree/execution/exec_operators.c	\
+		src/token_tree/execution/exec_parentheses.c	\
 		src/token_tree/execution/exec_pipe.c	\
 		src/token_tree/execution/exec_redirection_utils.c	\
 		src/token_tree/execution/exec_redirection.c	\
@@ -80,6 +81,7 @@ SRC	=	lib/my/mini_printf.c	\
 		src/token_tree/parse/clean_string.c	\
 		src/token_tree/parse/parse_utils.c	\
 		src/token_tree/parse/parser.c	\
+		src/token_tree/parse/parse_parentheses.c	\
 		src/error.c	\
 		src/free.c	\
 		src/main.c

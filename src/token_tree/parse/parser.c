@@ -48,20 +48,37 @@ token_tree_t *parse_pipe(char *line)
             return cut_branch(line, &data);
         }
     }
-    return parse_redirections(line);
+    return parse_parentheses(line);
 }
 
 /**
- * @brief Parses line for find operators && + || and build the tree
+ * @brief see if the character is inside parentheses by counting the depth
+ * @param c Character to check
+ * @param depth Pointer to current parentheses depth
  *
+ */
+static int is_inside_parentheses(char c, int *depth)
+{
+    if (c == ')')
+        (*depth)++;
+    if (c == '(')
+        (*depth)--;
+    return (*depth != 0);
+}
+
+/**
+ * @brief Parses line, find logical operators '&&' and '||' and build the tree
  * @param line Line to parse
- * @return token_tree_t* Command tree
+ *
  */
 token_tree_t *parse_logical(char *line)
 {
     struct_parse_t data;
+    int depth = 0;
 
     for (int i = my_strlen(line) - 1; i > 0; i--) {
+        if (is_inside_parentheses(line[i], &depth))
+            continue;
         if (line[i] == '&' && line[i - 1] == '&') {
             data = (struct_parse_t){AND_OPERATOR, i - 1, 2,
                 parse_logical, parse_pipe};
@@ -85,10 +102,17 @@ token_tree_t *parse_logical(char *line)
 token_tree_t *parse_line(char *line)
 {
     struct_parse_t data;
+    int depth = 0;
 
     if (!line)
         return NULL;
     for (int i = my_strlen(line) - 1; i >= 0; i--) {
+        if (line[i] == ')')
+            depth++;
+        if (line[i] == '(')
+            depth--;
+        if (depth != 0)
+            continue;
         if (line[i] == ';') {
             data = (struct_parse_t){SEMICOLONS, i, 1,
                 parse_line, parse_logical};

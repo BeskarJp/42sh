@@ -47,6 +47,8 @@ void run_tree(shell_t *shell, token_tree_t *tree)
         exec_operators(shell, tree);
     if (tree->type == PIPE)
         run_pipe(shell, tree);
+    if (tree->type == SUBSHELL)
+        exec_parentheses(shell, tree);
     if (tree->type >= REDIR_DROITE && tree->type <= REDIR_DB_GAUCHE)
         run_redirection(shell, tree);
     if (tree->type == SIMPLE_COMMAND)
