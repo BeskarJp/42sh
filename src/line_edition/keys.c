@@ -14,7 +14,7 @@
  */
 int handle_ctrl_d(line_edition_t *le)
 {
-    if (le->key != 4)
+    if (le->key != CTRL_D)
         return 0;
     tcsetattr(STDIN_FILENO, TCSANOW, &le->config);
     return 1;
@@ -27,11 +27,11 @@ int handle_ctrl_d(line_edition_t *le)
  */
 int handle_keys(shell_t *keys)
 {
-    if (keys->le->key != 27)
+    if (keys->le->key != ESC)
         return 0;
-    if (read(STDIN_FILENO, &keys->le->arrow_key[0], 1) != 1)
+    if (read(STDIN_FILENO, &keys->le->arrow_key[0], 1) <= 0)
         return 1;
-    if (read(STDIN_FILENO, &keys->le->arrow_key[1], 1) != 1)
+    if (read(STDIN_FILENO, &keys->le->arrow_key[1], 1) <= 0)
         return 1;
     check_arrows(keys);
     return 1;
@@ -44,7 +44,7 @@ int handle_keys(shell_t *keys)
  */
 int handle_backspace(line_edition_t *le)
 {
-    if (le->key != 127)
+    if (le->key != BACKSPACE)
         return 0;
     if (le->i > 0) {
         le->i--;

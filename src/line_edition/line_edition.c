@@ -71,10 +71,7 @@ line_edition_t *check_config(line_edition_t *le)
         tcsetattr(STDIN_FILENO, TCSANOW, &le->config);
         return NULL;
     }
-    le = set_line_edition(le);
-    if (!le)
-        return NULL;
-    return le;
+    return set_line_edition(le);
 }
 
 /**
@@ -84,7 +81,11 @@ line_edition_t *check_config(line_edition_t *le)
  */
 static void set_line(line_edition_t *le)
 {
-    le->entire_line = realloc(le->entire_line, le->i + 2);
+    char *new_line = realloc(le->entire_line, le->i + 2);
+
+    if (!new_line)
+        return;
+    le->entire_line = new_line;
     le->entire_line[le->i] = le->key;
     le->i++;
     le->entire_line[le->i] = '\0';
@@ -100,7 +101,7 @@ char *key_loop(shell_t *shell)
 {
     line_edition_t *le = shell->le;
 
-    while (read(STDIN_FILENO, &le->key, 1) != -1) {
+    while (read(STDIN_FILENO, &le->key, 1) > 0) {
         if (handle_ctrl_d(le))
             return NULL;
         if (handle_backspace(le) || handle_keys(shell) || le->key == '\t')

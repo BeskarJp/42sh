@@ -44,6 +44,12 @@
     #define PERM_NORM 0644
     #define FD_ERROR -1
 
+// Define for line-edition
+
+    #define CTRL_D 4
+    #define ESC 27
+    #define BACKSPACE 127
+
 
 /**
  * @brief Define type for parse line command
