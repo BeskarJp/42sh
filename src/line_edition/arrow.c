@@ -35,6 +35,19 @@ static history_t *get_prev(history_t *tmp, shell_t *shell)
 }
 
 /**
+ * @brief Clear the current line on the terminal display
+ *
+ * @param shell Shell structure containing line edition data
+ */
+static void clear_current_line(line_edition_t *le)
+{
+    while (le->i > 0) {
+        write(STDOUT_FILENO, "\b \b", 3);
+        le->i--;
+    }
+}
+
+/**
  * @brief Reproduce the up arrow from tcsh shell, naviguate throught
  * the history list and print it starting from the most recent to the oldest
  *
@@ -44,21 +57,19 @@ void handle_up(shell_t *shell)
 {
     history_t *tmp = shell->history;
 
-    if (!shell->history)
+    if (!tmp)
         return;
     if (shell->le->current == NULL)
         shell->le->current = get_last(tmp);
-    if (shell->le->current != NULL)
+    else
         shell->le->current = get_prev(tmp, shell);
-    while (shell->le->i > 0) {
-        write(STDOUT_FILENO, "\b \b", 3);
-        shell->le->i--;
-    }
-    free(shell->le->entire_line);
+    clear_current_line(shell->le);
+    if (shell->le->entire_line)
+        free(shell->le->entire_line);
     shell->le->entire_line = strdup(shell->le->current->command);
-    write(STDOUT_FILENO, shell->le->current->command,
-        strlen(shell->le->current->command));
-    shell->le->i = strlen(shell->le->current->command);
+    write(STDOUT_FILENO, shell->le->entire_line,
+        strlen(shell->le->entire_line));
+    shell->le->i = strlen(shell->le->entire_line);
 }
 
 /**
@@ -75,18 +86,18 @@ void handle_down(shell_t *shell)
         write(STDOUT_FILENO, "\b \b", 3);
         shell->le->i--;
     }
-    free(shell->le->entire_line);
+    if (shell->le->entire_line)
+        free(shell->le->entire_line);
     if (shell->le->current->next != NULL) {
         shell->le->current = shell->le->current->next;
         shell->le->entire_line = strdup(shell->le->current->command);
-        write(STDOUT_FILENO, shell->le->entire_line,
-            strlen(shell->le->entire_line));
-        shell->le->i = strlen(shell->le->entire_line);
     } else {
         shell->le->current = NULL;
         shell->le->entire_line = strdup("");
-        shell->le->i = 0;
     }
+    write(STDOUT_FILENO, shell->le->entire_line,
+        strlen(shell->le->entire_line));
+    shell->le->i = strlen(shell->le->entire_line);
 }
 
 /**
