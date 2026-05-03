@@ -1,0 +1,79 @@
+name: CI/CD 42sh - Epitech
+run-name: "(${{ github.actor }}) ${{ github.event.head_commit.message }}"
+
+
+on:
+  push:
+    branches:
+      - '*'
+      - '**'
+
+env:
+  CC: epiclang
+  EXECUTABLES: "42sh"
+  MIRROR_SSH_URL: git@github.com:EpitechPGE1-2025/G-PSU-200-LIL-2-1-42sh-1.git
+
+
+jobs:
+
+  check_compilation_and_coding_style:
+    if: github.repository == 'BeskarJp/G-PSU-200-LIL-MIRROR-2-1-42sh'
+    runs-on: ubuntu-latest
+    container:
+      image: epitechcontent/epitest-docker
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      - name: Launch make
+        run: make CC=${{ env.CC }} 2>&1 | tee /tmp/make.log
+        timeout-minutes: 4
+
+      - name: Display coding style errors
+        run: |
+          grep "\[Banana\]" /tmp/make.log | while read -r line; do
+            FILE=$(echo "$line" | cut -d':' -f1)
+            LINE=$(echo "$line" | cut -d':' -f2)
+            SEV=$(echo "$line" | sed -n 's/.*\[Banana\] \[\([^]]*\)\].*/\1/p')
+            MSG=$(echo "$line" | sed -n 's/.*\[Banana\] \[[^]]*\] \(.*\) (.*/\1/p')
+            BALISE=$(echo "$line" | sed -n 's/.*(\([^)]*\))$/\1/p')
+            echo "::error file=$FILE,line=$LINE,title=$SEV coding style error::$BALISE - $MSG"
+          done
+          if grep -q "\[Banana\]" /tmp/make.log; then
+            exit 1
+          fi
+
+      - name: Check executables
+        run: |
+          EXECUTABLES_LIST=$(echo "${{ env.EXECUTABLES }}" | tr ',' ' ')
+          for bin in $EXECUTABLES_LIST; do
+            if [ ! -x "$bin" ]; then
+              echo "::error title=Missing Executable::Le binaire '$bin' est introuvable." 
+              exit 1
+            fi
+            echo "Binaire '$bin' trouvé et opérationnel."
+          done
+
+      - name: Clean project
+        run: make fclean
+
+
+  push_to_mirror:
+    needs: [check_compilation_and_coding_style]
+    if: github.repository == 'BeskarJp/G-PSU-200-LIL-MIRROR-2-1-42sh' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Mirror to Epitech repository
+        uses: pixta-dev/repository-mirroring-action@v1
+        with:
+          target_repo_url: ${{ env.MIRROR_SSH_URL }}
+          ssh_private_key: ${{ secrets.GIT_SSH_PRIVATE_KEY }}

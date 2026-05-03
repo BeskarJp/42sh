@@ -26,6 +26,10 @@ SRC	=	lib/my/mini_printf.c	\
 		lib/my/my_strncmp.c	\
 		lib/my/str_nfuse.c	\
 		bonus/echo_output/echo_output.c	\
+		bonus/emac/emac_file.c	\
+		bonus/emac/emac_input.c	\
+		bonus/emac/emac_move.c	\
+		bonus/emac/emac.c	\
 		bonus/epiclaude/epiclaude_encyclo.c	\
 		bonus/epiclaude/epiclaude_explain.c	\
 		bonus/epiclaude/epiclaude_input.c	\
@@ -57,6 +61,9 @@ SRC	=	lib/my/mini_printf.c	\
 		src/environment/find_pathway.c	\
 		src/job_control/job_control_core.c	\
 		src/job_control/job_control_builtins.c	\
+		src/line_edition/line_edition.c	\
+		src/line_edition/keys.c			\
+		src/line_edition/arrow.c		\
 		src/shell/backticks/backticks_utils.c	\
 		src/shell/backticks/backticks.c	\
 		src/shell/shell_prompt_line.c	\
@@ -97,12 +104,12 @@ NAME_TEST	=	unit_tests
 all:	$(NAME)
 
 $(NAME):	$(OBJ)
-	@$(CC) -o $(NAME) $(OBJ)
+	@$(CC) -o $(NAME) $(OBJ) -lncurses
 	@make clean
 	@echo "Everything is compiled"
 
 tests_run:
-	@$(CC) -o $(NAME_TEST) $(SRC_TESTS) $(TESTS_FILES) $(CFLAGS) $(TFLAGS)
+	@$(CC) -o $(NAME_TEST) $(SRC_TESTS) $(TESTS_FILES) $(CFLAGS) $(TFLAGS) -lncurses
 	@echo Units Tests are compiled
 	./$(NAME_TEST)
 
