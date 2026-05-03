@@ -41,11 +41,12 @@ static char *char_return(const char *str, line_edition_t *le, const char *flag)
 static line_edition_t *set_line_edition(line_edition_t *le)
 {
     le->entire_line = NULL;
-    le->arrow_key = malloc(2);
+    le->arrow_key = malloc(sizeof(char) * 3);
     if (!le->arrow_key)
         return NULL;
-    le->arrow_key[0] = 0;
-    le->arrow_key[1] = 0;
+    le->arrow_key[0] = '\0';
+    le->arrow_key[1] = '\0';
+    le->arrow_key[2] = '\0';
     le->key = '\0';
     le->i = 0;
     le->current = NULL;
