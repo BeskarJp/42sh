@@ -40,11 +40,15 @@ void initilize_struct(char **env, shell_t *shell)
  */
 static int read_user_line(shell_t *shell, size_t *len, char **line)
 {
+    (void)len;
     refresh_jobs(shell);
     notify_done_jobs(shell);
     signal(SIGINT, handle_sigint);
     print_shell_line(shell->copy_env);
-    if (getline(line, len, stdin) == -1)
+    if (*line)
+        free(*line);
+    *line = detect_keys(shell);
+    if (*line == NULL)
         return -1;
     return 0;
 }
