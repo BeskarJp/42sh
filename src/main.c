@@ -117,6 +117,8 @@ int main(int argc, char **argv, char **env)
     size_t len = 0;
     shell_t shell;
 
+    if (argc != 1)
+        return 1;
     (void)argc;
     (void)argv;
     initilize_struct(env, &shell);
