@@ -70,6 +70,7 @@ SRC	=	lib/my/mini_printf.c	\
 		src/shell/shell_scripting.c	\
 		src/shell/shell_request.c	\
 		src/token_tree/execution/features/aliases/alias_checker.c	\
+		src/token_tree/execution/features/variables/var_interpreter.c	\
 		src/token_tree/execution/exec_globbings_utils.c	\
 		src/token_tree/execution/exec_globbings.c	\
 		src/token_tree/execution/exec_operators.c	\

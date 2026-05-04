@@ -280,6 +280,9 @@ int unset_builtin(shell_t *shell);
 // src/builtins/features/special_var/cwd_builtin.c
 void cwd_builtin(shell_t *shell);
 
+// src/token_tree/execution/features/variables/var_interpreter.c
+void var_interpreter(shell_t *shell, token_tree_t *tree);
+
 //src/builtins/features/wh_builtins/wh_utils.c
 int check_if_builtin(char *command);
 void print_when_where_match(char *copy_pathway, char *command);
