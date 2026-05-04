@@ -298,6 +298,7 @@ int builtin_assembly(shell_t *shell);
 
 // src/builtins/cd_builtin.c
 void exec_cd(shell_t *shell);
+char *check_cd_flag(shell_t *shell);
 
 // src/builtins/env_builtin.c
 void display_env(shell_t *shell);
@@ -305,9 +306,20 @@ void display_env(shell_t *shell);
 // src/builtins/setenv_builtin.c
 void exec_setenv(shell_t *shell);
 void make_env_bigger(shell_t *shell, char *new_line);
+void init_env(shell_t *shell, char *new_line);
+int check_setenv(shell_t *shell);
 
 // src/builtins/unsetenv_builtin.c
 void exec_unsetenv(shell_t *shell);
+void fill_the_void(char **env, int deleted_line);
+void delete_var(shell_t *shell, char *var_name);
+
+// src/builtins/builtin_assembly.c
+int builtin_assembly(shell_t *shell);
+int builtin_exec(shell_t *shell);
+int builtin_exec_continue(shell_t *shell);
+int builtin_local(shell_t *shell);
+int bonus_builtin_exec(shell_t *shell);
 
 // src/environment/env_interract.c
 char **copy_environment(char **env);
