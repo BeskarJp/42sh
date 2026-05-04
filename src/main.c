@@ -63,10 +63,8 @@ static int read_user_line(shell_t *shell, size_t *len, char **line)
 void shell_loop(shell_t *shell, size_t *len, char **line)
 {
     while (shell->continue_shell) {
-        if (read_user_line(shell, len, line) == -1) {
-            my_printf("\n");
+        if (read_user_line(shell, len, line) == -1)
             break;
-        }
         if ((*line)[0] != '\0' && (*line)[my_strlen(*line) - 1] == '\n')
             (*line)[my_strlen(*line) - 1] = '\0';
         *line = check_history_feature(shell, *line);
