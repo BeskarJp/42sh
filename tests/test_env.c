@@ -35,3 +35,21 @@ Test(env, create_env_line)
     cr_assert_str_eq(line, "MY_VAR=42");
     free(line);
 }
+
+Test(env, path_concatenation)
+{
+    char *path = create_path_way("/usr/bin", "grep");
+
+    cr_assert_str_eq(path, "/usr/bin/grep");
+    free(path);
+}
+
+Test(env, resolve_binary_path)
+{
+    char *env[] = {"PATH=/bin:/usr/bin", NULL};
+    char *full_path = find_command_path("ls", env);
+
+    cr_assert_not_null(full_path);
+    cr_assert(access(full_path, X_OK) == 0);
+    free(full_path);
+}
