@@ -103,6 +103,59 @@ Test(exec_echo, mixed_arguments)
     free(shell.arg_col);
 }
 
+Test(handle_emac_input, insert_char)
+{
+    emacs_t editor = {0};
+
+    editor.file_buffer = malloc(4096);
+    my_strcpy(editor.file_buffer, "hello");
+    editor.text_len = 5;
+    editor.cursor_in_file = 5;
+    editor.running = 1;
+    handle_emac_input('a', &editor);
+    cr_assert_str_eq(editor.file_buffer, "helloa");
+    cr_assert_eq(editor.cursor_in_file, 6);
+    cr_assert_eq(editor.text_len, 6);
+    free(editor.file_buffer);
+}
+
+Test(handle_emac_input, delete_char)
+{
+    emacs_t editor = {0};
+
+    editor.file_buffer = malloc(4096);
+    my_strcpy(editor.file_buffer, "hello!");
+    editor.text_len = 6;
+    editor.cursor_in_file = 6;
+    editor.running = 1;
+    handle_emac_input(127, &editor);
+    cr_assert_str_eq(editor.file_buffer, "hello");
+    cr_assert_eq(editor.cursor_in_file, 5);
+    cr_assert_eq(editor.text_len, 5);
+    free(editor.file_buffer);
+}
+
+Test(handle_emac_input, quit)
+{
+    emacs_t editor = {0};
+
+    editor.running = 1;
+    handle_emac_input(24, &editor);
+    cr_assert_eq(editor.running, 0);
+}
+
+Test(move_vertical, move_up)
+{
+    emacs_t editor = {0};
+
+    editor.file_buffer = my_strdup("hello\nworld");
+    editor.text_len = 11;
+    editor.cursor_in_file = 8;
+    move_vertical(&editor, KEY_UP);
+    cr_assert_eq(editor.cursor_in_file, 2);
+    free(editor.file_buffer);
+}
+
 Test(bonus_builtin_ascii_art_cactus, display_cactus)
 {
     cr_redirect_stdout();
@@ -233,4 +286,20 @@ Test(save_emac_file, save_to_file)
     fclose(f);
     remove("/tmp/test_emac_file");
     free(editor.file_buffer);
+}
+
+Test(start_claude, start_and_exit)
+{
+    shell_t shell = {0};
+    int pipefd[2];
+    char *env[] = {"USERNAME=testuser", NULL};
+
+    shell.copy_env = env;
+    pipe(pipefd);
+    write(pipefd[1], "exit\n", 5);
+    close(pipefd[1]);
+    dup2(pipefd[0], STDIN_FILENO);
+    close(pipefd[0]);
+    cr_redirect_stdout();
+    start_claude(&shell);
 }
