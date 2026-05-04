@@ -73,7 +73,7 @@ void handle_up(shell_t *shell)
 }
 
 /**
- * @brief Reproduce the down arrow from tcsh shell, naviguate throught
+ * @brief Reproduce the down arrow from shell, naviguate throught
  * the history list and print it starting from the oldest to the most recent
  *
  * @param shell Shell structure containing line edition data
@@ -101,7 +101,7 @@ void handle_down(shell_t *shell)
 }
 
 /**
- * @brief Reproduce the right arrow from tcsh shell
+ * @brief Reproduce the right arrow from shell
  * Used to move right without leaving the prompt
  *
  * @param shell Shell structure containing line edition data
@@ -117,7 +117,7 @@ void handle_right(shell_t *shell)
 }
 
 /**
- * @brief Reproduce the left arrow from tcsh shell
+ * @brief Reproduce the left arrow from shell
  * Used to move left without leaving the prompt
  *
  * @param shell Shell structure containing line edition data
