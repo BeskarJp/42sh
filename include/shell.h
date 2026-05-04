@@ -234,6 +234,8 @@ void bonus_builtin_ascii_art_cactus(void);
 
 // src/buitlins/features/aliases/alias_builtin.c
 void exec_alias(shell_t *shell);
+char *get_full_command(char **args);
+void display_aliases(shell_t *shell);
 
 // src/builtins/features/aliases/alias_utils.c
 alias_t *find_alias_by_name(alias_t *aliases, char *name);
@@ -246,14 +248,20 @@ void delete_alias_node(shell_t *shell, alias_t *aliases, alias_t *old);
 void exec_unalias(shell_t *shell);
 
 // src/builtins/features/history/history_builtin.c
+char *get_current_time(void);
 void add_to_history_linked_list(shell_t *shell, char *line);
 void display_history(shell_t *shell);
 
 // src/builtins/features/history/history_feature.c
 char *check_history_feature(shell_t *shell, char *line);
+char *find_command_by_index(history_t *history, int target);
+char *get_history_by_index(shell_t *shell, int index);
+char *get_history_by_str(shell_t *shell, char *str);
+char *find_expansion(shell_t *shell, char *line);
 
 // src/nuiltins/features/inhibitors/inhibitors.c
 int check_user(char *line, shell_t *env);
+int display_user(char *user_env, shell_t *env, char *arg);
 
 // src/builtins/features/variables/export_builtin.c
 void export_builtin(shell_t *shell);
@@ -272,6 +280,11 @@ void local_var_only(shell_t *shell);
 
 // src/builtins/features/variables/temp_var.c
 void local_and_cmd(shell_t *shell);
+int apply_temp_variables(shell_t *shell, char **saved_values,
+    char **var_names, int var_count);
+void exec_with_new_args(shell_t *shell, int i);
+void restore_env(shell_t *shell, char **saved_values,
+    char **var_names, int var_count);
 
 // src/builtins/features/variables/set_unset_builtin.c
 int set_builtin(shell_t *shell);
@@ -286,6 +299,8 @@ void var_interpreter(shell_t *shell, token_tree_t *tree);
 //src/builtins/features/wh_builtins/wh_utils.c
 int check_if_builtin(char *command);
 void print_when_where_match(char *copy_pathway, char *command);
+void process_where_command(shell_t *shell, char *command);
+void process_which_command(shell_t *shell, char *command);
 
 //src/builtins/features/wh_builtins/where_builtin.c
 void exec_where(shell_t *shell);
@@ -298,6 +313,7 @@ int builtin_assembly(shell_t *shell);
 
 // src/builtins/cd_builtin.c
 void exec_cd(shell_t *shell);
+char *check_cd_flag(shell_t *shell);
 
 // src/builtins/env_builtin.c
 void display_env(shell_t *shell);
@@ -305,9 +321,20 @@ void display_env(shell_t *shell);
 // src/builtins/setenv_builtin.c
 void exec_setenv(shell_t *shell);
 void make_env_bigger(shell_t *shell, char *new_line);
+void init_env(shell_t *shell, char *new_line);
+int check_setenv(shell_t *shell);
 
 // src/builtins/unsetenv_builtin.c
 void exec_unsetenv(shell_t *shell);
+void fill_the_void(char **env, int deleted_line);
+void delete_var(shell_t *shell, char *var_name);
+
+// src/builtins/builtin_assembly.c
+int builtin_assembly(shell_t *shell);
+int builtin_exec(shell_t *shell);
+int builtin_exec_continue(shell_t *shell);
+int builtin_local(shell_t *shell);
+int bonus_builtin_exec(shell_t *shell);
 
 // src/environment/env_interract.c
 char **copy_environment(char **env);
