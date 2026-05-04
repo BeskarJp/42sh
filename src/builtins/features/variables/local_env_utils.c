@@ -38,6 +38,28 @@ void add_to_local_env(shell_t *shell, char *line, int state)
 }
 
 /**
+ * @brief Change the value of a variable of local env
+ *
+ * @param shell Shell structure
+ * @param line VAR=var_value
+ */
+static void change_value(shell_t *shell, char *line)
+{
+    env_t *node = NULL;
+    char **buff = NULL;
+
+    if (!line || line[0] == '\n')
+        return;
+    buff = my_str_to_sep_array(line, "=");
+    if (!buff || !buff[0] || !buff[1] || buff[2] != NULL)
+        return;
+    node = find_var_by_name(shell->local_env, buff[0]);
+    if (!node)
+        return;
+    node->value = my_strdup(buff[1]);
+}
+
+/**
  * @brief Delete the node of local env
  *
  * @param shell Shell structure
@@ -79,8 +101,16 @@ void rm_local_env_var(shell_t *shell, char *name)
 
 void local_var_only(shell_t *shell)
 {
-    for (int i = 0; shell->arg_col[i] != NULL; i++)
-        add_to_local_env(shell, shell->arg_col[i], 0);
+    env_t *temp = NULL;
+
+    for (int i = 0; shell->arg_col[i] != NULL; i++) {
+        temp = find_var_by_name(shell->local_env, shell->arg_col[i]);
+        if (temp == NULL)
+            add_to_local_env(shell, shell->arg_col[i], 0);
+        if (temp != NULL) {
+            change_value(shell, shell->arg_col[i]);
+        }
+    }
 }
 
 void handle_local_var(shell_t *shell)
