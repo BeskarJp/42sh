@@ -16,6 +16,7 @@ int handle_ctrl_d(line_edition_t *le)
 {
     if (le->key != CTRL_D)
         return 0;
+    write(1, "\n", 1);
     tcsetattr(STDIN_FILENO, TCSANOW, &le->config);
     return 1;
 }
