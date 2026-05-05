@@ -13,8 +13,8 @@ Test(exec, find_env_var)
 {
     char *env[] = {"PATH=/usr/bin", "HOME=/home/user", NULL};
     char *res = find_word_in_env(env, "HOME");
-    cr_assert_str_eq(res, "/home/user");
 
+    cr_assert_str_eq(res, "/home/user");
     res = find_word_in_env(env, "UNKNOWN");
     cr_assert_null(res);
 }
@@ -22,6 +22,7 @@ Test(exec, find_env_var)
 Test(exec, create_path_way_test)
 {
     char *res = create_path_way("/bin", "ls");
+
     cr_assert_str_eq(res, "/bin/ls");
     free(res);
 }
