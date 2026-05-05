@@ -62,13 +62,13 @@ static line_edition_t *set_line_edition(line_edition_t *le)
 line_edition_t *check_config(line_edition_t *le)
 {
     if (tcgetattr(STDIN_FILENO, &le->config) == -1) {
-        printf("Error: invalid configuarion!\n");
+        printf("Error: invalid configuration!\n");
         return NULL;
     }
     le->config_copy = le->config;
     le->config_copy.c_lflag &= ~(ICANON | ECHO);
     if (tcsetattr(STDIN_FILENO, TCSANOW, &le->config_copy) == -1) {
-        printf("Error: invalid configuration\n");
+        printf("Error: invalid configuration!\n");
         tcsetattr(STDIN_FILENO, TCSANOW, &le->config);
         return NULL;
     }
@@ -116,6 +116,26 @@ char *key_loop(shell_t *shell)
 }
 
 /**
+ * @brief Handle the pipe entry to './42sh'
+ *
+ * @return char*. The string command.
+ */
+static char *read_non_interactive(void)
+{
+    char *result = NULL;
+    size_t len = 0;
+    ssize_t read_len = getline(&result, &len, stdin);
+
+    if (read_len == -1) {
+        free(result);
+        return NULL;
+    }
+    if (read_len > 0 && result[read_len - 1] == '\n')
+        result[read_len - 1] = '\0';
+    return result;
+}
+
+/**
  * @brief Read the line and if the function detect its an arrow key,
  * it will [something]
  *
@@ -125,6 +145,8 @@ char *detect_keys(shell_t *shell)
 {
     char *result = NULL;
 
+    if (!isatty(STDIN_FILENO))
+        return read_non_interactive();
     shell->le = malloc(sizeof(line_edition_t));
     if (!shell->le)
         return char_return("invalid malloc", shell->le, "silent");
