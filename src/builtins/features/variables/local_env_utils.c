@@ -8,6 +8,31 @@
 #include "shell.h"
 
 /**
+ * @brief Creates and initializes a new environment node
+ *
+ * @return env_t*. The new node, or NULL if parsing/allocation fails
+ */
+static env_t *create_env_node(char *line, int state)
+{
+    env_t *new_node = malloc(sizeof(env_t));
+    char **buff = my_str_to_sep_array(line, "=");
+
+    if (!new_node || !buff)
+        return NULL;
+    if (!buff[0] || !buff[1] || buff[2] != NULL) {
+        free_array(buff);
+        free(new_node);
+        return NULL;
+    }
+    new_node->var = my_strdup(buff[0]);
+    new_node->value = my_strdup(buff[1]);
+    new_node->temp = state;
+    new_node->next = NULL;
+    free_array(buff);
+    return new_node;
+}
+
+/**
  * @brief Adds a variable to local env
  *
  * @param shell Shell structure
@@ -15,22 +40,18 @@
  */
 void add_to_local_env(shell_t *shell, char *line, int state)
 {
-    env_t *new_node = malloc(sizeof(env_t));
-    env_t *temp = shell->local_env;
-    char **buff = NULL;
+    env_t *new_node = NULL;
+    env_t *temp = NULL;
 
-    if (!line || line[0] == '\n' || !new_node)
+    if (!line || line[0] == '\n')
         return;
-    buff = my_str_to_sep_array(line, "=");
-    if (!buff || !buff[0] || !buff[1] || buff[2] != NULL)
+    new_node = create_env_node(line, state);
+    if (!new_node)
         return;
-    new_node->var = my_strdup(buff[0]);
-    new_node->value = my_strdup(buff[1]);
-    new_node->temp = state;
-    new_node->next = NULL;
     if (!shell->local_env) {
         shell->local_env = new_node;
     } else {
+        temp = shell->local_env;
         while (temp->next != NULL)
             temp = temp->next;
         temp->next = new_node;
@@ -54,9 +75,13 @@ static void change_value(shell_t *shell, char *line)
     if (!buff || !buff[0] || !buff[1] || buff[2] != NULL)
         return;
     node = find_var_by_name(shell->local_env, buff[0]);
-    if (!node)
+    if (!node) {
+        free_array(buff);
         return;
+    }
+    free(node->value);
     node->value = my_strdup(buff[1]);
+    free_array(buff);
 }
 
 /**
