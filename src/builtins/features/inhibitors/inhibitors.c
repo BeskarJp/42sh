@@ -65,6 +65,8 @@ int check_user(char *line, shell_t *env)
     char *user_env = NULL;
 
     env->inhibitors = malloc(sizeof(inhibitors_t));
+    if (!env->inhibitors)
+        return 84;
     for (int i = 0; arg[i] != NULL; i++) {
         if (display_user(user_env, env, arg[i]) == 1) {
             free_array(arg);
