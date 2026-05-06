@@ -94,6 +94,7 @@ NAME	=	42sh
 SRC_TESTS	=	$(filter-out src/main.c, $(SRC))
 
 TESTS_FILES	=	tests/test_basic_exec.c	\
+				tests/test_shell.c	\
 				tests/test_bonus.c	\
 				tests/test_builtins_features.c	\
 				tests/test_builtins.c	\
