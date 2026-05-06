@@ -74,12 +74,16 @@ void recursive_var_interpreter(shell_t *shell, token_tree_t *tree,
         *rec_count >= arr_len(tree->args))
         return;
     correlation = find_corr_local(shell, tree, rec_count);
-    if (correlation != NULL)
+    if (correlation != NULL) {
+        free(tree->args[*rec_count]);
         tree->args[*rec_count] = my_strdup(correlation->value);
+    }
     if (correlation == NULL) {
         in_env = find_corr_env(shell, tree, rec_count);
-        if (in_env != NULL)
+        if (in_env != NULL) {
+            free(tree->args[*rec_count]);
             tree->args[*rec_count] = my_strdup(in_env);
+        }
     }
     (*rec_count)++;
     recursive_var_interpreter(shell, tree, rec_count);
