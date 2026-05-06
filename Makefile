@@ -94,11 +94,14 @@ NAME	=	42sh
 SRC_TESTS	=	$(filter-out src/main.c, $(SRC))
 
 TESTS_FILES	=	tests/test_basic_exec.c	\
-				tests/test_shell.c	\
 				tests/test_bonus.c	\
 				tests/test_builtins_features.c	\
 				tests/test_builtins.c	\
 				tests/test_env.c	\
+				tests/test_job_control.c	\
+				tests/test_lib_my.c	\
+				tests/test_line_edition.c	\
+				tests/test_shell.c	\
 				tests/test_token_tree.c
 
 NAME_TEST	=	unit_tests
