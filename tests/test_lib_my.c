@@ -99,3 +99,29 @@ Test(my_putchar, basic)
     my_putchar('Z');
     cr_assert_stdout_eq_str("Z");
 }
+
+Test(str_nfuse, basic_fusion)
+{
+    char *buff[] = {"usr", "bin", "ls", NULL};
+    char *res = str_nfuse(buff, 0, 2, '/');
+
+    cr_assert_str_eq(res, "usr/bin/ls/");
+    free(res);
+}
+
+Test(str_nfuse, error_cases)
+{
+    char *buff[] = {"a", "b", NULL};
+
+    cr_assert_null(str_nfuse(NULL, 0, 1, ' '));
+    cr_assert_null(str_nfuse(buff, 2, 0, ' '));
+}
+
+Test(str_nfuse, single_word)
+{
+    char *buff[] = {"hello", NULL};
+    char *res = str_nfuse(buff, 0, 0, ':');
+
+    cr_assert_str_eq(res, "hello:");
+    free(res);
+}
