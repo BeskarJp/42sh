@@ -155,5 +155,11 @@ char *detect_keys(shell_t *shell)
         return char_return("check_config fail", shell->le, "silent");
     result = key_loop(shell);
     tcsetattr(STDIN_FILENO, TCSANOW, &shell->le->config);
+    if (shell->le) {
+        if (shell->le->arrow_key)
+            free(shell->le->arrow_key);
+        free(shell->le);
+        shell->le = NULL;
+    }
     return result;
 }
