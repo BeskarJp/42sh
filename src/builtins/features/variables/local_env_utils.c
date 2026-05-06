@@ -18,18 +18,18 @@ static env_t *create_env_node(char *line, int state)
     char **buff = my_str_to_sep_array(line, "=");
 
     if (!new_node || !buff)
-        return (NULL);
+        return NULL;
     if (!buff[0] || !buff[1] || buff[2] != NULL) {
         free_array(buff);
         free(new_node);
-        return (NULL);
+        return NULL;
     }
     new_node->var = my_strdup(buff[0]);
     new_node->value = my_strdup(buff[1]);
     new_node->temp = state;
     new_node->next = NULL;
     free_array(buff);
-    return (new_node);
+    return new_node;
 }
 
 /**
