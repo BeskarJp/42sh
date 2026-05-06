@@ -40,10 +40,12 @@ token_tree_t *create_redirection_branch(char *line,
     int i, int len, node_type_t type)
 {
     token_tree_t *tree = create_branch_by_type(type);
+    char *left_str = clear_string(line, 0, i);
 
     if (!tree)
         return NULL;
-    tree->left = parse_redirections(clear_string(line, 0, i));
+    tree->left = parse_redirections(left_str);
+    free(left_str);
     tree->file = clear_string(line, i + len, my_strlen(line));
     return tree;
 }
@@ -59,10 +61,13 @@ token_tree_t *cut_branch(char *line, struct_parse_t *data)
 {
     token_tree_t *tree = create_branch_by_type(data->type);
     int len = my_strlen(line);
+    char *left_str = clear_string(line, 0, data->count_stopped);
+    char *right_str = clear_string(line,
+        data->count_stopped + data->end_line, len);
 
-    tree->left = data->left_function(
-        clear_string(line, 0, data->count_stopped));
-    tree->right = data->right_function(
-        clear_string(line, data->count_stopped + data->end_line, len));
+    tree->left = data->left_function(left_str);
+    tree->right = data->right_function(right_str);
+    free(left_str);
+    free(right_str);
     return tree;
 }
