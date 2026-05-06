@@ -355,6 +355,10 @@ int exec_fg(shell_t *shell);
 int exec_bg(shell_t *shell);
 
 // src/line_edition/arrow.c
+void handle_up(shell_t *shell);
+void handle_down(shell_t *shell);
+void handle_right(shell_t *shell);
+void handle_left(shell_t *shell);
 void check_arrows(shell_t *shell);
 
 // src/line_edition/keys.c
