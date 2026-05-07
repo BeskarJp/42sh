@@ -24,6 +24,8 @@ void child_one(shell_t *shell, token_tree_t *tree, pid_t child1, int pipefd[2])
         close(pipefd[0]);
         close(pipefd[1]);
         run_tree(shell, tree->left);
+        free_tree(tree);
+        free_shell(shell, NULL);
         exit(0);
     }
 }
@@ -45,6 +47,8 @@ void child_two(shell_t *shell, token_tree_t *tree, pid_t child2, int pipefd[2])
         close(pipefd[0]);
         close(pipefd[1]);
         run_tree(shell, tree->right);
+        free_tree(tree);
+        free_shell(shell, NULL);
         exit(0);
     }
 }

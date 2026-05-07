@@ -177,6 +177,7 @@ typedef struct shell_s {
     char **arg_col;
     char **copy_env;
     char *oldpwd;
+    char *current_line;
     env_t *local_env;
     alias_t *aliases;
     history_t *history;
@@ -446,7 +447,11 @@ void check_strsignal(int status);
 void free_array(char **array);
 void free_aliases(alias_t *aliases);
 void free_history(history_t *history);
+void free_env(env_t *env);
 void free_jobs(job_t *jobs);
 void free_tree(token_tree_t *tree);
+
+// src/main.c
+void free_shell(shell_t *shell, char *line);
 
 #endif /* MINISHELL */

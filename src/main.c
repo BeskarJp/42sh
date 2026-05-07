@@ -17,6 +17,7 @@ void initilize_struct(char **env, shell_t *shell)
 {
     shell->copy_env = copy_environment(env);
     shell->oldpwd = NULL;
+    shell->current_line = NULL;
     shell->continue_shell = 1;
     shell->aliases = NULL;
     shell->history = NULL;
@@ -95,8 +96,12 @@ void free_shell(shell_t *shell, char *line)
         free_jobs(shell->jobs);
     if (shell->copy_env)
         free_array(shell->copy_env);
+    if (shell->local_env)
+        free_env(shell->local_env);
     if (shell->oldpwd)
         free(shell->oldpwd);
+    if (shell->current_line)
+        free(shell->current_line);
     if (line)
         free(line);
 }

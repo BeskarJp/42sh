@@ -58,6 +58,26 @@ void free_history(history_t *history)
 }
 
 /**
+ * @brief Frees the env tab
+ *
+ * @param env Env structure
+ */
+void free_env(env_t *env)
+{
+    env_t *temp;
+
+    while (env) {
+        temp = env;
+        env = env->next;
+        if (temp->var)
+            free(temp->var);
+        if (temp->value)
+            free(temp->value);
+        free(temp);
+    }
+}
+
+/**
  * @brief Recursive free for token_tree_t tree
  *
  * @param tree Token tree to free
