@@ -449,4 +449,7 @@ void free_history(history_t *history);
 void free_jobs(job_t *jobs);
 void free_tree(token_tree_t *tree);
 
+// src/main.c
+void free_shell(shell_t *shell, char *line);
+
 #endif /* MINISHELL */
