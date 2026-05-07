@@ -34,7 +34,8 @@
 
 // Define speed of write for Epi Claude
 
-    #define FAST 20000
+    #define ULTRA_FAST 5000
+    #define FAST 15000
     #define BASIC 40000
     #define SLOW 50000
     #define ULTRA_SLOW 175000

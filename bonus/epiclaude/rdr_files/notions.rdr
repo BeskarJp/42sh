@@ -1,21 +1,47 @@
 With that shell, you can :
 
-  - Execute standard shell commands with their flags (for example 'ls', 'ls -l', etc).
+  - Standard Execution & Syntax
 
-  - Use pipes to connect multiple commands and transfer data between them ('|').
+      - Execute standard shell commands with their flags (for example `ls`, `ls -l`, etc).
+      - Execute sequences of commands separated by semicolons (`;`).
+      - Use Logical Operators to chain commands based on success or failure (`&&`, `||`).
+      - Execute command groups in a Subshell using parentheses `( command )`.
 
-  - Redirect command output to a file ('>') or append it to an existing file ('>>').
+  - Pipes & Redirections
 
-  - Redirect file content as input for a command ('<') or use heredocs ('<<').
+      - Use Pipes to connect multiple commands and transfer data between them (`|`).
+      - Output Redirection: Redirect output to a file (`>`) or append it (`>>`).
+      - Input Redirection: Redirect file content as input (`<`) or use Heredocs (`<<`).
 
-  - Manage environment variables with built-in commands ('setenv', 'unsetenv', 'env').
+  - Environment & Variables
 
-  - Create and use custom command shortcuts with the alias system ('alias').
+      - Manage environment variables with built-ins: `setenv`, `unsetenv`, `env`.
+      - Manage Local Variables with built-ins: `set`, `unset`, `local`, `export`.
+      - Use variable expansion with the `$` sign (e.g., `$PATH` or `$MY_VAR`).
 
-  - Navigate through your directories and manage the session ('cd', 'exit').
+  - Job Control
 
-  - Access and reuse your previous commands thanks to the history feature.
+      - Run commands in the Background using the `&` operator.
+      - Monitor and manage active tasks with the built-ins: `jobs`, `fg`, `bg`.
 
-  - Execute sequences of commands separated by semicolons (';').
+  - Advanced Features & Built-ins
 
-  - Replaces the models with the list of corresponding files (*, ?, []).
+      - Aliases: Create and use custom command shortcuts with `alias` and `unalias`.
+      - History: Access and reuse previous commands (supports navigation and `history` command).
+      - Globbing: Automatic replacement of patterns with matching files (`*`, `?`, `[]`).
+      - Search: Locate commands in your PATH or aliases using `which` and `where`.
+      - Built-in Echo: A dedicated `echo` command for displaying text.
+
+  - Line Edition & User Experience
+
+      - Navigate through your directories and manage the session (`cd`, `exit`).
+      - Interactive Line Edition with support for arrow keys, backspace, and terminal configuration (raw mode).
+      - Handle `Ctrl + C` and `Ctrl + D` gracefully.
+
+  - Bonus Features
+
+      - EpiClaude: An integrated encyclopedia and assistant accessible via `help` or `claude`.
+      - Built-in Text Editor: An Emacs-like visual editor usable via the `emac` command.
+      - Easter Eggs: Fun ASCII art commands like `cactus` or `travis`.
+      - Scripting: Ability to execute bash scripts directly from the shell.
+
