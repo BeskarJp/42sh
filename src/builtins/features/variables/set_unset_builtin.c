@@ -20,6 +20,8 @@ int set_builtin(shell_t *shell)
         j++;
     }
     temp = malloc(sizeof(char *) * j);
+    if (!temp)
+        return 84;
     for (int i = 0; shell->arg_col[i] != NULL; i++)
         temp[i] = my_strdup(shell->arg_col[i + 1]);
     shell->arg_col = temp;
