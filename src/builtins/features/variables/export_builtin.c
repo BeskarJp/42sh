@@ -59,6 +59,31 @@ void export_helper(shell_t *shell, env_t *var)
 }
 
 /**
+ * @brief For loop for export command
+ *
+ * @param shell Shell structure
+ * @param arg line ton export
+ */
+void process_export_arg(shell_t *shell, char *arg)
+{
+    env_t *temp = find_var_by_name(shell->local_env, arg);
+    char *var_name = NULL;
+
+    if (temp == NULL) {
+        add_to_local_env(shell, arg, 0);
+        temp = find_var_by_name(shell->local_env, arg);
+    }
+    if (temp == NULL)
+        return;
+    var_name = my_strdup(temp->var);
+    export_helper(shell, temp);
+    if (var_name) {
+        rm_local_env_var(shell, var_name);
+        free(var_name);
+    }
+}
+
+/**
  * @brief Export (and can define at same time) local variable
  *        to env variable
  *
@@ -66,19 +91,13 @@ void export_helper(shell_t *shell, env_t *var)
  */
 void export_builtin(shell_t *shell)
 {
-    env_t *temp = NULL;
-
-    if (!shell)
+    if (!shell || !shell->arg_col)
         return;
-    if (!shell->arg_col[1])
+    if (shell->arg_col[1] == NULL) {
         no_arg_export(shell);
+        return;
+    }
     for (int i = 1; shell->arg_col[i] != NULL; i++) {
-        temp = find_var_by_name(shell->local_env, shell->arg_col[i]);
-        if (!temp) {
-            add_to_local_env(shell, shell->arg_col[i], 0);
-            temp = find_var_by_name(shell->local_env, shell->arg_col[i]);
-        }
-        export_helper(shell, temp);
-        rm_local_env_var(shell, temp->var);
+        process_export_arg(shell, shell->arg_col[i]);
     }
 }
