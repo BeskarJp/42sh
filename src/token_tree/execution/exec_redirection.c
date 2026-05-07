@@ -28,23 +28,20 @@ int manipulate_file_with_type(token_tree_t *tree, int fd)
 }
 
 /**
- * @brief Handles redirection, execute a command in a child
+ * @brief Exec redirection feature in 42sh
  *
  * @param shell Shell structure
  * @param tree Redirection tree
  */
-void run_redirection(shell_t *shell, token_tree_t *tree)
+void exec_redirection(shell_t *shell, token_tree_t *tree)
 {
     int fd = FD_ERROR;
-    pid_t pid = fork();
 
-    if (pid != 0) {
-        waitpid(pid, NULL, 0);
-        return;
-    }
     fd = manipulate_file_with_type(tree, fd);
     if (fd == FD_ERROR && tree->type != REDIR_DB_GAUCHE) {
         perror(tree->file);
+        free_tree(tree);
+        free_shell(shell, NULL);
         exit(1);
     }
     if (fd != FD_ERROR) {
@@ -52,5 +49,27 @@ void run_redirection(shell_t *shell, token_tree_t *tree)
         close(fd);
     }
     run_tree(shell, tree->left);
+    free_tree(tree);
+    free_shell(shell, NULL);
     exit(0);
+}
+
+/**
+ * @brief Handles redirection, execute a command in a child
+ *
+ * @param shell Shell structure
+ * @param tree Redirection tree
+ */
+void run_redirection(shell_t *shell, token_tree_t *tree)
+{
+    pid_t pid = fork();
+
+    if (pid == -1) {
+        perror("fork");
+        return;
+    }
+    if (pid == 0)
+        exec_redirection(shell, tree);
+    else
+        waitpid(pid, NULL, 0);
 }
