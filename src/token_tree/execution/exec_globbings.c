@@ -73,7 +73,7 @@ char **expand_globbing(char **args)
     if (!expanded)
         return args;
     if (expand_all_args(args, expanded, &count, &capacity) == -1) {
-        free(expanded);
+        free_array(expanded);
         return args;
     }
     expanded[count] = NULL;
