@@ -37,7 +37,7 @@ void display_line_in_file(char *line_in_file, int size)
     }
     line_in_file[size] = '\0';
     ia_style_text_writer("\n", SLOW);
-    ia_style_text_writer(line_in_file, FAST);
+    ia_style_text_writer(line_in_file, ULTRA_FAST);
     ia_style_text_writer("\n", ULTRA_SLOW);
 }
 
