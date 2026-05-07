@@ -15,6 +15,8 @@
 static void run_subshell_child(shell_t *shell, token_tree_t *tree)
 {
     run_tree(shell, tree->left);
+    free_tree(tree);
+    free_shell(shell, NULL);
     exit(shell->exit_status);
 }
 
