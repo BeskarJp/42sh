@@ -177,6 +177,7 @@ typedef struct shell_s {
     char **arg_col;
     char **copy_env;
     char *oldpwd;
+    char *current_line;
     env_t *local_env;
     alias_t *aliases;
     history_t *history;
