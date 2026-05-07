@@ -446,6 +446,7 @@ void check_strsignal(int status);
 void free_array(char **array);
 void free_aliases(alias_t *aliases);
 void free_history(history_t *history);
+void free_env(env_t *env);
 void free_jobs(job_t *jobs);
 void free_tree(token_tree_t *tree);
 

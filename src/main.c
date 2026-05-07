@@ -95,6 +95,8 @@ void free_shell(shell_t *shell, char *line)
         free_jobs(shell->jobs);
     if (shell->copy_env)
         free_array(shell->copy_env);
+    if (shell->local_env)
+        free_env(shell->local_env);
     if (shell->oldpwd)
         free(shell->oldpwd);
     if (line)
