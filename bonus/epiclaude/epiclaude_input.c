@@ -25,6 +25,11 @@ int continue_bonus_commands(char *line)
         ia_style_text_writer("Don't you mean Hugoat ?\n\n", SLOW);
         return 1;
     }
+    if (my_strcmp(line, "logan") == 0) {
+        ia_style_text_writer("\n Let me ask Logan the AER ...\n\n", SLOW);
+        ia_style_text_writer("He is occupied with Noam ...\n\n", SLOW);
+        return 1;
+    }
     return 0;
 }
 

@@ -34,7 +34,8 @@
 
 // Define speed of write for Epi Claude
 
-    #define FAST 20000
+    #define ULTRA_FAST 5000
+    #define FAST 15000
     #define BASIC 40000
     #define SLOW 50000
     #define ULTRA_SLOW 175000
@@ -451,7 +452,10 @@ void free_env(env_t *env);
 void free_jobs(job_t *jobs);
 void free_tree(token_tree_t *tree);
 
-// src/main.c
+// src/42sh.c
+void initilize_struct(char **env, shell_t *shell);
+int read_user_line(shell_t *shell, size_t *len, char **line);
+void shell_loop(shell_t *shell, size_t *len, char **line);
 void free_shell(shell_t *shell, char *line);
 
 #endif /* MINISHELL */

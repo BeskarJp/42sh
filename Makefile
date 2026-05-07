@@ -83,6 +83,7 @@ SRC	=	lib/my/mini_printf.c	\
 		src/token_tree/parse/parse_utils.c	\
 		src/token_tree/parse/parser.c	\
 		src/token_tree/parse/parse_parentheses.c	\
+		src/42sh.c	\
 		src/error.c	\
 		src/free.c	\
 		src/main.c
@@ -102,7 +103,8 @@ TESTS_FILES	=	tests/test_basic_exec.c	\
 				tests/test_lib_my.c	\
 				tests/test_line_edition.c	\
 				tests/test_shell.c	\
-				tests/test_token_tree.c
+				tests/test_token_tree.c	\
+				tests/test_utils.c
 
 NAME_TEST	=	unit_tests
 
@@ -111,7 +113,6 @@ all:	$(NAME)
 
 $(NAME):	$(OBJ)
 	@$(CC) -o $(NAME) $(OBJ) -lncurses
-	@make clean
 	@echo "Everything is compiled"
 
 tests_run:
