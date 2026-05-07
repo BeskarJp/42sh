@@ -189,7 +189,9 @@ void line_executor(shell_t *shell, char *line)
         }
         tree = parse_line(line);
         if (tree != NULL) {
+            shell->current_line = line;
             run_tree(shell, tree);
+            shell->current_line = NULL;
             free_tree(tree);
         }
     }
