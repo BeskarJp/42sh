@@ -28,6 +28,7 @@ char *exec_backtick(shell_t *shell, char *command)
         close(pfd[0]);
         close(pfd[1]);
         line_executor(shell, command);
+        free_shell(shell, command);
         exit(0);
     }
     close(pfd[1]);
