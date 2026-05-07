@@ -17,3 +17,6 @@ gmon.out
 \#*\#
 *.save
 *.txt
+html/
+latex/
+doc/
