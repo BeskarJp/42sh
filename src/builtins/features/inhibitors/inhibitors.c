@@ -42,7 +42,6 @@ int display_user(char *user_env, shell_t *env, char *arg)
         user_env = get_user(env);
         if (user_env == NULL) {
             printf("USER: Undefined variable.\n");
-            free(env->inhibitors->user);
             return 1;
         }
         printf("%s\n", user_env);
