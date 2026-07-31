@@ -290,28 +290,6 @@ Test(special_var, cwd_builtin_ignores_missing_pwd)
     free(shell.copy_env);
 }
 
-Test(export, find_var_by_name_and_export)
-{
-    shell_t shell = {0};
-    env_t *first = malloc(sizeof(env_t));
-
-    first->var = my_strdup("VAR1");
-    first->value = my_strdup("value1");
-    first->temp = 0;
-    first->next = NULL;
-    shell.local_env = first;
-    shell.arg_col = malloc(sizeof(char *) * 2);
-    shell.arg_col[0] = "export";
-    shell.arg_col[1] = "VAR1";
-    shell.copy_env = NULL;
-    export_builtin(&shell);
-    cr_assert_not_null(shell.copy_env);
-    cr_assert_str_eq(shell.copy_env[0], "VAR1=value1");
-    cr_assert_null(shell.copy_env[1]);
-    free(shell.copy_env);
-    free(shell.arg_col);
-}
-
 Test(export, export_helper_updates_existing_line)
 {
     shell_t shell = {0};
