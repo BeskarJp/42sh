@@ -5,7 +5,7 @@
 ## Makefile of project
 ##
 
-CC = 	epiclang
+CC = 	gcc
 
 CFLAGS	= -Wall -Wextra -I./include
 
@@ -115,13 +115,13 @@ $(NAME):	$(OBJ)
 	@$(CC) -o $(NAME) $(OBJ) -lncurses
 	@echo "Everything is compiled"
 
-tests_run:
+tests_run: fclean
 	@$(CC) -o $(NAME_TEST) $(SRC_TESTS) $(TESTS_FILES) $(CFLAGS) $(TFLAGS) -lncurses
-	@echo Units Tests are compiled
+	@echo "Unit Tests compiled successfully"
 	./$(NAME_TEST)
 
 coverage:
-	@gcovr --gcov-executable "llvm-cov gcov" -e tests/
+	@gcovr -e tests/
 
 clean:
 	@rm -f $(OBJ)
