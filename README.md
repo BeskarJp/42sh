@@ -8,7 +8,7 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## Description
 
-**42sh** is the culmination of EPITECH's Minishell cycle. This project consists of creating a robust shell capable of handling complex command execution, variable manipulation, process control (Job Control), and an advanced interactive user interface.
+**42sh** consists of creating a robust shell capable of handling complex command execution, variable manipulation, process control (Job Control), and an advanced interactive user interface.
 
 The main objective is **stability** and compliance with the reference shell behavior: `tcsh`.
 
